@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Roken",
+    "class": "Roken",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 4,
+    "actionPool": [],
+    "buffs": []
+  },
+  {
+    "id": 2,
+    "name": "Tadashi",
+    "class": "Samurai",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "buffs": []
+  },
+  {
+    "id": 3,
+    "name": "Yoshimune",
+    "class": "Oyoroi",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "buffs": []
+  },
+  {
+    "id": 4,
+    "name": "Miyamoto",
+    "class": "Kobo",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "buffs": []
+  },
+  {
+    "id": 5,
+    "name": "Keiji",
+    "class": "Taiko",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "buffs": []
+  },
+  {
+    "id": 6,
+    "name": "Ryuji",
+    "class": "Genso",
+    "health": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "buffs": []
+  }
+]

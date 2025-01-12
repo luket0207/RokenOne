@@ -1,0 +1,58 @@
+.battle-container {
+    padding: 20px;
+    position: relative;
+  }
+  
+  .close-battle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .start-battle {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .battle-pods {
+    margin-top: 30px;
+  }
+  
+  .battle-pod {
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .battle-pod h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .battle-pod p {
+    margin: 5px 0;
+  }
+
+  .timeline-action {
+    padding: 5px;
+    margin: 3px;
+    border: 1px solid #ccc;
+  }
+  
+  .timeline-action.highlighted {
+    background-color: yellow; /* Change to any color or style you prefer */
+    font-weight: bold;
+  }
+  
