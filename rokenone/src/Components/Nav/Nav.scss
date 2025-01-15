@@ -1,0 +1,85 @@
+@import '../../Assets/Scss/import.scss'; // Assuming this is where your variables are defined
+
+.nav-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  width: 140px;
+  height: 300px;
+
+  .nav-toggle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    z-index: 3;
+
+    svg {
+      color: $darkerGrey;
+      font-size: 24px;
+    }
+  }
+
+  &.closed {
+    
+
+    nav {
+      display: none;
+    }
+  }
+
+  &.open {
+
+    nav {
+      background-color: $white;
+      border-radius: 10px;
+      padding: 20px;
+      position: absolute;
+      top: 0px;
+      padding-top: 80px;
+      left: 0;
+      animation: expandNav 0.3s ease;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin: 10px 0;
+
+          a {
+            text-decoration: none;
+            color: $darkerGrey;
+            font-size: 18px;
+            transition: color 0.3s;
+
+            &:hover {
+              color: darken($darkerGrey, 15%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes expandNav {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

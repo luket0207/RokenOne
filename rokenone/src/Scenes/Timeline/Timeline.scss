@@ -1,25 +1,13 @@
+@import "../../Assets/Scss/import.scss";
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
 .timeline-container {
-  display: flex;
-  flex-direction: column;
+  @include sceneContainer;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
   align-items: center;
-  padding: 20px;
-
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    margin-top: 20px;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 15px;
-  }
 }
 
 .timeline {
@@ -28,64 +16,77 @@
   margin-bottom: 20px;
 
   .timeline-slot {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 120px;
     border: 2px dashed #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+   margin-right: 20px;
     background-color: #f9f9f9;
     transition: background-color 0.3s ease;
 
     &.hover {
-      background-color: lightgreen;
+      background-color: $lightGrey;
     }
 
     &.filled {
-      border: 2px solid #4caf50;
+      border: 2px solid $grey;
     }
 
     &:hover {
       background-color: #f0f0f0;
     }
+  }
+}
 
-    button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 5px;
+.timeline-slot-action {
+  padding: 20px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
 
-      &:hover {
-        background-color: #45a049;
-      }
+.action-title {
+  margin-bottom: 5px;
+}
+
+.action-pool {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  padding-top: 30px;
+  max-width: 600px;
+
+  .action-item {
+    @include cardFrame;
+    @include boxShadowHover;
+    width: 180px; // Fixed width
+    height: 80px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex: 0 0 auto; // Prevent flex from resizing the item
+    margin-right: 40px;
+
+    p {
+      margin: 0;
+      text-align: center;
+    }
+
+    &:first-of-type {
+      margin-left: 60px;
+    }
+    
+    &:last-of-type {
+      margin-right: 60px;
     }
   }
 }
 
-.action-pool {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin: 40px 0px;
-
-  .action-item {
-    background-color: darkslategray;
-    color: white;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 0px 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05 );
-    }
-  }
+.home-button {
+  margin-top: 40px;
 }

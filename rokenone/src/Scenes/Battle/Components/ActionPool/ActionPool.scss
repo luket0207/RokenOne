@@ -1,0 +1,77 @@
+@import '../../../../Assets/Scss/import.scss';
+
+.battle-pods {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, 240px);
+  padding: 10px;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 10px;
+}
+
+.char-one {
+  grid-column: 3;
+}
+
+.char-two {
+  grid-column: 2;
+}
+
+.char-three {
+  grid-column: 4;
+}
+
+.char-four {
+  grid-column: 1;
+}
+
+.char-five {
+  grid-column: 5;
+}
+
+.battle-pod {
+  padding: 10px;
+  width: 200px;
+  border-radius: 5px;
+  grid-row: 1;
+  display: grid;
+  justify-items: center;
+}
+
+.battle-pod-image {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 30px;
+
+  img {
+    width: 100%;
+  }
+
+  @include bottomWhiteFade;
+}
+
+.image-action-attack {
+  color: red;
+}
+
+.image-action-defence {
+  color: blue;
+}
+
+.image-action-heal {
+  color: green;
+}
+
+.image-action-charge {
+  color: gold;
+}
+
+.image-action-buff {
+  color: teal;
+}
+
+.image-action-illusion {
+  color: purple;
+}
+

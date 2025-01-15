@@ -1,0 +1,71 @@
+@import './colours.scss';
+
+@mixin sceneContainer {
+    min-height: 300px;
+    min-width: 400px;
+    padding: 60px;
+    background-color: $lightGrey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin boxShadow {
+  box-shadow: 0 5px 10px rgba(#333333, 0.5);
+}
+
+@mixin boxShadowHover($translateDistance: -10px) {
+  @include boxShadow;
+  transform: scale(1) translateY(0px) rotate(0deg);
+  transition: all 0.8s ease;
+  &:hover {
+    box-shadow: 0 10px 20px rgba(#333333, 0.3);
+    transform: scale(1.05) translateY($translateDistance) rotate(2deg);
+  }
+}
+
+@mixin cardFrame {
+  @include boxShadow;
+  position: relative;
+  background: $white;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 160px;
+    height: 80px;
+    background-image: url("../Images/frame.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  &:before {
+    top: -10px;
+    left: -10px;
+    transform: scale(-1);
+  }
+
+  &:after {
+    bottom: -10px;
+    right: -10px;
+  }
+}
+
+@mixin bottomWhiteFade {
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $lightGrey;
+    background: linear-gradient(
+      0deg,
+      rgba($lightGrey, 1) 0%,
+      rgba(240, 240, 240, 0) 40%
+    );
+  }
+}

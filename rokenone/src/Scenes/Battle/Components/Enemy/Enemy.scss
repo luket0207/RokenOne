@@ -1,0 +1,44 @@
+@import '../../../../Assets/Scss/import.scss';
+
+
+.enemy-container {
+  display: grid;
+  grid-template-columns: repeat(5, 240px);
+  padding: 30px;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 10px;
+
+  .enemy {
+    grid-row: 1;
+  }
+
+  > :nth-child(1) {
+    grid-column: 3; 
+  }
+
+  > :nth-child(2) {
+    grid-column: 4; 
+  }
+
+  > :nth-child(3) {
+    grid-column: 2; 
+  }
+
+  > :nth-child(4) {
+    grid-column: 5; 
+  }
+
+  > :nth-child(5) {
+    grid-column: 1; 
+  }
+}
+
+.enemy-image {
+  color: $darkGrey;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+
+  @include bottomWhiteFade;
+}

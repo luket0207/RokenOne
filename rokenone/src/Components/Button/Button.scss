@@ -1,0 +1,113 @@
+@import "../../Assets/Scss/import.scss";
+
+.btn {
+  p {
+    margin: 0;
+    z-index: 3;
+  }
+}
+
+.btn-primary {
+  @include boxShadow;
+  display: flex;
+  max-width: 200px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px 40px;
+  cursor: pointer;
+  transform: scale(1) rotate(0deg);
+  transition: all 0.8s ease;
+  background-color: $white;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0px;
+    transition: width 0.8s ease;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    border-right: solid 10px $darkerGrey;
+  }
+
+  &::after {
+    top: 0;
+    right: 0;
+    border-left: solid 10px $darkerGrey;
+  }
+
+  &:hover {
+    box-shadow: 0 20px 40px rgba(#333333, 0.3);
+    transform: scale(1.05) rotate(-2deg);
+
+    &::before,
+    &::after {
+      width: 100%;
+    }
+
+    p {
+      transform: scale(1.2);
+    }
+  }
+
+  p {
+    font-weight: 600;
+    transition: transform 0.8s ease;
+  }
+}
+
+.btn-secondary {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: all 0.8s ease;
+  background-color: $white;
+  font-size: 14px;
+  @include boxShadowHover(-3px);
+
+  &:hover {
+    p {
+      transform: scale(1.15);
+    }
+  }
+
+  p {
+    font-weight: 600;
+    transition: transform 0.8s ease;
+  }
+}
+
+.btn-small {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: all 0.8s ease;
+  background-color: $white;
+  font-size: 12px;
+  @include boxShadowHover(-3px);
+
+  &:hover {
+    p {
+      transform: scale(1.15);
+    }
+  }
+
+  p {
+    font-weight: 600;
+    transition: transform 0.8s ease;
+  }
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

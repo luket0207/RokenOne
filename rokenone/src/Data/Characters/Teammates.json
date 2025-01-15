@@ -7,7 +7,10 @@
     "timeline": [],
     "timelineSlots": 4,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   },
   {
     "id": 2,
@@ -17,7 +20,10 @@
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   },
   {
     "id": 3,
@@ -27,7 +33,10 @@
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   },
   {
     "id": 4,
@@ -37,7 +46,10 @@
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   },
   {
     "id": 5,
@@ -47,7 +59,10 @@
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   },
   {
     "id": 6,
@@ -57,6 +72,9 @@
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": []
+    "buffs": [],
+    "currentDefence": 0,
+    "currentCharge": 0,
+    "currentIllusion": 0
   }
 ]

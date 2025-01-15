@@ -1,0 +1,26 @@
+@import './colours.scss';
+
+p, li {
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 700;
+  font-style: normal;
+  color: $darkerGrey;
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+button {
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 900;
+  font-style: normal;
+  color: $darkerGrey;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 48px;
+}

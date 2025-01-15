@@ -1,52 +1,45 @@
 import React, { useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useDrag, useDrop } from "react-dnd";
-import "./Timeline.scss";
+import "./Timeline.scss"; // Make sure the styles are applied
+import Button from "../../Components/Button/Button";
 
 const ItemType = {
   ACTION: "action",
 };
 
 const Timeline = () => {
-  const { characterId } = useParams(); // Gets characterId from URL params
+  const { characterId } = useParams();
   const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
-  // Convert characterId from string to number
   const character = playerTeam.find((char) => char.id === Number(characterId));
 
-  // If no character found, show a loading/error message
   if (!character) {
     return <div>Character not found or not selected yet!</div>;
   }
 
-  // Handle dropping action into the timeline
   const handleDrop = (action, index) => {
-    // Respect timeline slots
     if (index >= character.timelineSlots) return;
 
-    // Fill empty slots with null to match timeline slots
     const newTimeline = Array(character.timelineSlots)
       .fill(null)
       .map((slot, idx) => character.timeline[idx] || null);
 
-    // If the slot already has an action, move it back to the action pool
     const actionBeingReplaced = newTimeline[index];
     let updatedActionPool = [...character.actionPool];
 
     if (actionBeingReplaced) {
-      // Add the replaced action back to the action pool
       updatedActionPool = [...updatedActionPool, actionBeingReplaced];
     }
 
-    // Place the new action into the correct slot
     newTimeline[index] = action;
 
     const updatedCharacter = {
       ...character,
       timeline: newTimeline,
-      actionPool: updatedActionPool.filter((a) => a.id !== action.id), // Remove the dragged action from the pool
+      actionPool: updatedActionPool.filter((a) => a.id !== action.id),
     };
 
     setPlayerTeam((prevTeam) =>
@@ -57,16 +50,14 @@ const Timeline = () => {
   };
 
   const handleReturnToPool = (action) => {
-    // Find the index of the action in the timeline
     const newTimeline = character.timeline.map((a) =>
       a && a.id === action.id ? null : a
     );
 
     const updatedCharacter = {
       ...character,
-      timeline: newTimeline, // Remove action from the specific slot
-
-      actionPool: [...character.actionPool, action], // Add action back to the pool
+      timeline: newTimeline,
+      actionPool: [...character.actionPool, action],
     };
 
     setPlayerTeam((prevTeam) =>
@@ -76,7 +67,6 @@ const Timeline = () => {
     );
   };
 
-  // Drag-and-drop setup
   const Action = ({ action }) => {
     const [, drag] = useDrag({
       type: ItemType.ACTION,
@@ -105,12 +95,16 @@ const Timeline = () => {
       <div
         ref={drop}
         className={`timeline-slot ${action ? "filled" : ""}`}
-        style={{ backgroundColor: isOver ? "lightgreen" : "white" }}
+        style={{ backgroundColor: isOver ? "#333" : "white" }}
       >
         {action ? (
-          <div>
-            {action.name}
-            <button onClick={() => handleReturnToPool(action)}>Remove</button>
+          <div className="timeline-slot-action">
+            <p>{action.name}</p>
+            <Button
+              text={"Remove"}
+              type={"small"}
+              onClick={() => handleReturnToPool(action)}
+            ></Button>
           </div>
         ) : (
           <div>Empty Slot</div>
@@ -119,40 +113,39 @@ const Timeline = () => {
     );
   };
 
-  // Handle navigation back to home screen
   const handleGoHome = () => {
-    navigate("/home"); // Navigates to the home route
+    navigate("/home");
   };
 
   return (
     <div className="timeline-container">
-      {/* Timeline */}
       <h1>{character.name}'s Timeline</h1>
       <h3>Timeline (Slots: {character.timelineSlots}):</h3>
-      <ul className="timeline">
+      <div className="timeline">
         {Array.from({ length: character.timelineSlots }).map((_, index) => (
-          <li key={index}>
+          <div key={index}>
             <TimelineSlot
               action={character.timeline[index] || null}
               index={index}
             />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
-      {/* Action Pool */}
-      <h3>Action Pool:</h3>
+      <h3 className="action-title">Action Pool:</h3>
+      <p>Drag moves from below into your timeline</p>
+      {/* Make this container horizontally scrollable */}
       <div className="action-pool">
         {character.actionPool
           .slice()
           .sort((a, b) => a.id - b.id)
           .map((action) => (
-            <Action action={action} />
+            <Action key={action.id} action={action} />
           ))}
       </div>
-
-      {/* Button to navigate back to Home */}
-      <button onClick={handleGoHome}>Back to Home</button>
+      <div className="home-button">
+        <Button text={"Back to Home"} onClick={handleGoHome}></Button>
+      </div>
     </div>
   );
 };

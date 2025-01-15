@@ -1,0 +1,66 @@
+@import '../../Assets/Scss/import.scss';
+
+.home {
+    @include sceneContainer;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.enemy-selection {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+    width: 600px;
+    grid-gap: 10px;
+    margin-bottom: 30px;
+}
+
+.team {
+    display: flex;
+    margin-bottom: 30px;
+
+    &-teammate {
+        margin-right: 20px;
+        background-color: $darkerGrey;
+        @include boxShadow;
+        padding: 30px;
+        display: grid;
+        justify-items: center;
+
+        h2, &-detail {
+            color: $lightGrey;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}
+
+.selected-enemies {
+    display: flex;
+    margin-bottom: 30px;
+    height: 100px;
+
+    &-enemy {
+        margin-right: 20px;
+        background-color: $darkerGrey;
+        @include boxShadow;
+        padding: 10px;
+        width: 110px;
+        height: 80px;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+
+        h4 {
+            color: $lightGrey;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}
