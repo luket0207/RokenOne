@@ -1,21 +1,17 @@
 {
   "files": {
-    "main.css": "/RokenOne/static/css/main.e8d580bc.css",
-    "main.js": "/RokenOne/static/js/main.1c1ca13d.js",
+    "main.css": "/RokenOne/static/css/main.7c8a6c34.css",
+    "main.js": "/RokenOne/static/js/main.c151ef56.js",
     "static/js/151.6af7596a.chunk.js": "/RokenOne/static/js/151.6af7596a.chunk.js",
     "static/media/Roken_Battle_Back.png": "/RokenOne/static/media/Roken_Battle_Back.797c0b4797e413b99ac8.png",
     "static/media/frame.png": "/RokenOne/static/media/frame.325183423c340274302c.png",
-    "static/media/slick.svg": "/RokenOne/static/media/slick.2630a3e3eab21c607e21.svg",
-    "static/media/slick.eot": "/RokenOne/static/media/slick.a4e97f5a2a64f0ab1323.eot",
-    "static/media/slick.ttf": "/RokenOne/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "/RokenOne/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/RokenOne/index.html",
-    "main.e8d580bc.css.map": "/RokenOne/static/css/main.e8d580bc.css.map",
-    "main.1c1ca13d.js.map": "/RokenOne/static/js/main.1c1ca13d.js.map",
+    "main.7c8a6c34.css.map": "/RokenOne/static/css/main.7c8a6c34.css.map",
+    "main.c151ef56.js.map": "/RokenOne/static/js/main.c151ef56.js.map",
     "151.6af7596a.chunk.js.map": "/RokenOne/static/js/151.6af7596a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e8d580bc.css",
-    "static/js/main.1c1ca13d.js"
+    "static/css/main.7c8a6c34.css",
+    "static/js/main.c151ef56.js"
   ]
 }
