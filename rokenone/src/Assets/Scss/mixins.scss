@@ -1,8 +1,8 @@
 @import './colours.scss';
 
 @mixin sceneContainer {
-    min-height: 300px;
-    min-width: 400px;
+    min-height: 710px;
+    min-width: 1260px;
     padding: 60px;
     background-color: $lightGrey;
     position: absolute;
@@ -25,10 +25,23 @@
   }
 }
 
-@mixin cardFrame {
+@mixin cardFrame($darkMode: false) {
   @include boxShadow;
   position: relative;
   background: $white;
+
+  div {
+    z-index: 10;
+  }
+
+  // Conditionally apply dark mode styles
+  @if $darkMode {
+    background: $darkerGrey;
+    h1, h2, h3, h4, h5, p {
+      color: $lightGrey;
+    }
+  }
+
   &:before,
   &:after {
     content: "";
@@ -51,6 +64,7 @@
     right: -10px;
   }
 }
+
 
 @mixin bottomWhiteFade {
   position: relative;

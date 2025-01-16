@@ -4,6 +4,7 @@ import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useDrag, useDrop } from "react-dnd";
 import "./Timeline.scss"; // Make sure the styles are applied
 import Button from "../../Components/Button/Button";
+import Carousel from "../../Components/Carousel/Carousel";
 
 const ItemType = {
   ACTION: "action",
@@ -27,19 +28,17 @@ const Timeline = () => {
       .fill(null)
       .map((slot, idx) => character.timeline[idx] || null);
 
-    const actionBeingReplaced = newTimeline[index];
-    let updatedActionPool = [...character.actionPool];
-
-    if (actionBeingReplaced) {
-      updatedActionPool = [...updatedActionPool, actionBeingReplaced];
-    }
+    // Mark the action as disabled when added to the timeline
+    const updatedActionPool = character.actionPool.map((a) =>
+      a.id === action.id ? { ...a, locked: true } : a
+    );
 
     newTimeline[index] = action;
 
     const updatedCharacter = {
       ...character,
       timeline: newTimeline,
-      actionPool: updatedActionPool.filter((a) => a.id !== action.id),
+      actionPool: updatedActionPool,
     };
 
     setPlayerTeam((prevTeam) =>
@@ -50,27 +49,35 @@ const Timeline = () => {
   };
 
   const handleReturnToPool = (action) => {
-    const newTimeline = character.timeline.map((a) =>
-      a && a.id === action.id ? null : a
+    const newTimeline = character.timeline.filter((a) => a && a.id !== action.id);
+  
+    // If the timeline is completely empty, set it as an empty array
+    const updatedTimeline = newTimeline.length === 0 ? [] : newTimeline;
+  
+    // Unlock the action when it is returned to the pool
+    const updatedActionPool = character.actionPool.map((a) =>
+      a.id === action.id ? { ...a, locked: false } : a
     );
-
+  
     const updatedCharacter = {
       ...character,
-      timeline: newTimeline,
-      actionPool: [...character.actionPool, action],
+      timeline: updatedTimeline,
+      actionPool: updatedActionPool,
     };
-
+  
     setPlayerTeam((prevTeam) =>
       prevTeam.map((char) =>
         char.id === character.id ? updatedCharacter : char
       )
     );
   };
+  
 
   const Action = ({ action }) => {
     const [, drag] = useDrag({
       type: ItemType.ACTION,
       item: { action },
+      canDrag: () => !action.locked, // Prevent dragging of disabled actions
     });
     return (
       <div
@@ -99,15 +106,21 @@ const Timeline = () => {
       >
         {action ? (
           <div className="timeline-slot-action">
-            <p>{action.name}</p>
+            <p className="timeline-slot-text">{action.name}</p>
             <Button
               text={"Remove"}
               type={"small"}
               onClick={() => handleReturnToPool(action)}
-            ></Button>
+            />
           </div>
         ) : (
-          <div>Empty Slot</div>
+          <div>
+            {isOver ? (
+              <p className="timeline-slot-text" style={{ color: "white" }}>Add to Timeline</p>
+            ) : (
+              <p className="timeline-slot-text" style={{ color: "#333" }}>Empty Slot</p>
+            )}
+          </div>
         )}
       </div>
     );
@@ -133,15 +146,17 @@ const Timeline = () => {
       </div>
 
       <h3 className="action-title">Action Pool:</h3>
-      <p>Drag moves from below into your timeline</p>
+      <p className="action-text">Drag moves from below into your timeline</p>
       {/* Make this container horizontally scrollable */}
       <div className="action-pool">
-        {character.actionPool
-          .slice()
-          .sort((a, b) => a.id - b.id)
-          .map((action) => (
-            <Action key={action.id} action={action} />
-          ))}
+        <Carousel slidesPerPage={3}>
+          {character.actionPool
+            .slice()
+            .sort((a, b) => a.id - b.id)
+            .map((action) => (
+              <Action key={action.id} action={action} />
+            ))}
+        </Carousel>
       </div>
       <div className="home-button">
         <Button text={"Back to Home"} onClick={handleGoHome}></Button>

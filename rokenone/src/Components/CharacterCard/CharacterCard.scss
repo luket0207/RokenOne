@@ -31,6 +31,10 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+
+    p {
+      font-size: 10px;
+    }
   }
   
   .action-played {
@@ -71,19 +75,24 @@
     gap: 5px;
     margin-top: 10px;
     height: 10px;
+    
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $darkGrey;
+      transform: scale(1);
+      transition: all .3s ease;
+      display: inline-block;
+    }
+    
+    .dot.current {
+      background-color: $darkerGrey;
+      transform: scale(1.2);
+    }
   }
   
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: black;
-    display: inline-block;
-  }
   
-  .dot.current {
-    background-color: red;
-  }
   
   .charge-bar-container {
     width: 100%;

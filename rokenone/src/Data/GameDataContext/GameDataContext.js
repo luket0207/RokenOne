@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import actions from '../../Data/Actions/Actions.json'; // Import the Actions.json file
 
 // Create the GameDataContext
@@ -19,12 +19,22 @@ export const GameDataProvider = ({ children }) => {
     {
       id: 1,
       name: 'Roken',
+      maxHealth: 100,
       health: 100,
       timeline: [],
       actionPool: actions.filter(action => action.player === 'All' && !action.locked), // Add actions to the pool
-      buffs: [],
+      currentDefence: 0,
+      currentIllusion: 0
     },
   ]);
+
+  // Check if the player is forced to select a teammate (if only Roken exists)
+  useEffect(() => {
+    if (playerTeam.length === 1 && playerTeam[0].name === 'Roken') {
+      // Handle logic when Roken is the only character (for example, redirect to Start page)
+      // In GameDataListener.js, we will handle this redirect via `useNavigate`
+    }
+  }, [playerTeam]);
 
   // Add functions to modify game state or player team if needed later
   return (

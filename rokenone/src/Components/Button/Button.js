@@ -7,7 +7,7 @@ const Button = ({ text, onClick, type = "primary", disabled = false }) => {
       className={`btn btn-${type} ${disabled ? "btn-disabled" : ""}`}
       onClick={!disabled ? onClick : null} // Disable click if disabled is true
     >
-      <p>{text}</p>
+      {text}
     </div>
   );
 };

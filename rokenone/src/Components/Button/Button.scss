@@ -14,7 +14,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 20px 40px;
+  height: 62px;
+  padding: 0px 60px;
   cursor: pointer;
   transform: scale(1) rotate(0deg);
   transition: all 0.8s ease;
@@ -24,30 +25,36 @@
   &::after {
     content: "";
     position: absolute;
-    height: 100%;
-    width: 0px;
+    height: 72px;
+    width: 35px;
     transition: width 0.8s ease;
+    background-image: url('../../Assets/Images/dashes/dash-chevron.png'); 
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all .8s ease;
   }
 
   &::before {
-    top: 0;
-    left: 0;
-    border-right: solid 10px $darkerGrey;
+    top: -5px;
+    left: -10px;  
+    transform: scale(-1);  
   }
 
   &::after {
-    top: 0;
-    right: 0;
-    border-left: solid 10px $darkerGrey;
+    top: -5px;
+    right: -10px;
   }
 
   &:hover {
     box-shadow: 0 20px 40px rgba(#333333, 0.3);
     transform: scale(1.05) rotate(-2deg);
 
-    &::before,
+    &::before {
+      left: calc(100% - 10px);
+    }
+
     &::after {
-      width: 100%;
+      right: calc(100% - 10px);
     }
 
     p {

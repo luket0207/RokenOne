@@ -4,12 +4,11 @@
     "name": "Roken",
     "class": "Roken",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 4,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   },
   {
@@ -17,12 +16,11 @@
     "name": "Tadashi",
     "class": "Samurai",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   },
   {
@@ -30,12 +28,11 @@
     "name": "Yoshimune",
     "class": "Oyoroi",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   },
   {
@@ -43,12 +40,11 @@
     "name": "Miyamoto",
     "class": "Kobo",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   },
   {
@@ -56,12 +52,11 @@
     "name": "Keiji",
     "class": "Taiko",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   },
   {
@@ -69,12 +64,11 @@
     "name": "Ryuji",
     "class": "Genso",
     "health": 100,
+    "maxHealth": 100,
     "timeline": [],
     "timelineSlots": 3,
     "actionPool": [],
-    "buffs": [],
     "currentDefence": 0,
-    "currentCharge": 0,
     "currentIllusion": 0
   }
 ]

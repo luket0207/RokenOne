@@ -1,11 +1,13 @@
 {
   "name": "rokenone",
+  "homepage": "https://luket0207.github.io/RokenOne",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@types/react-slick": "^0.23.13",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-dnd": "^16.0.1",
@@ -17,6 +19,8 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -39,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }

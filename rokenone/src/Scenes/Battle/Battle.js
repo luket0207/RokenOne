@@ -14,13 +14,32 @@ const Battle = () => {
   const [isBattleStarted, setIsBattleStarted] = useState(false);
   const [turn, setTurn] = useState(0);
   const [battleEnded, setBattleEnded] = useState(false);
+  const [win, setWin] = useState(false);
   const [enemies, setEnemies] = useState(state?.enemies || []); // Get enemies from the state
   const [enemyHealths, setEnemyHealths] = useState(
     enemies.map((enemy) => enemy.health)
   ); // Health of each enemy
   const navigate = useNavigate();
+  const [teamCharge, setTeamCharge] = useState(0);
 
   const intervalRef = useRef(null); // Use ref for interval
+  const [intervalTime, setIntervalTime] = useState(1000);
+
+  useEffect(() => {
+    if (isBattleStarted && !battleEnded) {
+      clearInterval(intervalRef.current); // Clear previous interval
+      intervalRef.current = setInterval(() => {
+        setTurn((prevTurn) => prevTurn + 1); // Increment turn
+      }, intervalTime);
+    }
+
+    // Cleanup the interval when the component unmounts or battle ends
+    return () => clearInterval(intervalRef.current);
+  }, [intervalTime, isBattleStarted, battleEnded]);
+
+  const handleSlowSpeed = () => setIntervalTime(2000); // 2 seconds interval
+  const handleNormalSpeed = () => setIntervalTime(1000); // 1 second interval
+  const handleFastSpeed = () => setIntervalTime(500); // 0.5 second interval
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
@@ -38,7 +57,7 @@ const Battle = () => {
         // Step 2: Construct the timeline based on the selected pattern
         const timeline = selectedPattern.map((actionName) => {
           return actionArray.find(
-            (action) => action.name === `Action ${actionName}`
+            (action) => action.action === `Action ${actionName}`
           );
         });
 
@@ -61,7 +80,8 @@ const Battle = () => {
   }, []);
 
   // Handle ending the battle
-  const handleBattleEnd = () => {
+  const handleBattleEnd = (win) => {
+    setWin(win)
     setBattleEnded(true);
     clearInterval(intervalRef.current);
   };
@@ -101,35 +121,90 @@ const Battle = () => {
   }, [turn]); // Trigger turn processing whenever turn changes
 
   const handleTurn = (currentTurn) => {
-    // Step 1: Process player's actions first
-    const updatedTeam = playerTeam.map((teammate, teammateIndex) => {
-      // Skip teammates with 0 health
-      if (teammate.health <= 0) return teammate;
-
-      const actionSlotIndex = (currentTurn - 1) % teammate.timeline.length;
-      const action = teammate.timeline[actionSlotIndex];
-
+    // Step 1: Apply buffs (only once per turn)
+    let teamAttackBuffThisTurn = 0;
+    let teamDefenceBuffThisTurn = 0;
+    let teamHealBuffThisTurn = 0;
+  
+    // Apply buffs from all teammates
+    playerTeam.forEach((teammate) => {
+      const action =
+        teammate.timeline[(currentTurn - 1) % teammate.timeline.length];
+  
+      if (action) {
+        // Apply Buffs
+        if (action.buffAttack) {
+          teamAttackBuffThisTurn += action.buffAttack;
+          console.log(
+            `Buffed team attack by ${action.buffAttack} from ${teammate.name}`
+          );
+        }
+        if (action.buffDefence) {
+          teamDefenceBuffThisTurn += action.buffDefence;
+          console.log(
+            `Buffed team defense by ${action.buffDefence} from ${teammate.name}`
+          );
+        }
+        if (action.buffHeal) {
+          teamHealBuffThisTurn += action.buffHeal;
+          console.log(
+            `Buffed team heal by ${action.buffHeal} from ${teammate.name}`
+          );
+        }
+      }
+    });
+  
+    // Step 2: Process Actions (apply damage, healing, defense, etc.)
+    let updatedTeam = playerTeam.map((teammate, teammateIndex) => {
+      let updatedTeammate = { ...teammate };
+  
+      if (updatedTeammate.health <= 0) return updatedTeammate; // Skip dead teammates
+  
+      const actionSlotIndex =
+        (currentTurn - 1) % updatedTeammate.timeline.length;
+      const action = updatedTeammate.timeline[actionSlotIndex];
+  
       if (!action) {
-        return { ...teammate, actionPlayed: { name: "No Action", type: "" } };
+        return {
+          ...updatedTeammate,
+          actionPlayed: { name: "No Action", type: "" },
+        };
       }
-
-      // Apply team actions (attack, defense, etc.)
+  
+      // Apply buffs and actions
       if (action.defence) {
-        teammate.currentDefence =
-          (teammate.currentDefence || 0) + action.defence;
-      }
-      if (action.charge) {
-        teammate.currentCharge = Math.min(
-          (teammate.currentCharge || 0) + action.charge,
-          10
+        const turnDefence = action.defence + teamDefenceBuffThisTurn;
+        updatedTeammate.currentDefence =
+          (updatedTeammate.currentDefence || 0) + turnDefence;
+        console.log(
+          `On turn ${currentTurn}, ${updatedTeammate.name} defended with ${turnDefence} (buff: ${teamDefenceBuffThisTurn})`
         );
       }
+  
+      if (action.heal) {
+        const turnHeal = action.heal + teamHealBuffThisTurn;
+        updatedTeammate.health = Math.min(
+          updatedTeammate.maxHealth,
+          updatedTeammate.health + turnHeal
+        );
+        console.log(
+          `On turn ${currentTurn}, ${updatedTeammate.name} healed by ${turnHeal} (buff: ${teamHealBuffThisTurn})`
+        );
+      }
+  
+      if (action.charge) {
+        setTeamCharge((prevCharge) => Math.min(prevCharge + action.charge, 10));
+        console.log(
+          `On turn ${currentTurn}, ${updatedTeammate.name} charged by ${action.charge}`
+        );
+      }
+  
       if (action.attack) {
-        const totalAttack = action.attack;
+        const totalAttack = action.attack + teamAttackBuffThisTurn;
         const aliveEnemiesWithIndex = enemies
           .map((enemy, index) => ({ enemy, index }))
           .filter(({ enemy, index }) => enemyHealths[index] > 0);
-
+  
         if (aliveEnemiesWithIndex.length > 0) {
           const randomAliveEnemy = Math.floor(
             Math.random() * aliveEnemiesWithIndex.length
@@ -139,31 +214,54 @@ const Battle = () => {
           applyDamageToEnemy(originalEnemyIndex, totalAttack, teammateIndex);
         }
       }
-
-      return { ...teammate, actionPlayed: action };
+  
+      return { ...updatedTeammate, actionPlayed: action };
     });
-
+  
+    // Step 2.5: Apply defenceAll buffs to all teammates (without overwriting state)
+    updatedTeam = updatedTeam.map((teammate) => {
+      const actionSlotIndex =
+        (currentTurn - 1) % teammate.timeline.length;
+      const action = teammate.timeline[actionSlotIndex];
+  
+      if (action && action.defenceAll) {
+        const turnDefenceAll = action.defenceAll + teamDefenceBuffThisTurn;
+  
+        if (teammate.health > 0) {
+          const updatedTeammate = {
+            ...teammate,
+            currentDefence: (teammate.currentDefence || 0) + turnDefenceAll,
+          };
+          console.log(
+            `On turn ${currentTurn}, ${teammate.name} received ${turnDefenceAll} defence (total defence: ${updatedTeammate.currentDefence})`
+          );
+          return updatedTeammate;
+        }
+      }
+  
+      return teammate;
+    });
+  
+    // Finally, set the updated team once
     setPlayerTeam(updatedTeam);
-
-    // Step 2: Now process enemies' actions (only once per turn)
-    const updatedEnemies = enemies.map((enemy, enemyIndex) => {
-      // Skip enemies with 0 health
-      if (enemyHealths[enemyIndex] <= 0) return enemy;
-
+  
+    // Step 3: Process enemy actions
+    let updatedEnemies = enemies.map((enemy, enemyIndex) => {
+      if (enemyHealths[enemyIndex] <= 0) return enemy; // Skip dead enemies
+  
       const actionSlotIndex = (currentTurn - 1) % enemy.timeline.length;
       const action = enemy.timeline[actionSlotIndex];
-
+  
       if (!action) {
         return { ...enemy, actionPlayed: { name: "No Action", type: "" } };
       }
-
-      // Apply enemy actions (for example, attacking the player's team)
+  
       if (action.attack) {
         const totalAttack = action.attack;
         const aliveTeammatesWithIndex = playerTeam
           .map((teammate, index) => ({ teammate, index }))
           .filter(({ teammate }) => teammate.health > 0);
-
+  
         if (aliveTeammatesWithIndex.length > 0) {
           const randomAliveTeammate = Math.floor(
             Math.random() * aliveTeammatesWithIndex.length
@@ -173,21 +271,20 @@ const Battle = () => {
           applyDamageToTeammate(teammateIndex, totalAttack, enemyIndex);
         }
       }
-
+  
       return { ...enemy, actionPlayed: action };
     });
-
-    setEnemies(updatedEnemies); // Update the enemies state with new actions
+  
+    setEnemies(updatedEnemies);
   };
+  
 
   // Apply damage to a specific teammate
   const applyDamageToTeammate = (teammateIndex, attackValue, enemyIndex) => {
-    console.log("first trigger");
-    const turnCheck = 0;
+
     setPlayerTeam((prevTeam) => {
       const updatedTeam = [...prevTeam];
       const teammate = updatedTeam[teammateIndex];
-      console.log("second trigger");
 
       let remainingDamage = attackValue;
 
@@ -215,7 +312,7 @@ const Battle = () => {
 
       // Check if all teammates are defeated
       if (updatedTeam.every((teammate) => teammate.health <= 0)) {
-        handleBattleEnd();
+        handleBattleEnd(false);
       }
 
       return updatedTeam; // Return the updated team in a single state update
@@ -257,7 +354,7 @@ const Battle = () => {
 
       // Check if all enemies are defeated
       if (updatedHealths.every((health) => health <= 0)) {
-        handleBattleEnd();
+        handleBattleEnd(true);
       }
 
       return updatedHealths;
@@ -271,23 +368,36 @@ const Battle = () => {
       </button>
 
       {!isBattleStarted && (
-        <div className="start-container">
-          <div className="start-modal">
+        <div className="battle-modal-container">
+          <div className="battle-modal">
             <Button text={"Start Battle"} onClick={handleStartBattle}></Button>
           </div>
         </div>
       )}
       <div className="battle-info">
         {battleEnded && (
-          <div className="battle-ended">
-            <p>All Enemies Defeated!</p>
-            <button onClick={handleCloseBattle}>Back to Home</button>
+          <div className="battle-modal-container">
+            <div className="battle-modal">
+              {win ?
+              <h2>All Enemies Defeated! You Win!</h2>
+              :
+              <h2>You're Dead</h2>
+              }
+              
+              <Button
+                text={"Back to Home"}
+                onClick={handleCloseBattle}
+              ></Button>
+            </div>
           </div>
         )}
 
         {!battleEnded && (
           <div className="turn-info">
             <p>Turn: {turn}</p>
+            <button onClick={handleSlowSpeed}>Slow</button>
+            <button onClick={handleNormalSpeed}>Normal</button>
+            <button onClick={handleFastSpeed}>Fast</button>
           </div>
         )}
       </div>
@@ -298,9 +408,18 @@ const Battle = () => {
         enemyHealths={enemyHealths}
         enemyActions={enemies.map((enemy, enemyIndex) => enemy.actionPlayed)}
       />
-
       {/* Render ActionPool Component */}
       <ActionPool playerTeam={playerTeam} turn={turn} />
+
+      <div className="team-charge">
+        <div
+          className="team-charge-bar"
+          style={{
+            width: `${(teamCharge / 10) * 100}%`, // Scale from 0 to 100%
+          }}
+        ></div>
+        <p>Charge</p>
+      </div>
     </div>
   );
 };

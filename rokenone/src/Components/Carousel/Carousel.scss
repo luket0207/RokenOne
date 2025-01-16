@@ -1,0 +1,88 @@
+@import '../../Assets/Scss/import.scss';
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%; // Full width of parent container
+  overflow: hidden; // Hide items outside the visible area
+  padding-bottom: 20px;
+}
+
+.carousel-content {
+  display: flex;
+  overflow: hidden;
+}
+
+.carousel-items {
+  display: flex;
+  transition: transform 0.3s ease; // Smooth scrolling effect for the sliding
+  width: 610px;
+  justify-content: center;
+}
+
+.carousel-items.up {
+  transform: translateY(-100%); // Slide up effect
+}
+
+.carousel-items.down {
+  transform: translateY(100%); // Slide down effect
+}
+
+.carousel-items > div {
+  margin: 25px 15px;
+
+  &:first-of-type {
+    margin-left: 62px;
+  }
+
+  &:last-of-type {
+    margin-right: 62px;
+  }
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}
+
+/* Dots Pagination */
+.dots-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 2px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $grey;
+  margin: 0 5px;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: $darkerGrey;
+  width: 16px;
+}

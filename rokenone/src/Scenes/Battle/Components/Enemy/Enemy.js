@@ -32,6 +32,7 @@ const Enemy = ({ enemies, enemyHealths, enemyActions, turn }) => {
             <CharacterCard
               teammate={formattedEnemy} // Pass the formatted enemy object
               currentActionIndex={currentActionIndex}
+              enemy={true}
             />
           </div>
         );

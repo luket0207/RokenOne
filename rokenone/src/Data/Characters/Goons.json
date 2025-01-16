@@ -1,189 +1,236 @@
 [
-    {
-      "name": "Kachi",
-      "class": "Samurai",
-      "health": 30,
-      "level": 10,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 10
-        }
-      ],
-      "actionPatterns": ["A"]
-    },
-    {
-      "name": "Ronin",
-      "class": "Samurai",
-      "health": 40,
-      "level": 30,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 20
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        }
-      ],
-      "actionPatterns": ["A,A,B", "B,A,A"]
-    },
-    {
-      "name": "Wakashū",
-      "class": "Ō-Yoroi",
-      "health": 30,
-      "level": 10,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 2
-        },
-        {
-          "name": "Action B",
-          "defence": 10
-        }
-      ],
-      "actionPatterns": ["A,A,B", "B,A,A"]
-    },
-    {
-      "name": "Mamoru",
-      "class": "Ō-Yoroi",
-      "health": 50,
-      "level": 30,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 10
-        },
-        {
-          "name": "Action B",
-          "defence": 12
-        }
-      ],
-      "actionPatterns": ["A,B,A,B", "B,A,A"]
-    },
-    {
-      "name": "Miku",
-      "class": "Kōbō",
-      "health": 30,
-      "level": 20,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 5
-        },
-        {
-          "name": "Action B",
-          "heal": 5
-        }
-      ],
-      "actionPatterns": ["A,B,A,B", "B,A,A"]
-    },
-    {
-      "name": "Honoka",
-      "class": "Kōbō",
-      "health": 40,
-      "level": 40,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 10
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        },
-        {
-          "name": "Action C",
-          "heal": 10
-        }
-      ],
-      "actionPatterns": ["A,B,C,B", "A,B,A,C", "A,C,B"]
-    },
-    {
-      "name": "Raruzu",
-      "class": "Taiko",
-      "health": 20,
-      "level": 20,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 2
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        },
-        {
-          "name": "Action C",
-          "charge": 2
-        }
-      ],
-      "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
-    },
-    {
-      "name": "Yukiyama",
-      "class": "Taiko",
-      "health": 30,
-      "level": 40,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 5
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        },
-        {
-          "name": "Action C",
-          "charge": 2
-        }
-      ],
-      "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
-    },
-    {
-      "name": "Espa",
-      "class": "Gensō",
-      "health": 20,
-      "level": 20,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 2
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        },
-        {
-          "name": "Action C",
-          "illusion": 1
-        }
-      ],
-      "actionPatterns": ["A,B,B,A,A", "A,A,B"]
-    },
-    {
-      "name": "Reinōsha",
-      "class": "Gensō",
-      "health": 40,
-      "level": 40,
-      "actionArray": [
-        {
-          "name": "Action A",
-          "attack": 4
-        },
-        {
-          "name": "Action B",
-          "defence": 5
-        },
-        {
-          "name": "Action C",
-          "illusion": 2
-        }
-      ],
-      "actionPatterns": ["A,B,C,A,B", "A,A,C,B", "B,C,A,A"]
-    }
-  ]
-  
+  {
+    "name": "Kachi",
+    "class": "Samurai",
+    "health": 30,
+    "level": 10,
+    "actionArray": [
+      {
+        "name": "Samurai Stab",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 10
+      }
+    ],
+    "actionPatterns": ["A"]
+  },
+  {
+    "name": "Ronin",
+    "class": "Samurai",
+    "health": 40,
+    "level": 30,
+    "actionArray": [
+      {
+        "name": "Blade Strike",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 20
+      },
+      {
+        "name": "Samurai Guard",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      }
+    ],
+    "actionPatterns": ["A,A,B", "B,A,A"]
+  },
+  {
+    "name": "Wakashū",
+    "class": "Ō-Yoroi",
+    "health": 30,
+    "level": 10,
+    "actionArray": [
+      {
+        "name": "Armor Crush",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 2
+      },
+      {
+        "name": "Steel Guard",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 10
+      }
+    ],
+    "actionPatterns": ["A,A,B", "B,A,A"]
+  },
+  {
+    "name": "Mamoru",
+    "class": "Ō-Yoroi",
+    "health": 50,
+    "level": 30,
+    "actionArray": [
+      {
+        "name": "Heavy Swing",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 10
+      },
+      {
+        "name": "Defensive Stance",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 12
+      }
+    ],
+    "actionPatterns": ["A,B,A,B", "B,A,A"]
+  },
+  {
+    "name": "Miku",
+    "class": "Kōbō",
+    "health": 30,
+    "level": 20,
+    "actionArray": [
+      {
+        "name": "Cleansing Strike",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 5
+      },
+      {
+        "name": "Healing Aura",
+        "action": "Action B",
+        "type": "heal",
+        "heal": 5
+      }
+    ],
+    "actionPatterns": ["A,B,A,B", "B,A,A"]
+  },
+  {
+    "name": "Honoka",
+    "class": "Kōbō",
+    "health": 40,
+    "level": 40,
+    "actionArray": [
+      {
+        "name": "Energy Slash",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 10
+      },
+      {
+        "name": "Reinforced Barrier",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      },
+      {
+        "name": "Divine Restoration",
+        "action": "Action C",
+        "type": "heal",
+        "heal": 10
+      }
+    ],
+    "actionPatterns": ["A,B,C,B", "A,B,A,C", "A,C,B"]
+  },
+  {
+    "name": "Raruzu",
+    "class": "Taiko",
+    "health": 20,
+    "level": 20,
+    "actionArray": [
+      {
+        "name": "Charge Strike",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 2
+      },
+      {
+        "name": "Fortified Guard",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      },
+      {
+        "name": "Taiko Pulse",
+        "action": "Action C",
+        "type": "charge",
+        "charge": 2
+      }
+    ],
+    "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
+  },
+  {
+    "name": "Yukiyama",
+    "class": "Taiko",
+    "health": 30,
+    "level": 40,
+    "actionArray": [
+      {
+        "name": "Mountain Breaker",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 5
+      },
+      {
+        "name": "Stone Wall",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      },
+      {
+        "name": "Spirit Charge",
+        "action": "Action C",
+        "type": "charge",
+        "charge": 2
+      }
+    ],
+    "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
+  },
+  {
+    "name": "Espa",
+    "class": "Gensō",
+    "health": 20,
+    "level": 20,
+    "actionArray": [
+      {
+        "name": "Illusory Strike",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 2
+      },
+      {
+        "name": "Phantom Barrier",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      },
+      {
+        "name": "Shadow Mirage",
+        "action": "Action C",
+        "type": "illusion",
+        "illusion": 1
+      }
+    ],
+    "actionPatterns": ["A,B,B,A,A", "A,A,B"]
+  },
+  {
+    "name": "Reinōsha",
+    "class": "Gensō",
+    "health": 40,
+    "level": 40,
+    "actionArray": [
+      {
+        "name": "Spirit Slash",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 4
+      },
+      {
+        "name": "Ghostly Shield",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 5
+      },
+      {
+        "name": "Phantasmal Wave",
+        "action": "Action C",
+        "type": "illusion",
+        "illusion": 2
+      }
+    ],
+    "actionPatterns": ["A,B,C,A,B", "A,A,C,B", "B,C,A,A"]
+  }
+]
