@@ -14,8 +14,8 @@
   margin-bottom: 20px;
 
   .timeline-slot {
-    width: 150px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
     border: 2px dashed $darkGrey;
     display: flex;
     justify-content: center;
@@ -47,14 +47,10 @@
 .timeline-slot-action {
   padding: 20px;
   display: grid;
-  grid-template-rows: 60px 27px;
+  grid-template-rows: 30px 90px 27px;
   justify-items: center;
   text-align: center;
   z-index: 10;
-
-  p {
-    font-size: 14px;
-  }
 }
 
 .action-title {
@@ -70,17 +66,18 @@
   overflow-x: auto;
   padding: 20px;
   padding-top: 0px;
-  max-width: 600px;
+  max-width: 1000px;
 
   .action-item {
     @include cardFrame;
     @include boxShadowHover;
-    width: 100px; // Fixed width
-    height: 80px;
+    width: 200px; // Fixed width
+    height: 120px;
     padding: 10px 20px;
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
+    text-align: center;
     cursor: pointer;
     flex: 0 0 auto; // Prevent flex from resizing the item
 

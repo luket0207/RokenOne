@@ -8,7 +8,6 @@ import Button from "../../Components/Button/Button";
 
 const Start = () => {
   const { setPlayerTeam } = useContext(GameDataContext);
-  const [selectedTeam, setSelectedTeam] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

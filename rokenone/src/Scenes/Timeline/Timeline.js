@@ -24,6 +24,7 @@ const Timeline = () => {
   const handleDrop = (action, index) => {
     if (index >= character.timelineSlots) return;
 
+    // Ensure the timeline length matches character.timelineSlots
     const newTimeline = Array(character.timelineSlots)
       .fill(null)
       .map((slot, idx) => character.timeline[idx] || null);
@@ -33,6 +34,7 @@ const Timeline = () => {
       a.id === action.id ? { ...a, locked: true } : a
     );
 
+    // Place the dropped action at the correct index
     newTimeline[index] = action;
 
     const updatedCharacter = {
@@ -49,29 +51,65 @@ const Timeline = () => {
   };
 
   const handleReturnToPool = (action) => {
-    const newTimeline = character.timeline.filter((a) => a && a.id !== action.id);
-  
-    // If the timeline is completely empty, set it as an empty array
-    const updatedTimeline = newTimeline.length === 0 ? [] : newTimeline;
-  
+    // Remove the action from the timeline but preserve the length with nulls
+    const newTimeline = Array(character.timelineSlots)
+      .fill(null)
+      .map((slot, idx) =>
+        character.timeline[idx] && character.timeline[idx].id === action.id
+          ? null
+          : character.timeline[idx]
+      );
+
     // Unlock the action when it is returned to the pool
     const updatedActionPool = character.actionPool.map((a) =>
       a.id === action.id ? { ...a, locked: false } : a
     );
-  
+
     const updatedCharacter = {
       ...character,
-      timeline: updatedTimeline,
+      timeline: newTimeline,
       actionPool: updatedActionPool,
     };
-  
+
     setPlayerTeam((prevTeam) =>
       prevTeam.map((char) =>
         char.id === character.id ? updatedCharacter : char
       )
     );
   };
-  
+
+  // Function to generate description based on action attributes
+  const generateDescription = (action) => {
+    let description = [];
+
+    // Handle the attack and defence properties
+    if (action.attack) {
+      description.push(`Attack ${action.attack}`);
+    } else if (action.defence) {
+      description.push(`Defence ${action.defence}`);
+    } else if (action.heal) {
+      description.push(`Heal ${action.heal}`);
+    } else if (action.healAll) {
+      description.push(`Heal All ${action.healAll}`);
+    } else if (action.charge) {
+      description.push(`Charge ${action.charge}`);
+    } else if (action.buffAttack && action.buffDefence) {
+      description.push(`Buff Attack ${action.buffAttack}, Buff Defence ${action.buffDefence}`);
+    } else if (action.attackAll) {
+      description.push(`Attack All ${action.attackAll}`);
+    } else if (action.defenceAll) {
+      description.push(`Defence All ${action.defenceAll}`);
+    }
+
+    // Handle the weatherBoostEffect and weatherBoost properties
+    if (action.weatherBoost && action.weatherBoostEffect.length > 0) {
+      const weatherEffect = action.weatherBoostEffect[0];
+      description.push(`Plus ${weatherEffect[1]} ${weatherEffect[0]} if ${action.weatherBoost}.`);
+    }
+
+    // Join the description array with <br /> for line breaks
+    return description.join('<br />');
+  };
 
   const Action = ({ action }) => {
     const [, drag] = useDrag({
@@ -79,12 +117,15 @@ const Timeline = () => {
       item: { action },
       canDrag: () => !action.locked, // Prevent dragging of disabled actions
     });
+  
     return (
       <div
         ref={drag}
         className={`action-item ${action.locked ? "disabled" : ""}`}
       >
-        <p>{action.name}</p>
+        <h5>{action.name}</h5>
+        {/* Render description with dangerouslySetInnerHTML to parse the HTML line breaks */}
+        <p className="small-text" dangerouslySetInnerHTML={{ __html: generateDescription(action) }}></p>
       </div>
     );
   };
@@ -106,7 +147,8 @@ const Timeline = () => {
       >
         {action ? (
           <div className="timeline-slot-action">
-            <p className="timeline-slot-text">{action.name}</p>
+            <h5 className="timeline-slot-text">{action.name}</h5>
+            <p className="small-text" dangerouslySetInnerHTML={{ __html: generateDescription(action) }}></p>
             <Button
               text={"Remove"}
               type={"small"}

@@ -61,28 +61,48 @@
 
 .team-charge {
   width: 600px;
-  height: 24px;
   background-color: $lightGrey;
-  border: solid 2px $grey;
-  border-radius: 12px;
   position: relative;
   margin: auto;
   margin-top: 10px;
 
-  p {
-    text-align: center;
-    z-index: 1;
-    position: relative;
-    color: $grey;
+  .team-charge-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  &-bar {
-    position: absolute;
-    height: 24px;
-    border-radius: 12px;
-    bottom: 0;
-    left: 0;
-    background-color: $burgendy;
-    transition: width 0.8s ease;
+  .charge-icon {
+    width: 34px; /* Set the icon size */
+    height: 34px; /* Set the icon size */
+    margin-right: 15px; /* Space between icons */
+    border-radius: 50%;
+    @include boxShadow;
+    position: relative;
+    background-color: $white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      opacity: 0;
+      transform: scale(0) translate(-50%, -50%);
+      transition: all 0.8s ease;
+      background-image: url("../../Assets/Images/dashes/dash-bolt.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: 26px;
+      width: 26px;
+      left: 52%;
+      top: 50%;
+    }
+  }
+
+  .charge-icon.filled {
+    background-color: $gold;
+    &::before {
+      transform: scale(1) translate(-50%, -50%);
+      opacity: 1;
+    }
   }
 }

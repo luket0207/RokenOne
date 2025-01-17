@@ -5,7 +5,7 @@ import "./CharacterCard.scss";
 const CharacterCard = ({ teammate, currentActionIndex, enemy = false }) => {
   return (
     <div className="battle-pod-details">
-      <h2>{teammate.name}</h2>
+      <h3>{teammate.name}</h3>
       <p>Health: {teammate.health}</p>
       <p>Defence: {teammate.currentDefence}</p>
       <div className="action-container">

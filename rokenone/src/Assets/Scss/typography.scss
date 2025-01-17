@@ -1,6 +1,7 @@
-@import './colours.scss';
+@import "./colours.scss";
 
-p, li {
+p,
+li {
   font-family: "Cinzel Decorative", serif;
   font-weight: 700;
   font-style: normal;
@@ -22,5 +23,53 @@ h5,
 }
 
 h1 {
+
+}
+
+h1,
+h2 {
+  position: relative;
+  display: inline-block;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    min-width: 200px;
+    background-image: url("../Images/dashes/dash-straight-fade.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+h1 {
   font-size: 48px;
+  padding-bottom: 25px;
+  &:after {
+    height: 20px;
+  }
+}
+
+h2 {
+  padding-bottom: 15px;
+  font-size: 24px;
+
+  &:after {
+    height: 10px;
+  }
+}
+
+h3 {
+  font-size: 24px; //same as h2 but no dash underline
+}
+
+.small-text {
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 400;
+  color: $darkerGrey;
+  margin-top: 0;
+  font-size: 12px;
 }

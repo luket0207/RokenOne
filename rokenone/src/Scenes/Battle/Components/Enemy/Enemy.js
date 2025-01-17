@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Enemy.scss";
 
-const Enemy = ({ enemies, enemyHealths, enemyActions, turn }) => {
+const Enemy = ({ enemies, enemyActions, turn }) => {
   return (
     <div className="enemy-container">
       {enemies.map((enemy, index) => {
         // Format the enemy object to pass it to CharacterCard
         const formattedEnemy = {
           ...enemy,
-          health: enemyHealths[index], // Current health from enemyHealths
+          health: enemy.health || 0, // Current health from enemyHealths
           currentDefence: enemy.currentDefence || 0, // Assuming enemies also have defense
           currentCharge: enemy.currentCharge || 0, // Assuming enemies also have charge
           actionPlayed: enemyActions[index], // Use enemyActions for their current action
