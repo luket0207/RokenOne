@@ -29,12 +29,23 @@ const Timeline = () => {
       .fill(null)
       .map((slot, idx) => character.timeline[idx] || null);
 
-    // Mark the action as disabled when added to the timeline
-    const updatedActionPool = character.actionPool.map((a) =>
+    // Find the existing action in the slot (if any) and unlock it
+    const replacedAction = newTimeline[index];
+    let updatedActionPool = [...character.actionPool];
+
+    if (replacedAction) {
+      // Unlock the replaced action by setting locked to false
+      updatedActionPool = updatedActionPool.map((a) =>
+        a.id === replacedAction.id ? { ...a, locked: false } : a
+      );
+    }
+
+    // Lock the new action being added to the timeline
+    updatedActionPool = updatedActionPool.map((a) =>
       a.id === action.id ? { ...a, locked: true } : a
     );
 
-    // Place the dropped action at the correct index
+    // Place the new action in the timeline
     newTimeline[index] = action;
 
     const updatedCharacter = {
@@ -94,7 +105,9 @@ const Timeline = () => {
     } else if (action.charge) {
       description.push(`Charge ${action.charge}`);
     } else if (action.buffAttack && action.buffDefence) {
-      description.push(`Buff Attack ${action.buffAttack}, Buff Defence ${action.buffDefence}`);
+      description.push(
+        `Buff Attack ${action.buffAttack}, Buff Defence ${action.buffDefence}`
+      );
     } else if (action.attackAll) {
       description.push(`Attack All ${action.attackAll}`);
     } else if (action.defenceAll) {
@@ -104,11 +117,13 @@ const Timeline = () => {
     // Handle the weatherBoostEffect and weatherBoost properties
     if (action.weatherBoost && action.weatherBoostEffect.length > 0) {
       const weatherEffect = action.weatherBoostEffect[0];
-      description.push(`Plus ${weatherEffect[1]} ${weatherEffect[0]} if ${action.weatherBoost}.`);
+      description.push(
+        `Plus ${weatherEffect[1]} ${weatherEffect[0]} if ${action.weatherBoost}.`
+      );
     }
 
     // Join the description array with <br /> for line breaks
-    return description.join('<br />');
+    return description.join("<br />");
   };
 
   const Action = ({ action }) => {
@@ -117,7 +132,7 @@ const Timeline = () => {
       item: { action },
       canDrag: () => !action.locked, // Prevent dragging of disabled actions
     });
-  
+
     return (
       <div
         ref={drag}
@@ -125,7 +140,10 @@ const Timeline = () => {
       >
         <h5>{action.name}</h5>
         {/* Render description with dangerouslySetInnerHTML to parse the HTML line breaks */}
-        <p className="small-text" dangerouslySetInnerHTML={{ __html: generateDescription(action) }}></p>
+        <p
+          className="small-text"
+          dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
+        ></p>
       </div>
     );
   };
@@ -148,7 +166,10 @@ const Timeline = () => {
         {action ? (
           <div className="timeline-slot-action">
             <h5 className="timeline-slot-text">{action.name}</h5>
-            <p className="small-text" dangerouslySetInnerHTML={{ __html: generateDescription(action) }}></p>
+            <p
+              className="small-text"
+              dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
+            ></p>
             <Button
               text={"Remove"}
               type={"small"}
@@ -158,9 +179,13 @@ const Timeline = () => {
         ) : (
           <div>
             {isOver ? (
-              <p className="timeline-slot-text" style={{ color: "white" }}>Add to Timeline</p>
+              <p className="timeline-slot-text" style={{ color: "white" }}>
+                Add to Timeline
+              </p>
             ) : (
-              <p className="timeline-slot-text" style={{ color: "#333" }}>Empty Slot</p>
+              <p className="timeline-slot-text" style={{ color: "#333" }}>
+                Empty Slot
+              </p>
             )}
           </div>
         )}
