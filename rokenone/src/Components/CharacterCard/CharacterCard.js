@@ -11,12 +11,12 @@ const CharacterCard = ({ teammate, currentActionIndex, enemy = false }) => {
       <div className="action-container">
         {/* Only render actionPlayed if it's valid */}
         {teammate.actionPlayed && teammate.actionPlayed.name !== "No Action" && (
-          <p
+          <div
             className={`action-played action-${teammate.actionPlayed.type}`}
             key={teammate.actionPlayed.name}
           >
-            {teammate.actionPlayed.name}
-          </p>
+            <p>{teammate.actionPlayed.name}</p>
+          </div>
         )}
       </div>
 

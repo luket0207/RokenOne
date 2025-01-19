@@ -2,10 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import RokenBattle from "../../../../Assets/Images/Roken_Battle_Back.png";
-import "./ActionPool.scss";
+import "./Team.scss";
 import CharacterCard from "../../../../Components/CharacterCard/CharacterCard";
 
-const ActionPool = ({ playerTeam, turn }) => {
+const Team = ({ playerTeam, turn }) => {
   const positionClasses = [
     "char-one",
     "char-two",
@@ -46,4 +46,4 @@ const ActionPool = ({ playerTeam, turn }) => {
   );
 };
 
-export default ActionPool;
+export default Team;

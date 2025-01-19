@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
-import ActionPool from "./Components/ActionPool/ActionPool"; // Import ActionPool component
+import Team from "./Components/Team/Team"; // Import Team component
 import Enemy from "./Components/Enemy/Enemy"; // Import Enemy component
 import "./Battle.scss";
 import Button from "../../Components/Button/Button";
@@ -20,6 +20,7 @@ const Battle = () => {
   const [teamCharge, setTeamCharge] = useState(0);
   const [enemyCharge, setEnemyCharge] = useState(0);
   const [weather, setWeather] = useState(null);
+  const [opponentTarget, setOpponentTarget] = useState(null);
   const intervalRef = useRef(null); // Use ref for interval
   const [intervalTime, setIntervalTime] = useState(1000);
   const availableWeather = [
@@ -51,45 +52,44 @@ const Battle = () => {
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
-  
+
     if (!hasTimeline) {
       const updatedEnemies = enemies.map((enemy) => {
         const { actionArray, actionPatterns } = enemy;
-  
+
         // Step 1: Randomly select an action pattern
         const randomPatternIndex = Math.floor(
           Math.random() * actionPatterns.length
         );
         const selectedPattern = actionPatterns[randomPatternIndex].split(",");
-  
+
         // Step 2: Construct the timeline based on the selected pattern
         const timeline = selectedPattern.map((actionName) => {
           // Find the corresponding action in the actionArray
           const action = actionArray.find(
             (action) => action.action === `Action ${actionName}`
           );
-  
+
           // If the action is null (empty slot), we can either:
           // - return null,
           // - or create a placeholder action (like an empty object or a custom message).
           if (action && action.type === "null") {
             return null; // Handle empty slots as null or skip them
           }
-  
+
           return action; // Return the action as is
         });
-  
+
         // Return the updated enemy with the timeline
         return {
           ...enemy,
           timeline, // Add the timeline to the enemy
         };
       });
-  
+
       setEnemies(updatedEnemies); // Update enemies with timelines
     }
   }, [enemies, setEnemies]);
-  
 
   // Cleanup the interval when the component unmounts
   useEffect(() => {
@@ -119,13 +119,15 @@ const Battle = () => {
       }))
     );
     clearInterval(intervalRef.current);
-    navigate("/home");
+    navigate("/expeditionhome");
   };
 
   // Start the battle and set up the turn ticking mechanism
   const handleStartBattle = () => {
     setIsBattleStarted(true);
-    console.log("****************************//////////////////////////// NEW BATTLE STARTED ////////////////////////////****************************")
+    console.log(
+      "****************************//////////////////////////// NEW BATTLE STARTED ////////////////////////////****************************"
+    );
     intervalRef.current = setInterval(() => {
       setTurn((prevTurn) => prevTurn + 1); // Only increment the turn here
     }, 1000);
@@ -133,12 +135,34 @@ const Battle = () => {
 
   useEffect(() => {
     if (turn > 0 && !battleEnded) {
+      // Check if the targeted enemy is alive
+      const targetedEnemy = enemies[opponentTarget];
+      if (targetedEnemy && targetedEnemy.health === 0) {
+        // If the enemy is dead, reset the opponent target
+        setOpponentTarget(null);
+      }
+
       const turnWeather = generateWeather(availableWeather);
 
       // Pass in the appropriate team, setTeam function, and whether it's the player team
       setWeather(turnWeather);
-      handleTurn(playerTeam, setPlayerTeam, true, turnWeather); // For the player's team
-      handleTurn(enemies, setEnemies, false, turnWeather); // For the enemy team
+      handleTurn(
+        playerTeam,
+        setPlayerTeam,
+        true,
+        turnWeather,
+        enemies,
+        setEnemies,
+        opponentTarget
+      ); // For the player's team
+      handleTurn(
+        enemies,
+        setEnemies,
+        false,
+        turnWeather,
+        playerTeam,
+        setPlayerTeam
+      ); // For the enemy team
     }
   }, [turn]);
 
@@ -282,103 +306,143 @@ const Battle = () => {
     }
     return action;
   };
-  
 
-  const handleTurn = (team, setTeam, isPlayerTeam, turnWeather) => {
+  // Function to perform illusion checks and replace actions with 'Missed' if applicable
+  const performIllusionCheck = (team) => {
+    return team.map((teammate) => {
+      if (teammate.health > 0 && teammate.currentIllusion > 0) {
+        const action = teammate.actionPlayed;
+        if (action && action.type !== "Illusion") {
+          const chanceToMiss = teammate.currentIllusion * 25; // 25% per illusion level
+          const roll = Math.random() * 100;
+          if (roll < chanceToMiss) {
+            console.log(
+              `${teammate.name} missed their action due to illusion! (Illusion level: ${teammate.currentIllusion}, Roll: ${roll})`
+            );
+            // Replace action with "Missed" action
+            teammate.actionPlayed = {
+              id: "M155",
+              class: "All",
+              name: "Missed",
+              type: "missed",
+            };
+          }
+        }
+      }
+      return teammate;
+    });
+  };
+
+  const handleTurn = (
+    team,
+    setTeam,
+    isPlayerTeam,
+    turnWeather,
+    enemyTeam,
+    setEnemyTeam,
+    opponentTargetIndex = null
+  ) => {
     let teamBuffs = {
       attack: 0,
       defence: 0,
       heal: 0,
     };
-  
+
     console.log(`Turn ${turn} it was ${turnWeather}`);
-  
-    // Step 1: Get the actions for this turn and apply weather boosts before buffs
+
+    // Step 1: Apply illusion effects to the enemy team before any action processing
+    // (same logic as before)
+
+    // Step 2: Map each teammate's action for the turn
     const actionsForTurn = team
       .map((teammate) => {
         if (teammate.health <= 0) {
           teammate.actionPlayed = null; // Dead teammates don't play any action
-          return null; // Skip dead teammate
+          return null;
         }
-  
-        // Ensure there is a valid action in the timeline for this turn
+
+        // Get the action for the current turn
         let action = teammate.timeline[(turn - 1) % teammate.timeline.length];
-  
         if (!action) {
           console.log(
             `No action found for teammate ${teammate.name} in the timeline for turn ${turn}`
           );
           teammate.actionPlayed = null;
-          return null; // Skip teammate if there's no valid action
+          return null; // Skip teammates with no valid action
         }
-  
-        // Store the action played for the turn
+
+        // Store the action to be played
         teammate.actionPlayed = action;
-  
-        // Apply weather boost here, before applying buffs or other logic
+
+        // Apply weather boost here
         if (action.weatherBoost) {
-          // Store original values of the attributes that will be boosted
           const originalValues = {};
           if (Array.isArray(action.weatherBoostEffect)) {
             action.weatherBoostEffect.forEach(([attribute]) => {
               if (action[attribute] !== undefined) {
-                originalValues[attribute] = action[attribute]; // Save the original value
+                originalValues[attribute] = action[attribute]; // Save original value
               }
             });
           }
-  
-          // Apply the weather boost
+
           action = checkWeatherBoost(
             turnWeather,
             action.weatherBoost,
             action.weatherBoostEffect,
             action
           );
-  
-          // Add the original values to the action, so we can restore them later
+
           action.originalValues = originalValues;
         }
-  
-        // Return the updated action after applying the weather boost
+
         return action;
       })
-      .filter((action) => action !== null); // Remove dead teammates from the actions list
-  
-    // Step 2: Calculate buffs for the current team after weather boost
-    calcBuffs(team, teamBuffs);
-  
-    // Step 3: Calculate defence and defenceAll for the current team
-    let updatedTeam = calcDefence(team, teamBuffs.defence);
-  
-    // Step 4: Process charge actions
+      .filter((action) => action !== null);
+
+    // Step 3: Perform illusion check (after actions are selected, before buffs)
+    let updatedTeam = performIllusionCheck(team);
+
+    // Step 4: Calculate buffs for the current team after weather boost
+    calcBuffs(updatedTeam, teamBuffs);
+
+    // Step 5: Calculate defence and defenceAll for the current team
+    updatedTeam = calcDefence(updatedTeam, teamBuffs.defence);
+
+    // Step 6: Process charge actions
     updatedTeam = calcCharge(updatedTeam, isPlayerTeam);
-  
-    // Step 5: Process attack actions
-    updatedTeam = calcAttack(updatedTeam, teamBuffs.attack, isPlayerTeam);
-  
-    // Step 6: Process healing actions
+
+    // Step 7: Process attack actions
+    updatedTeam = calcAttack(
+      updatedTeam,
+      teamBuffs.attack,
+      isPlayerTeam,
+      opponentTargetIndex
+    ); // Pass opponentTargetIndex
+
+    // Step 8: Process healing actions
     updatedTeam = calcHeal(updatedTeam, teamBuffs.heal);
-  
-    // Step 7: Remove weather boost effects at the end of the turn
+
+    // Step 9: Remove weather boost effects at the end of the turn and reset illusions
     updatedTeam = updatedTeam.map((teammate) => {
       if (teammate.actionPlayed && teammate.actionPlayed.originalValues) {
-        // Revert any changes made by the weather boost effect
         const { originalValues } = teammate.actionPlayed;
         Object.keys(originalValues).forEach((attribute) => {
           if (teammate.actionPlayed[attribute] !== undefined) {
-            teammate.actionPlayed[attribute] = originalValues[attribute]; // Restore the original value
+            teammate.actionPlayed[attribute] = originalValues[attribute]; // Restore original value
           }
         });
-        // Remove the stored original values
         delete teammate.actionPlayed.originalValues;
       }
+
+      // Reset illusion at the end of each turn
+      teammate.currentIllusion = 0;
+
       return teammate;
     });
-  
-    // Update the team state with the processed actions
+
+    // Update the team state
     setTeam(updatedTeam);
   };
-  
 
   const calcBuffs = (team, teamBuffs) => {
     team.forEach((teammate) => {
@@ -463,8 +527,12 @@ const Battle = () => {
     });
   };
 
-  // Attack calculation function
-  const calcAttack = (team, teamAttackBuffThisTurn, isPlayerTeam) => {
+  const calcAttack = (
+    team,
+    teamAttackBuffThisTurn,
+    isPlayerTeam,
+    opponentTargetIndex
+  ) => {
     return team.map((teammate, teammateIndex) => {
       if (teammate.health <= 0) return teammate; // Skip dead teammates
 
@@ -495,39 +563,47 @@ const Battle = () => {
         if (action.attack) {
           const totalAttack = action.attack + teamAttackBuffThisTurn;
 
-          if (isPlayerTeam) {
-            const aliveEnemies = enemies.filter((enemy) => enemy.health > 0);
-            if (aliveEnemies.length > 0) {
-              const randomEnemyIndex = Math.floor(
-                Math.random() * aliveEnemies.length
-              );
-              const enemyIndexInOriginalArray = enemies.findIndex(
-                (enemy) => enemy === aliveEnemies[randomEnemyIndex]
-              );
-              applyDamage(
-                enemyIndexInOriginalArray,
-                totalAttack,
-                true,
-                teammateIndex
-              ); // Use refactored applyDamage
-            }
+          let targetIndex;
+
+          // If opponentTargetIndex is provided, use it; otherwise, choose at random
+          if (opponentTargetIndex !== null) {
+            targetIndex = opponentTargetIndex;
           } else {
-            const aliveTeammates = playerTeam.filter(
-              (member) => member.health > 0
-            );
-            if (aliveTeammates.length > 0) {
-              const randomTeammateIndex = Math.floor(
-                Math.random() * aliveTeammates.length
+            // Filter alive targets
+            let targetCandidates;
+            if (isPlayerTeam) {
+              // Filter out dead enemies
+              targetCandidates = enemies.filter((enemy) => enemy.health > 0);
+            } else {
+              // Filter out dead teammates
+              targetCandidates = playerTeam.filter(
+                (member) => member.health > 0
               );
-              const teammateIndexInOriginalArray = playerTeam.findIndex(
-                (member) => member === aliveTeammates[randomTeammateIndex]
-              );
-              applyDamage(
-                teammateIndexInOriginalArray,
-                totalAttack,
-                false,
-                teammateIndex
-              ); // Use refactored applyDamage
+            }
+
+            // If we have alive targets, pick one randomly
+            if (targetCandidates.length > 0) {
+              targetIndex = Math.floor(Math.random() * targetCandidates.length);
+              if (isPlayerTeam) {
+                targetIndex = enemies.indexOf(targetCandidates[targetIndex]);
+              } else {
+                targetIndex = playerTeam.indexOf(targetCandidates[targetIndex]);
+              }
+            }
+          }
+
+          // Apply attack damage to the selected target
+          if (targetIndex !== undefined) {
+            if (isPlayerTeam) {
+              const target = enemies[targetIndex];
+              if (target && target.health > 0) {
+                applyDamage(targetIndex, totalAttack, true, teammateIndex); // Use refactored applyDamage
+              }
+            } else {
+              const target = playerTeam[targetIndex];
+              if (target && target.health > 0) {
+                applyDamage(targetIndex, totalAttack, false, teammateIndex); // Use refactored applyDamage
+              }
             }
           }
         }
@@ -635,6 +711,10 @@ const Battle = () => {
     }
   };
 
+  const resetOpponent = () => {
+    setOpponentTarget(null);
+  };
+
   return (
     <div className="battle-container">
       <button className="close-battle" onClick={handleCloseBattle}>
@@ -670,6 +750,7 @@ const Battle = () => {
           <div className="turn-info">
             <p>Turn: {turn}</p>
             <p>Weather: {weather}</p>
+            <p>Target: {opponentTarget}</p>
             <button onClick={handleSlowSpeed}>Slow</button>
             <button onClick={handleNormalSpeed}>Normal</button>
             <button onClick={handleFastSpeed}>Fast</button>
@@ -693,9 +774,11 @@ const Battle = () => {
       <Enemy
         enemies={enemies}
         enemyActions={enemies.map((enemy, enemyIndex) => enemy.actionPlayed)}
+        opponentTarget={opponentTarget}
+        setOpponentTarget={setOpponentTarget}
       />
-      {/* Render ActionPool Component */}
-      <ActionPool playerTeam={playerTeam} turn={turn} />
+      {/* Render Team Component */}
+      <Team playerTeam={playerTeam} turn={turn} />
 
       <div className="team-charge">
         <div className="team-charge-icons">

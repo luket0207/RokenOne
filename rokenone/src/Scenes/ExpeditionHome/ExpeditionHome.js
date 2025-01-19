@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { Link, useNavigate } from "react-router-dom";
 import goonsData from "../../Data/Characters/Goons.json"; // Import the Goons data
-import "./Home.scss";
+import "./ExpeditionHome.scss";
 import Button from "../../Components/Button/Button";
 
-const Home = () => {
+const ExpeditionHome = () => {
   const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
   const navigate = useNavigate();
   const [selectedEnemies, setSelectedEnemies] = useState([]); // Store selected enemies
@@ -52,7 +52,7 @@ const Home = () => {
   );
 
   return (
-    <div className="home">
+    <div className="expedition-home">
       <h1>Your Team</h1>
       <div className="team">
         {playerTeam.map((character) => {
@@ -115,4 +115,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ExpeditionHome;

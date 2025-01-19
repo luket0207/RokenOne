@@ -3,18 +3,18 @@ import { Route, Routes } from 'react-router-dom';
 
 // Import all your pages
 import Start from './Scenes/Start/Start';
-import Home from './Scenes/Home/Home';
 import Map from './Scenes/Map/Map';
-import Timeline from './Scenes/Timeline/Timeline';
+import Edit from './Scenes/Edit/Edit';
 import Battle from './Scenes/Battle/Battle';
+import ExpeditionHome from './Scenes/ExpeditionHome/ExpeditionHome';
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Start />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/expeditionhome" element={<ExpeditionHome />} />
       <Route path="/map" element={<Map />} />
-      <Route path="/timeline/:characterId" element={<Timeline />} />
+      <Route path="/edit/:characterId" element={<Edit />} />
       <Route path="/battle" element={<Battle />} />
     </Routes>
   );

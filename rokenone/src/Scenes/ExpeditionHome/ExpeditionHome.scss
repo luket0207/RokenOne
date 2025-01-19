@@ -1,0 +1,123 @@
+@import "../../Assets/Scss/import.scss";
+
+.expedition-home {
+  @include sceneContainer;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.enemy-title {
+    margin-top: 30px;
+}
+
+.enemy-selection {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: center;
+  width: 600px;
+  grid-gap: 20px;
+  margin-bottom: 30px;
+}
+
+.team {
+  display: flex;
+  margin-bottom: 30px;
+
+  &-teammate {
+    margin-right: 20px;
+    @include boxShadow;
+    @include cardFrame(true);
+    padding: 30px;
+    display: grid;
+    justify-items: center;
+    position: relative;
+
+    .no-timeline-flag {
+      position: absolute;
+      height: 36px;
+      width: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $burgendy;
+      color: $lightGrey;
+      top: -12px;
+      left: -12px;
+      border-radius: 50%;
+      animation: scaleShake 6s ease-in-out infinite;
+      @include boxShadow;
+
+      h3 {
+        margin: 0;
+      }
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.selected-enemies {
+  display: flex;
+  margin-bottom: 30px;
+  height: 100px;
+
+  &-enemy {
+    margin-right: 20px;
+    background-color: $darkerGrey;
+    @include boxShadow;
+    padding: 10px;
+    width: 110px;
+    height: 80px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    h4 {
+      color: $lightGrey;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+@keyframes scaleShake {
+  0% {
+    transform: scale(1); /* Start at normal size */
+  }
+  12% {
+    transform: scale(1.5); /* Scale up */
+  }
+  25% {
+    transform: scale(1.5) rotate(15deg); /* Start shaking with rotation */
+  }
+  30% {
+    transform: scale(1.5) rotate(-15deg); /* Shake in the opposite direction */
+  }
+  35% {
+    transform: scale(1.5) rotate(13deg); /* Continue shaking */
+  }
+  40% {
+    transform: scale(1.5) rotate(-13deg); /* Continue shaking */
+  }
+  45% {
+    transform: scale(1.5) rotate(15deg); /* Start shaking with rotation */
+  }
+  50% {
+    transform: scale(1.5) rotate(-15deg); /* Shake in the opposite direction */
+  }
+  55% {
+    transform: scale(1.5) rotate(15deg); /* Shrink back down */
+  }
+  60% {
+    transform: scale(1) rotate(0deg); /* Shrink back down */
+  }
+  100% {
+    transform: scale(1); /* End at normal size */
+  }
+}

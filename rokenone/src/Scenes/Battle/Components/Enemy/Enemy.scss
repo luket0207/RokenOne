@@ -11,6 +11,41 @@
 
   .enemy {
     grid-row: 1;
+    cursor: pointer;
+    position: relative;
+    transition: all 1s ease;
+    transform: scale(1);
+    opacity: 1;
+
+    &.dead {
+      opacity: .3;
+      transform: scale(.8);
+      cursor: not-allowed;
+    }
+
+    &-target {
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $burgendy;
+      color: $lightGrey;
+      bottom: -12px;
+      left: -12px;
+      border-radius: 50%;
+      @include boxShadow;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+
+    &.targeted {
+      .enemy-target {
+        opacity: 1;
+      }
+    }
   }
 
   > :nth-child(1) {

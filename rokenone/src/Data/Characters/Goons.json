@@ -4,6 +4,7 @@
     "class": "Samurai",
     "health": 30,
     "maxHealth": 30,
+    "currentIllusion": 0,
     "level": 10,
     "actionArray": [
       {
@@ -14,16 +15,18 @@
       },
       {
         "action": "Action B",
-        "type": "null"
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
     "actionPatterns": ["A,B", "B,A"]
-  },  
+  },
   {
     "name": "Ronin",
     "class": "Samurai",
     "health": 40,
     "maxHealth": 40,
+    "currentIllusion": 0,
     "level": 30,
     "actionArray": [
       {
@@ -37,15 +40,21 @@
         "action": "Action B",
         "type": "defence",
         "defence": 2
+      },
+      {
+        "action": "Action C",
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
-    "actionPatterns": ["A,A,B", "B,A,A"]
+    "actionPatterns": ["A,B,C", "B,A,C"]
   },
   {
     "name": "Wakashū",
     "class": "Ō-Yoroi",
     "health": 30,
     "maxHealth": 30,
+    "currentIllusion": 0,
     "level": 10,
     "actionArray": [
       {
@@ -59,15 +68,21 @@
         "action": "Action B",
         "type": "defence",
         "defence": 4
+      },
+      {
+        "action": "Action C",
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
-    "actionPatterns": ["A,A,B", "B,A,A"]
+    "actionPatterns": ["A,B,C", "B,A,C", "C,B,A"]
   },
   {
     "name": "Mamoru",
     "class": "Ō-Yoroi",
     "health": 50,
     "maxHealth": 50,
+    "currentIllusion": 0,
     "level": 30,
     "actionArray": [
       {
@@ -81,15 +96,21 @@
         "action": "Action B",
         "type": "defence",
         "defence": 4
+      },
+      {
+        "action": "Action C",
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
-    "actionPatterns": ["A,B,A,B", "B,A,A"]
+    "actionPatterns": ["A,C,B", "B,A,C"]
   },
   {
     "name": "Miku",
     "class": "Kōbō",
     "health": 30,
     "maxHealth": 30,
+    "currentIllusion": 0,
     "level": 20,
     "actionArray": [
       {
@@ -103,22 +124,28 @@
         "action": "Action B",
         "type": "heal",
         "heal": 3
+      },
+      {
+        "action": "Action C",
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
-    "actionPatterns": ["A,B,A,B", "B,A,A"]
+    "actionPatterns": ["A,B,C", "B,A,C"]
   },
   {
     "name": "Honoka",
     "class": "Kōbō",
     "health": 40,
     "maxHealth": 40,
+    "currentIllusion": 0,
     "level": 40,
     "actionArray": [
       {
         "name": "Energy Slash",
         "action": "Action A",
         "type": "attack",
-        "attack": 10
+        "attack": 8
       },
       {
         "name": "Reinforced Barrier",
@@ -130,16 +157,17 @@
         "name": "Divine Restoration",
         "action": "Action C",
         "type": "heal",
-        "heal": 2
+        "heal": 1
       }
     ],
-    "actionPatterns": ["A,B,C,B", "A,B,A,C", "A,C,B"]
+    "actionPatterns": ["A,B,C,B", "A,B,A,C"]
   },
   {
     "name": "Raruzu",
     "class": "Taiko",
-    "health": 25,
-    "maxHealth": 25,
+    "health": 100,
+    "maxHealth": 100,
+    "currentIllusion": 0,
     "level": 20,
     "actionArray": [
       {
@@ -161,13 +189,14 @@
         "charge": 2
       }
     ],
-    "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
+    "actionPatterns": ["B,C,B,A", "A,B,A,C"]
   },
   {
     "name": "Yukiyama",
     "class": "Taiko",
     "health": 30,
     "maxHealth": 30,
+    "currentIllusion": 0,
     "level": 40,
     "actionArray": [
       {
@@ -189,13 +218,14 @@
         "charge": 2
       }
     ],
-    "actionPatterns": ["C,B,A", "C,B,C,A", "B,C,B,A"]
+    "actionPatterns": ["C,B,C,A", "B,C,B,A"]
   },
   {
     "name": "Espa",
     "class": "Gensō",
     "health": 20,
     "maxHealth": 20,
+    "currentIllusion": 0,
     "level": 20,
     "actionArray": [
       {
@@ -217,13 +247,14 @@
         "illusion": 1
       }
     ],
-    "actionPatterns": ["A,B,B,A,A", "A,A,B"]
+    "actionPatterns": ["A,B,C", "A,C,B", "B,A,C"]
   },
   {
     "name": "Reinōsha",
     "class": "Gensō",
     "health": 40,
     "maxHealth": 40,
+    "currentIllusion": 0,
     "level": 40,
     "actionArray": [
       {
@@ -243,8 +274,13 @@
         "action": "Action C",
         "type": "attack",
         "attackAll": 2
+      },
+      {
+        "action": "Action D",
+        "name": "Taunt",
+        "type": "missed"
       }
     ],
-    "actionPatterns": ["A,B,C,A,B", "A,A,C,B", "B,C,A,A"]
+    "actionPatterns": ["A,B,C,A,D", "A,D,C,B", "B,C,A,D"]
   }
 ]

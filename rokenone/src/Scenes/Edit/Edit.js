@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useDrag, useDrop } from "react-dnd";
-import "./Timeline.scss"; // Make sure the styles are applied
+import "./Edit.scss"; // Make sure the styles are applied
 import Button from "../../Components/Button/Button";
 import Carousel from "../../Components/Carousel/Carousel";
 
@@ -10,7 +10,7 @@ const ItemType = {
   ACTION: "action",
 };
 
-const Timeline = () => {
+const Edit = () => {
   const { characterId } = useParams();
   const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
   const navigate = useNavigate();
@@ -193,12 +193,12 @@ const Timeline = () => {
     );
   };
 
-  const handleGoHome = () => {
-    navigate("/home");
+  const handleGoExpeditionHome = () => {
+    navigate("/expeditionhome");
   };
 
   return (
-    <div className="timeline-container">
+    <div className="edit-container">
       <h1>{character.name}'s Timeline</h1>
       <h3>Timeline (Slots: {character.timelineSlots}):</h3>
       <div className="timeline">
@@ -226,10 +226,10 @@ const Timeline = () => {
         </Carousel>
       </div>
       <div className="home-button">
-        <Button text={"Back to Home"} onClick={handleGoHome}></Button>
+        <Button text={"Back to Home"} onClick={handleGoExpeditionHome}></Button>
       </div>
     </div>
   );
 };
 
-export default Timeline;
+export default Edit;

@@ -135,13 +135,12 @@
   {
     "id": "A12",
     "class": "All",
-    "name": "Kick Block",
-    "type": "attack",
-    "typeTwo": "defence",
-    "attack": 1,
-    "defence": 1,
+    "name": "Illusion",
+    "type": "illusion",
+    "typeTwo": "",
+    "illusion": 1,
     "locked": false,
-    "upgrade": "Even Levels: Attack +1, Odd Levels: Defence +1",
+    "upgrade": "illusion +1",
     "rarity": 0,
     "weatherBoost": "",
     "weatherBoostEffect": []
