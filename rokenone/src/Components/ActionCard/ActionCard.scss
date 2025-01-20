@@ -1,0 +1,50 @@
+@import "../../Assets/Scss/import.scss";
+
+.action-card {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 200px;
+    height: 60px;
+    cursor: pointer;
+    @include cardFrame;
+  
+    .info-icon {
+      display: inline-block;
+      cursor: pointer;
+      font-size: 16px; /* Adjust size if necessary */
+      margin-left: 5px;
+    }
+  
+    .description {
+      position: absolute;
+      top: 100%; /* Adjust positioning as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: $lightGrey;
+      border: solid 2px $darkerGrey;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: pre-wrap; /* Keeps line breaks */
+      z-index: 10;
+      max-width: 200px; /* Adjust size if necessary */
+      display: block;
+
+    }
+  }
+  
+  .action-class-all {
+
+  }
+
+  .action-class-samurai {
+    background-color: lightblue;
+  }
+  
+  .action-class-oyoroi {
+    background-color: lightgreen;
+  }
+  
+  /* Add more classes as needed */
+  

@@ -16,6 +16,7 @@ const Battle = () => {
   const [battleEnded, setBattleEnded] = useState(false);
   const [win, setWin] = useState(false);
   const [enemies, setEnemies] = useState(state?.enemies || []); // Get enemies from the state
+  const [weaponPlayed, setWeaponPlayed] = useState(null);
   const navigate = useNavigate();
   const [teamCharge, setTeamCharge] = useState(0);
   const [enemyCharge, setEnemyCharge] = useState(0);
@@ -149,20 +150,11 @@ const Battle = () => {
       handleTurn(
         playerTeam,
         setPlayerTeam,
-        true,
-        turnWeather,
         enemies,
         setEnemies,
+        turnWeather,
         opponentTarget
-      ); // For the player's team
-      handleTurn(
-        enemies,
-        setEnemies,
-        false,
-        turnWeather,
-        playerTeam,
-        setPlayerTeam
-      ); // For the enemy team
+      );
     }
   }, [turn]);
 
@@ -332,49 +324,78 @@ const Battle = () => {
       return teammate;
     });
   };
-
   const handleTurn = (
-    team,
-    setTeam,
-    isPlayerTeam,
+    playerTeam,
+    setPlayerTeam,
+    enemies,
+    setEnemies,
     turnWeather,
-    enemyTeam,
-    setEnemyTeam,
     opponentTargetIndex = null
   ) => {
-    let teamBuffs = {
-      attack: 0,
-      defence: 0,
-      heal: 0,
+    let playerTeamBuffs = { attack: 0, defence: 0, heal: 0 };
+    let enemyTeamBuffs = { attack: 0, defence: 0, heal: 0 };
+
+    console.log(`Turn ${turn} with weather: ${turnWeather}`);
+
+    // Step 2: Apply illusion effects to both teams before any action processing
+    const applyIllusionEffects = (team, enemyTeam) => {
+      team.forEach((teammate) => {
+        if (teammate.health <= 0) return; // Skip dead teammates
+
+        let action = teammate.timeline[(turn - 1) % teammate.timeline.length];
+        if (!action) return;
+
+        // Apply illusion effects
+        if (action.illusion || action.illusionAll) {
+          if (action.illusion) {
+            let aliveEnemies = enemyTeam.filter((enemy) => enemy.health > 0);
+            if (aliveEnemies.length > 0) {
+              let randomIndex = Math.floor(Math.random() * aliveEnemies.length);
+              let target = aliveEnemies[randomIndex];
+              target.currentIllusion = Math.min(
+                target.currentIllusion + action.illusion,
+                4
+              );
+              console.log(
+                `${teammate.name} applied ${target.currentIllusion} illusion to ${target.name}`
+              );
+            }
+          }
+          if (action.illusionAll) {
+            enemyTeam.forEach((enemy) => {
+              if (enemy.health > 0) {
+                enemy.currentIllusion = Math.min(
+                  enemy.currentIllusion + action.illusionAll,
+                  3
+                );
+                console.log(
+                  `${teammate.name} applied ${action.illusionAll} illusion to ${enemy.name}`
+                );
+              }
+            });
+          }
+        }
+      });
     };
 
-    console.log(`Turn ${turn} it was ${turnWeather}`);
+    // Apply illusion to both teams
+    applyIllusionEffects(playerTeam, enemies);
+    applyIllusionEffects(enemies, playerTeam);
 
-    // Step 1: Apply illusion effects to the enemy team before any action processing
-    // (same logic as before)
-
-    // Step 2: Map each teammate's action for the turn
-    const actionsForTurn = team
-      .map((teammate) => {
+    // Step 3: Process each team's actions for the current turn
+    const processActionsForTurn = (team) => {
+      return team.map((teammate) => {
         if (teammate.health <= 0) {
-          teammate.actionPlayed = null; // Dead teammates don't play any action
+          teammate.actionPlayed = null;
           return null;
         }
-
-        // Get the action for the current turn
         let action = teammate.timeline[(turn - 1) % teammate.timeline.length];
-        if (!action) {
-          console.log(
-            `No action found for teammate ${teammate.name} in the timeline for turn ${turn}`
-          );
-          teammate.actionPlayed = null;
-          return null; // Skip teammates with no valid action
-        }
+        if (!action) return null;
 
         // Store the action to be played
         teammate.actionPlayed = action;
 
-        // Apply weather boost here
+        // Apply weather boost
         if (action.weatherBoost) {
           const originalValues = {};
           if (Array.isArray(action.weatherBoostEffect)) {
@@ -384,64 +405,93 @@ const Battle = () => {
               }
             });
           }
-
           action = checkWeatherBoost(
             turnWeather,
             action.weatherBoost,
             action.weatherBoostEffect,
             action
           );
-
           action.originalValues = originalValues;
         }
-
         return action;
-      })
-      .filter((action) => action !== null);
+      });
+    };
 
-    // Step 3: Perform illusion check (after actions are selected, before buffs)
-    let updatedTeam = performIllusionCheck(team);
+    const playerActions = processActionsForTurn(playerTeam);
+    const enemyActions = processActionsForTurn(enemies);
 
-    // Step 4: Calculate buffs for the current team after weather boost
-    calcBuffs(updatedTeam, teamBuffs);
+    // Step 4: Perform illusion check for both teams
+    const updatedPlayerTeam = performIllusionCheck(playerTeam);
+    const updatedEnemyTeam = performIllusionCheck(enemies);
 
-    // Step 5: Calculate defence and defenceAll for the current team
-    updatedTeam = calcDefence(updatedTeam, teamBuffs.defence);
+    // Step 5: Calculate buffs for both teams
+    calcBuffs(updatedPlayerTeam, playerTeamBuffs);
+    calcBuffs(updatedEnemyTeam, enemyTeamBuffs);
 
-    // Step 6: Process charge actions
-    updatedTeam = calcCharge(updatedTeam, isPlayerTeam);
+    // Step 6: Calculate defence and defenceAll for both teams
+    const playerTeamWithDefence = calcDefence(
+      updatedPlayerTeam,
+      playerTeamBuffs.defence
+    );
+    const enemyTeamWithDefence = calcDefence(
+      updatedEnemyTeam,
+      enemyTeamBuffs.defence
+    );
 
-    // Step 7: Process attack actions
-    updatedTeam = calcAttack(
-      updatedTeam,
-      teamBuffs.attack,
-      isPlayerTeam,
+    // Step 7: Process charge actions for both teams
+    const playerTeamWithCharge = calcCharge(playerTeamWithDefence, true);
+    const enemyTeamWithCharge = calcCharge(enemyTeamWithDefence, false);
+
+    // Step 1: Trigger weapon if played
+    if (weaponPlayed) {
+      triggerWeapon(weaponPlayed, enemyTeamWithCharge);
+    }
+
+    // Step 8: Process attack actions for both teams
+    const playerTeamWithAttack = calcAttack(
+      playerTeamWithCharge,
+      playerTeamBuffs.attack,
+      true,
       opponentTargetIndex
-    ); // Pass opponentTargetIndex
+    );
+    const enemyTeamWithAttack = calcAttack(
+      enemyTeamWithCharge,
+      enemyTeamBuffs.attack,
+      false,
+      null
+    );
 
-    // Step 8: Process healing actions
-    updatedTeam = calcHeal(updatedTeam, teamBuffs.heal);
+    // Step 9: Process healing actions for both teams
+    const finalPlayerTeam = calcHeal(
+      playerTeamWithAttack,
+      playerTeamBuffs.heal
+    );
+    const finalEnemyTeam = calcHeal(enemyTeamWithAttack, enemyTeamBuffs.heal);
 
-    // Step 9: Remove weather boost effects at the end of the turn and reset illusions
-    updatedTeam = updatedTeam.map((teammate) => {
-      if (teammate.actionPlayed && teammate.actionPlayed.originalValues) {
-        const { originalValues } = teammate.actionPlayed;
-        Object.keys(originalValues).forEach((attribute) => {
-          if (teammate.actionPlayed[attribute] !== undefined) {
-            teammate.actionPlayed[attribute] = originalValues[attribute]; // Restore original value
-          }
-        });
-        delete teammate.actionPlayed.originalValues;
-      }
+    // Step 10: Remove weather boost effects at the end of the turn and reset illusions for both teams
+    const resetEffectsAndIllusions = (team) => {
+      return team.map((teammate) => {
+        if (teammate.actionPlayed && teammate.actionPlayed.originalValues) {
+          const { originalValues } = teammate.actionPlayed;
+          Object.keys(originalValues).forEach((attribute) => {
+            if (teammate.actionPlayed[attribute] !== undefined) {
+              teammate.actionPlayed[attribute] = originalValues[attribute]; // Restore original value
+            }
+          });
+          delete teammate.actionPlayed.originalValues;
+        }
+        teammate.currentIllusion = 0; // Reset illusion
+        return teammate;
+      });
+    };
 
-      // Reset illusion at the end of each turn
-      teammate.currentIllusion = 0;
+    const finalProcessedPlayerTeam = resetEffectsAndIllusions(finalPlayerTeam);
+    const finalProcessedEnemyTeam = resetEffectsAndIllusions(finalEnemyTeam);
 
-      return teammate;
-    });
-
-    // Update the team state
-    setTeam(updatedTeam);
+    // Step 11: Update both teams' state
+    setPlayerTeam(finalProcessedPlayerTeam);
+    setEnemies(finalProcessedEnemyTeam);
+    setWeaponPlayed(null);
   };
 
   const calcBuffs = (team, teamBuffs) => {
@@ -480,9 +530,12 @@ const Battle = () => {
       const action = teammate.actionPlayed; // Use action played for this turn
       if (action && action.defence) {
         const turnDefence = action.defence + teamDefenceBuffThisTurn;
-        teammate.currentDefence = (teammate.currentDefence || 0) + turnDefence;
+        teammate.currentDefence = Math.min(
+          teammate.maxHealth,
+          (teammate.currentDefence || 0) + turnDefence
+        );
         console.log(
-          `On turn ${turn}, ${teammate.name} defended with ${turnDefence}`
+          `On turn ${turn}, ${teammate.name} defended with ${turnDefence}, defence capped at ${teammate.maxHealth}`
         );
       }
 
@@ -490,12 +543,14 @@ const Battle = () => {
         const turnDefenceAll = action.defenceAll + teamDefenceBuffThisTurn;
         team.forEach((member) => {
           if (member.health > 0) {
-            member.currentDefence =
-              (member.currentDefence || 0) + turnDefenceAll;
+            member.currentDefence = Math.min(
+              member.maxHealth,
+              (member.currentDefence || 0) + turnDefenceAll
+            );
           }
         });
         console.log(
-          `On turn ${turn}, all teammates received ${turnDefenceAll} defence`
+          `On turn ${turn}, all teammates received ${turnDefenceAll} defence, defence capped at maxHealth`
         );
       }
 
@@ -711,8 +766,38 @@ const Battle = () => {
     }
   };
 
-  const resetOpponent = () => {
-    setOpponentTarget(null);
+  const playWeapon = (weapon) => {
+    setWeaponPlayed(weapon);
+  };
+
+  // Weapon Use Effect
+
+  const triggerWeapon = (weapon, enemyTeam) => {
+    if (weaponPlayed) {
+      // Filter enemies that are still alive
+      let aliveEnemies = enemyTeam.filter((enemy) => enemy.health > 0);
+
+      if (aliveEnemies.length > 0) {
+        // Select a random enemy from the aliveEnemies array
+        const randomIndex = Math.floor(Math.random() * aliveEnemies.length);
+
+        // Use the random index as targetIndex, weapon's attack value as attackValue,
+        // 'true' for isEnemy, and attackerIndex can be 0 for now.
+        applyDamage(randomIndex, weaponPlayed.attack, true, 0);
+
+        console.log(
+          `${aliveEnemies[randomIndex].name} was hit with ${weaponPlayed.name}, causing ${weaponPlayed.attack} damage!`
+        );
+      }
+
+      // Reset the weaponPlayed state after use
+      setWeaponPlayed(null);
+    }
+  };
+
+  const dummyWeapon = {
+    name: "Dummy Weapon",
+    attack: 50,
   };
 
   return (
@@ -751,9 +836,20 @@ const Battle = () => {
             <p>Turn: {turn}</p>
             <p>Weather: {weather}</p>
             <p>Target: {opponentTarget}</p>
-            <button onClick={handleSlowSpeed}>Slow</button>
-            <button onClick={handleNormalSpeed}>Normal</button>
-            <button onClick={handleFastSpeed}>Fast</button>
+            <div>
+              <button onClick={handleSlowSpeed}>Slow</button>
+              <button onClick={handleNormalSpeed}>Normal</button>
+              <button onClick={handleFastSpeed}>Fast</button>
+            </div>
+            <div>
+              {weaponPlayed ? (
+                <p>{weaponPlayed.name}</p>
+              ) : (
+                <button onClick={() => playWeapon(dummyWeapon)}>
+                  Test Weapon
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

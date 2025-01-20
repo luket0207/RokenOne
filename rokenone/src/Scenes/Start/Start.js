@@ -19,7 +19,7 @@ const Start = () => {
     const updatedTeam = [teammates.find((c) => c.id === 1), character];
     const teamWithActions = addActionsToTeam(updatedTeam);
     setPlayerTeam(teamWithActions);
-    navigate("/expeditionhome");
+    navigate("/home");
   };
 
   const addActionsToTeam = (team) => {

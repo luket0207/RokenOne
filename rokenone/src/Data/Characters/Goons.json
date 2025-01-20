@@ -75,10 +75,10 @@
         "type": "missed"
       }
     ],
-    "actionPatterns": ["A,B,C", "B,A,C", "C,B,A"]
+    "actionPatterns": ["B,A,C"]
   },
   {
-    "name": "Mamoru",
+    "name": "Umi",
     "class": "Ō-Yoroi",
     "health": 50,
     "maxHealth": 50,

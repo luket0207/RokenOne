@@ -1,0 +1,103 @@
+@import "../../Assets/Scss/import.scss";
+
+.code-breaker {
+  @include sceneContainer;
+  text-align: center;
+
+  &-game {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  // Style for the guesses section
+  .guesses {
+    width: 100%;
+    margin-bottom: 15px;
+
+    h3, p {
+        margin-bottom: 5px;
+    }
+
+    .guess {
+      background-color: $white;
+      height: 40px;
+      width: 40px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 5px;
+      border-radius: 5px;
+      border: solid 1px $darkerGrey;
+      font-size: 20px;
+
+      &.correct {
+        background-color: $green;
+      }
+    }
+  }
+
+  // Style for the input form section
+  .guess-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+
+    // Container for draggable numbers
+    .number-list {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+  }
+
+  // Style for individual draggable number icons
+  .number-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $burgendy;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $grey;
+      transform: scale(1.1);
+    }
+  }
+
+
+  // Style for the feedback message
+  .message {
+    margin-top: 10px;
+    color: $burgendy;
+    padding: 20px;
+  }
+
+  .icon-in-text {
+    margin-left: 8px;
+  }
+
+  // Style for end-game messages
+  .success {
+    font-size: 18px;
+    color: $green;
+    font-weight: bold;
+  }
+
+  .failure {
+    font-size: 18px;
+    color: $red;
+    font-weight: bold;
+  }
+}
+
+

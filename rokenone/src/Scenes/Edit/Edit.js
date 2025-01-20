@@ -104,6 +104,8 @@ const Edit = () => {
       description.push(`Heal All ${action.healAll}`);
     } else if (action.charge) {
       description.push(`Charge ${action.charge}`);
+    } else if (action.illusion) {
+      description.push(`Illusion ${action.illusion}`);
     } else if (action.buffAttack && action.buffDefence) {
       description.push(
         `Buff Attack ${action.buffAttack}, Buff Defence ${action.buffDefence}`

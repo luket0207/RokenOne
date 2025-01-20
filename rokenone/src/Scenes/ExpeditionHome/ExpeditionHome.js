@@ -25,8 +25,12 @@ const ExpeditionHome = () => {
   };
 
   // Function to handle starting the battle with selected enemies
-  const startBattle = () => {
-    navigate("/battle", { state: { enemies: selectedEnemies } });
+  const continueExpedition = () => {
+    navigate("/expeditionmap");
+  };
+
+  const backToHome = () => {
+    navigate("/home");
   };
 
   const navigateToEdit = (id) => {
@@ -77,39 +81,16 @@ const ExpeditionHome = () => {
       {/* Button to heal the entire team */}
       <Button text={"Heal All"} onClick={healTeam} type={"secondary"}></Button>
 
-      <h2 className="enemy-title">Select Enemies to Battle</h2>
-      <div className="enemy-selection">
-        {goonsData.map((enemy) => (
-          <Button
-            key={enemy.id}
-            text={enemy.name}
-            onClick={() => addEnemyToList(enemy)}
-            disabled={selectedEnemies.length >= 5}
-            type="small"
-          ></Button>
-        ))}
-      </div>
-
-      <h3>Selected Enemies: {selectedEnemies.length}/5</h3>
-      <div className="selected-enemies">
-        {selectedEnemies.map((enemy) => (
-          <div className="selected-enemies-enemy" key={enemy.id}>
-            <h4>{enemy.name}</h4>
-            <Button
-              text={"Remove"}
-              onClick={() =>
-                removeEnemyFromList(selectedEnemies.indexOf(enemy))
-              }
-              type={"small"}
-            ></Button>
-          </div>
-        ))}
-      </div>
+      <Button
+        text={"Continue"}
+        onClick={continueExpedition}
+        disabled={isBattleButtonDisabled} // Disable if any teammate has no actions
+      ></Button>
 
       <Button
-        text={"Start Battle"}
-        onClick={startBattle}
-        disabled={selectedEnemies.length === 0 || isBattleButtonDisabled} // Disable if any teammate has no actions
+        text={"Back to Home"}
+        onClick={backToHome}
+        type="secondary"
       ></Button>
     </div>
   );
