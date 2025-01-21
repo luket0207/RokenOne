@@ -6,27 +6,87 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+}
+
+.edit-text {
+  margin-bottom: 30px;
+}
+
+.edit-timeline-grid {
+  display: grid;
+  grid-template-columns: 720px 280px;
 }
 
 .timeline {
-  display: flex;
+  display: grid;
+  grid-auto-rows: 80px;
+  height: 520px;
   justify-content: center;
+  justify-items: center;
+  align-items: center;
   margin-bottom: 20px;
+  background-color: $darkerGrey;
+
+  h3 {
+    color: $lightGrey;
+    text-align: center;
+    margin: 0;
+  }
 
   .timeline-slot {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 56px;
     border: 2px dashed $darkGrey;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
-    background-color: #f9f9f9;
     transition: background-color 0.3s ease;
+    position: relative;
 
     &-text {
       margin: 10px 0px;
       text-align: center;
+    }
+
+    
+
+    h5 {
+      margin: 0px;
+    }
+
+    &-remove {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $burgendy;
+      top: -10px;
+      right: -10px;
+      color: $lightGrey;
+      cursor: pointer;
+      @include boxShadowHover(-3px);
+    }
+
+    &-empty {
+      background-color: $lightGrey;
+      color: $burgendy !important;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-weight: 800;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     &.hover {
@@ -45,12 +105,18 @@
 }
 
 .timeline-slot-action {
-  padding: 20px;
+  padding: 10px 20px;
   display: grid;
-  grid-template-rows: 30px 90px 27px;
-  justify-items: center;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  z-index: 10;
+  cursor: pointer;
+  flex: 0 0 auto; // Prevent flex from resizing the item
+
+  p {
+    margin: 0;
+    text-align: center;
+  }
 }
 
 .action-title {
@@ -62,23 +128,25 @@
 }
 
 .action-pool {
-  display: flex;
-  overflow-x: auto;
-  padding: 20px;
-  padding-top: 0px;
-  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 150px;
+  height: 460px;
+  overflow-y: scroll;
+  padding: 30px 20px;
+  max-width: 700px;
 
   .action-item {
     @include cardFrame;
     @include boxShadowHover;
-    width: 200px; // Fixed width
-    height: 120px;
+    width: 160px; // Fixed width
+    height: 100px;
     padding: 10px 20px;
     display: grid;
     justify-content: center;
     align-items: center;
     text-align: center;
-    cursor: pointer;
+    cursor: grab;
     flex: 0 0 auto; // Prevent flex from resizing the item
 
     p {

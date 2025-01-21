@@ -5,6 +5,8 @@ import { useDrag, useDrop } from "react-dnd";
 import "./Edit.scss"; // Make sure the styles are applied
 import Button from "../../Components/Button/Button";
 import Carousel from "../../Components/Carousel/Carousel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const ItemType = {
   ACTION: "action",
@@ -168,15 +170,9 @@ const Edit = () => {
         {action ? (
           <div className="timeline-slot-action">
             <h5 className="timeline-slot-text">{action.name}</h5>
-            <p
-              className="small-text"
-              dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
-            ></p>
-            <Button
-              text={"Remove"}
-              type={"small"}
-              onClick={() => handleReturnToPool(action)}
-            />
+            <div className="timeline-slot-remove" onClick={() => handleReturnToPool(action)}>
+              <FontAwesomeIcon icon={faXmark} />
+            </div>
           </div>
         ) : (
           <div>
@@ -185,7 +181,7 @@ const Edit = () => {
                 Add to Timeline
               </p>
             ) : (
-              <p className="timeline-slot-text" style={{ color: "#333" }}>
+              <p className="timeline-slot-text timeline-slot-empty" style={{ color: "#333" }}>
                 Empty Slot
               </p>
             )}
@@ -201,32 +197,34 @@ const Edit = () => {
 
   return (
     <div className="edit-container">
-      <h1>{character.name}'s Timeline</h1>
-      <h3>Timeline (Slots: {character.timelineSlots}):</h3>
-      <div className="timeline">
-        {Array.from({ length: character.timelineSlots }).map((_, index) => (
-          <div key={index}>
-            <TimelineSlot
-              action={character.timeline[index] || null}
-              index={index}
-            />
-          </div>
-        ))}
-      </div>
+      <h1>Edit {character.name}</h1>
+      <p className="edit-text">Drag actions from the left into your timeline. Timeline is played from the top down.</p>
 
-      <h3 className="action-title">Action Pool:</h3>
-      <p className="action-text">Drag moves from below into your timeline</p>
-      {/* Make this container horizontally scrollable */}
-      <div className="action-pool">
-        <Carousel slidesPerPage={3}>
+      <div className="edit-timeline-grid">
+        <div className="action-pool">
           {character.actionPool
             .slice()
             .sort((a, b) => a.id - b.id)
             .map((action) => (
               <Action key={action.id} action={action} />
             ))}
-        </Carousel>
+        </div>
+        <div className="timeline">
+          <div>
+            <h3>Timeline</h3>
+          </div>
+          {Array.from({ length: character.timelineSlots }).map((_, index) => (
+            <div key={index}>
+              <TimelineSlot
+                action={character.timeline[index] || null}
+                index={index}
+              />
+            </div>
+          ))}
+        </div>
       </div>
+      {/* Make this container horizontally scrollable */}
+
       <div className="home-button">
         <Button text={"Back to Home"} onClick={handleGoExpeditionHome}></Button>
       </div>
