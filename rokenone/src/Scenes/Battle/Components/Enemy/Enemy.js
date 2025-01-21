@@ -10,6 +10,8 @@ const Enemy = ({
   turn,
   opponentTarget,
   setOpponentTarget,
+  setWeaponAttacker,  // Add setWeaponAttacker as a prop
+  setWeaponEnemy,     // Add setWeaponEnemy as a prop
 }) => {
   const setTarget = (opponentIndex, health) => {
     if (health !== 0) {
@@ -23,11 +25,11 @@ const Enemy = ({
         // Format the enemy object to pass it to CharacterCard
         const formattedEnemy = {
           ...enemy,
-          health: enemy.health || 0, // Current health from enemyHealths
-          currentDefence: enemy.currentDefence || 0, // Assuming enemies also have defense
-          currentCharge: enemy.currentCharge || 0, // Assuming enemies also have charge
-          actionPlayed: enemyActions[index], // Use enemyActions for their current action
-          timeline: enemy.timeline || [], // Assuming enemies have a timeline as well
+          health: enemy.health || 0,
+          currentDefence: enemy.currentDefence || 0,
+          currentCharge: enemy.currentCharge || 0,
+          actionPlayed: enemyActions[index],
+          timeline: enemy.timeline || [],
         };
 
         // Calculate currentActionIndex based on the turn
@@ -39,6 +41,14 @@ const Enemy = ({
             className={`enemy ${index === opponentTarget ? "targeted" : ""} ${enemy.health === 0 ? "dead" : ""}`}
             key={enemy.id}
             onClick={() => setTarget(index, enemy.health)}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              const characterIndex = e.dataTransfer.getData("characterIndex");
+              // Call the passed in functions to set the weapon attacker and enemy
+              console.log(`${characterIndex} ${index} set for weapon drag`)
+              setWeaponAttacker(characterIndex);
+              setWeaponEnemy(index);
+            }}
           >
             <div className="enemy-target">
               <FontAwesomeIcon icon={faBullseye} size="2x" />
@@ -48,7 +58,7 @@ const Enemy = ({
             </div>
             {/* Use CharacterCard component */}
             <CharacterCard
-              teammate={formattedEnemy} // Pass the formatted enemy object
+              teammate={formattedEnemy}
               currentActionIndex={currentActionIndex}
               enemy={true}
             />

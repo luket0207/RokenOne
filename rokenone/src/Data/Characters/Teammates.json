@@ -9,7 +9,12 @@
     "timelineSlots": 4,
     "actionPool": [],
     "currentDefence": 0,
-    "currentIllusion": 0
+    "currentIllusion": 0,
+    "weapon": [{
+      "name": "Bamboo",
+      "attack": 20,
+      "chargeCost": 2
+    }]
   },
   {
     "id": 2,

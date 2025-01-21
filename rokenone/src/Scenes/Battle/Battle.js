@@ -17,6 +17,8 @@ const Battle = () => {
   const [win, setWin] = useState(false);
   const [enemies, setEnemies] = useState(state?.enemies || []); // Get enemies from the state
   const [weaponPlayed, setWeaponPlayed] = useState(null);
+  const [weaponAttacker, setWeaponAttacker] = useState(null);
+  const [weaponEnemy, setWeaponEnemy] = useState(null);
   const navigate = useNavigate();
   const [teamCharge, setTeamCharge] = useState(0);
   const [enemyCharge, setEnemyCharge] = useState(0);
@@ -153,6 +155,8 @@ const Battle = () => {
         enemies,
         setEnemies,
         turnWeather,
+        weaponAttacker,
+        weaponEnemy,
         opponentTarget
       );
     }
@@ -330,6 +334,8 @@ const Battle = () => {
     enemies,
     setEnemies,
     turnWeather,
+    weaponAttacker,
+    weaponEnemy,
     opponentTargetIndex = null
   ) => {
     let playerTeamBuffs = { attack: 0, defence: 0, heal: 0 };
@@ -389,13 +395,18 @@ const Battle = () => {
           teammate.actionPlayed = null;
           return null;
         }
+
         let action = teammate.timeline[(turn - 1) % teammate.timeline.length];
-        if (!action) return null;
+
+        if (!action) {
+          teammate.actionPlayed = null;
+          return null;
+        }
 
         // Store the action to be played
         teammate.actionPlayed = action;
 
-        // Apply weather boost
+        // Apply weather boost and any other adjustments
         if (action.weatherBoost) {
           const originalValues = {};
           if (Array.isArray(action.weatherBoostEffect)) {
@@ -442,11 +453,6 @@ const Battle = () => {
     const playerTeamWithCharge = calcCharge(playerTeamWithDefence, true);
     const enemyTeamWithCharge = calcCharge(enemyTeamWithDefence, false);
 
-    // Step 1: Trigger weapon if played
-    if (weaponPlayed) {
-      triggerWeapon(weaponPlayed, enemyTeamWithCharge);
-    }
-
     // Step 8: Process attack actions for both teams
     const playerTeamWithAttack = calcAttack(
       playerTeamWithCharge,
@@ -462,11 +468,34 @@ const Battle = () => {
     );
 
     // Step 9: Process healing actions for both teams
-    const finalPlayerTeam = calcHeal(
+    const playerTeamWithHeal = calcHeal(
       playerTeamWithAttack,
       playerTeamBuffs.heal
     );
-    const finalEnemyTeam = calcHeal(enemyTeamWithAttack, enemyTeamBuffs.heal);
+    const enemyTeamWithHeal = calcHeal(
+      enemyTeamWithAttack,
+      enemyTeamBuffs.heal
+    );
+
+    // Declare finalPlayerTeam and finalEnemyTeam outside the if/else block
+    let finalPlayerTeam;
+    let finalEnemyTeam;
+
+    // Trigger weapon if played
+    if (weaponAttacker !== null && weaponEnemy !== null) {
+      const { updatedPlayerTeam, updatedEnemyTeam } = triggerWeapon({
+        weaponAttacker,
+        weaponEnemy,
+        playerTeam: playerTeamWithHeal,
+        enemyTeam: enemyTeamWithHeal,
+        setWeaponPlayed,
+      });
+      finalPlayerTeam = updatedPlayerTeam;
+      finalEnemyTeam = updatedEnemyTeam;
+    } else {
+      finalPlayerTeam = playerTeamWithHeal;
+      finalEnemyTeam = enemyTeamWithHeal;
+    }
 
     // Step 10: Remove weather boost effects at the end of the turn and reset illusions for both teams
     const resetEffectsAndIllusions = (team) => {
@@ -485,15 +514,29 @@ const Battle = () => {
       });
     };
 
-    const finalProcessedPlayerTeam = resetEffectsAndIllusions(finalPlayerTeam);
-    const finalProcessedEnemyTeam = resetEffectsAndIllusions(finalEnemyTeam);
+    console.log(finalPlayerTeam);
 
-    // Step 11: Update both teams' state
-    setPlayerTeam(finalProcessedPlayerTeam);
-    setEnemies(finalProcessedEnemyTeam);
+    // Ensure both finalPlayerTeam and finalEnemyTeam are arrays before calling the reset function
+    if (Array.isArray(finalPlayerTeam) && Array.isArray(finalEnemyTeam)) {
+      const finalProcessedPlayerTeam =
+        resetEffectsAndIllusions(finalPlayerTeam);
+      const finalProcessedEnemyTeam = resetEffectsAndIllusions(finalEnemyTeam);
+
+      // Step 11: Update both teams' state
+      setPlayerTeam(finalProcessedPlayerTeam);
+      setEnemies(finalProcessedEnemyTeam);
+    } else {
+      console.error(
+        "Error: finalPlayerTeam or finalEnemyTeam is not an array."
+      );
+    }
+
+    //Reset Weapon Stuff
+    setWeaponAttacker(null);
+    setWeaponEnemy(null);
     setWeaponPlayed(null);
   };
-
+  
   const calcBuffs = (team, teamBuffs) => {
     team.forEach((teammate) => {
       if (teammate.health <= 0) return; // Skip dead teammates
@@ -766,38 +809,61 @@ const Battle = () => {
     }
   };
 
-  const playWeapon = (weapon) => {
-    setWeaponPlayed(weapon);
-  };
+  // Weapon Stuff
+  const triggerWeapon = ({
+    weaponAttacker,
+    weaponEnemy,
+    playerTeam,
+    enemyTeam,
+    setWeaponPlayed,
+    weaponAttackerBuff = 0, // Buffs related to the weapon attacker
+    weaponEnemyBuff = 0, // Buffs related to the weapon enemy
+  }) => {
+    console.log(`Triggered inside triggerWeapon ${playerTeam}`);
+    const updatedPlayerTeam = [...playerTeam];
+    const updatedEnemyTeam = [...enemyTeam];
 
-  // Weapon Use Effect
+    // Check if the attacker has a weapon
+    const attacker = updatedPlayerTeam[weaponAttacker];
 
-  const triggerWeapon = (weapon, enemyTeam) => {
-    if (weaponPlayed) {
-      // Filter enemies that are still alive
-      let aliveEnemies = enemyTeam.filter((enemy) => enemy.health > 0);
+    console.log(
+      `Weapon Attack - Attacker id: ${weaponAttacker} - Enemy id: ${weaponEnemy}`
+    );
 
-      if (aliveEnemies.length > 0) {
-        // Select a random enemy from the aliveEnemies array
-        const randomIndex = Math.floor(Math.random() * aliveEnemies.length);
+    if (attacker && attacker.weapon && attacker.weapon.length > 0) {
+      const weapon = attacker.weapon[0]; // Assuming only one weapon per character for simplicity
+      const weaponAttack = weapon.attack + weaponAttackerBuff; // Weapon attack value + any buffs
 
-        // Use the random index as targetIndex, weapon's attack value as attackValue,
-        // 'true' for isEnemy, and attackerIndex can be 0 for now.
-        applyDamage(randomIndex, weaponPlayed.attack, true, 0);
+      if (weaponAttacker !== null && weaponEnemy !== null) {
+        // Get the enemy who will receive the damage
+        const targetEnemy = updatedEnemyTeam[weaponEnemy];
 
-        console.log(
-          `${aliveEnemies[randomIndex].name} was hit with ${weaponPlayed.name}, causing ${weaponPlayed.attack} damage!`
-        );
+        if (targetEnemy && targetEnemy.health > 0) {
+          // Apply damage to the enemy, just like calcAttack
+          applyDamage(weaponEnemy, weaponAttack, true, weaponAttacker);
+
+          console.log(
+            `${attacker.name} attacked ${targetEnemy.name} with ${weapon.name}, causing ${weaponAttack} damage!`
+          );
+        } else {
+          console.log(`${targetEnemy.name} is already defeated.`);
+        }
+
+        const updatedCharge = teamCharge - weapon.chargeCost;
+        setTeamCharge(updatedCharge);
+
+        // Set the weaponPlayed for the current turn
+        setWeaponPlayed(weapon);
       }
-
-      // Reset the weaponPlayed state after use
-      setWeaponPlayed(null);
+    } else {
+      console.log("This character doesn't have a weapon.");
     }
-  };
 
-  const dummyWeapon = {
-    name: "Dummy Weapon",
-    attack: 50,
+    // Return the updated teams after the weapon is triggered
+    return {
+      updatedPlayerTeam,
+      updatedEnemyTeam,
+    };
   };
 
   return (
@@ -841,15 +907,7 @@ const Battle = () => {
               <button onClick={handleNormalSpeed}>Normal</button>
               <button onClick={handleFastSpeed}>Fast</button>
             </div>
-            <div>
-              {weaponPlayed ? (
-                <p>{weaponPlayed.name}</p>
-              ) : (
-                <button onClick={() => playWeapon(dummyWeapon)}>
-                  Test Weapon
-                </button>
-              )}
-            </div>
+            <div>{weaponPlayed && <p>{weaponPlayed.name}</p>}</div>
           </div>
         )}
       </div>
@@ -872,9 +930,12 @@ const Battle = () => {
         enemyActions={enemies.map((enemy, enemyIndex) => enemy.actionPlayed)}
         opponentTarget={opponentTarget}
         setOpponentTarget={setOpponentTarget}
+        setWeaponAttacker={setWeaponAttacker}
+        setWeaponEnemy={setWeaponEnemy}
       />
+
       {/* Render Team Component */}
-      <Team playerTeam={playerTeam} turn={turn} />
+      <Team playerTeam={playerTeam} teamCharge={teamCharge} turn={turn} />
 
       <div className="team-charge">
         <div className="team-charge-icons">

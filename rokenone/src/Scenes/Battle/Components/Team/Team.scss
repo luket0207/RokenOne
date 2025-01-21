@@ -37,6 +37,21 @@
   grid-row: 1;
   display: grid;
   justify-items: center;
+  position: relative;
+
+  .drag-weapon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 40px;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor:grab;
+  }
 }
 
 .battle-pod-image {
