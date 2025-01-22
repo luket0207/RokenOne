@@ -1,4 +1,4 @@
-@import '../../../../Assets/Scss/import.scss';
+@import "../../../../Assets/Scss/import.scss";
 
 .battle-pods {
   margin-top: 10px;
@@ -39,18 +39,88 @@
   justify-items: center;
   position: relative;
 
+  &::after {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  &.tired {
+    &::after {
+      content: "T";
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include font;
+      color: $lightGrey;
+      background-color: $darkerGrey;
+      bottom: -10px;
+      left: -10px;
+      border-radius: 50%;
+      opacity: 1;
+    }
+  }
+
+  &.fatigued {
+    &::after {
+      content: "F";
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include font;
+      color: $lightGrey;
+      background-color: $darkerGrey;
+      bottom: -10px;
+      left: -10px;
+      border-radius: 50%;
+      opacity: 1;
+    }
+  }
+
+  &.exhausted {
+    &::after {
+      content: "X";
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include font;
+      color: $lightGrey;
+      background-color: $burgendy;
+      bottom: -10px;
+      left: -10px;
+      border-radius: 50%;
+      opacity: 1;
+    }
+  }
+
   .drag-weapon {
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 40px;
-    background-color: $white;
+    top: 60px;
+    transform: translateX(-50%) scale(1);
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: $burgendy;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor:grab;
+    cursor: grab;
+    color: $lightGrey;
+    font-size: 22px;
+    animation: pulse 3s infinite;
+
+    &:hover {
+      animation: none;
+      transform: scale(1.2);
+    }
   }
 }
 
@@ -90,3 +160,23 @@
   color: $purple;
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  85% {
+    transform: scale(1.2);
+  }
+  90% {
+    transform: scale(1);
+  }
+  95% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

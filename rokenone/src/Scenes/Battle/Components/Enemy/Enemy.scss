@@ -1,5 +1,4 @@
-@import '../../../../Assets/Scss/import.scss';
-
+@import "../../../../Assets/Scss/import.scss";
 
 .enemy-container {
   display: grid;
@@ -17,9 +16,50 @@
     transform: scale(1);
     opacity: 1;
 
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background-color: $burgendy;
+      border-radius: 50%; // Makes it a circle
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+      transition: opacity 0.1s ease; // Quick fade out
+      pointer-events: none; // Prevent interaction with the pseudo-element
+    }
+
+    &.weapon-attacked {
+      &::after {
+        width: 200px;
+        height: 200px;
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1); // Scale it to full size
+        animation: growAndFade 0.5s forwards;
+      }
+    }
+
+    &.dragged-on {
+      &::after {
+        content: 'Hit with Weapon';
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $lightGrey;
+        @include font;
+        background-color: $darkerGrey;
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
     &.dead {
-      opacity: .3;
-      transform: scale(.8);
+      opacity: 0.3;
+      transform: scale(0.8);
       cursor: not-allowed;
     }
 
@@ -38,7 +78,7 @@
       @include boxShadow;
       z-index: 10;
       opacity: 0;
-      transition: opacity .3s ease;
+      transition: opacity 0.3s ease;
     }
 
     &.targeted {
@@ -49,23 +89,23 @@
   }
 
   > :nth-child(1) {
-    grid-column: 3; 
+    grid-column: 3;
   }
 
   > :nth-child(2) {
-    grid-column: 4; 
+    grid-column: 4;
   }
 
   > :nth-child(3) {
-    grid-column: 2; 
+    grid-column: 2;
   }
 
   > :nth-child(4) {
-    grid-column: 5; 
+    grid-column: 5;
   }
 
   > :nth-child(5) {
-    grid-column: 1; 
+    grid-column: 1;
   }
 }
 
@@ -76,4 +116,19 @@
   margin-bottom: 30px;
 
   @include bottomWhiteFade;
+}
+
+@keyframes growAndFade {
+  0% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  80% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }

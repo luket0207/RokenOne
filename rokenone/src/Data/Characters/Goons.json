@@ -33,7 +33,7 @@
         "name": "Blade Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 10
+        "attack": 1
       },
       {
         "name": "Samurai Guard",
@@ -89,7 +89,7 @@
         "name": "Heavy Swing",
         "action": "Action A",
         "type": "attack",
-        "attack": 4
+        "attackAll": 1
       },
       {
         "name": "Defensive Stance",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CharacterCard from "../../../../Components/CharacterCard/CharacterCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullseye, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +10,13 @@ const Enemy = ({
   turn,
   opponentTarget,
   setOpponentTarget,
-  setWeaponAttacker,  // Add setWeaponAttacker as a prop
-  setWeaponEnemy,     // Add setWeaponEnemy as a prop
+  setWeaponAttacker,
+  setWeaponEnemy,
+  weaponAnimation,
 }) => {
+  // State to track which enemy is being dragged over
+  const [draggedOverIndex, setDraggedOverIndex] = useState(null);
+
   const setTarget = (opponentIndex, health) => {
     if (health !== 0) {
       setOpponentTarget(opponentIndex === opponentTarget ? null : opponentIndex);
@@ -38,16 +42,31 @@ const Enemy = ({
 
         return (
           <div
-            className={`enemy ${index === opponentTarget ? "targeted" : ""} ${enemy.health === 0 ? "dead" : ""}`}
+            className={`enemy ${index === opponentTarget ? "targeted" : ""} 
+              ${index === weaponAnimation ? "weapon-attacked" : ""} 
+              ${index === draggedOverIndex ? "dragged-on" : ""} 
+              ${enemy.health === 0 ? "dead" : ""}`}
             key={enemy.id}
             onClick={() => setTarget(index, enemy.health)}
             onDragOver={(e) => e.preventDefault()}
+            onDragEnter={(e) => {
+              e.preventDefault();
+              // Ensure the dragged item stays "dragged-on" while hovering
+              setDraggedOverIndex(index);
+            }}
+            onDragLeave={(e) => {
+              // Only remove the class if the drag has truly left the element
+              if (!e.currentTarget.contains(e.relatedTarget)) {
+                setDraggedOverIndex(null);
+              }
+            }}
             onDrop={(e) => {
               const characterIndex = e.dataTransfer.getData("characterIndex");
               // Call the passed in functions to set the weapon attacker and enemy
-              console.log(`${characterIndex} ${index} set for weapon drag`)
+              console.log(`${characterIndex} ${index} set for weapon drag`);
               setWeaponAttacker(characterIndex);
               setWeaponEnemy(index);
+              setDraggedOverIndex(null); // Clear the drag state when dropped
             }}
           >
             <div className="enemy-target">

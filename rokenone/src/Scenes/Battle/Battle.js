@@ -6,7 +6,7 @@ import Enemy from "./Components/Enemy/Enemy"; // Import Enemy component
 import "./Battle.scss";
 import Button from "../../Components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCross, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Battle = () => {
   const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
@@ -19,6 +19,7 @@ const Battle = () => {
   const [weaponPlayed, setWeaponPlayed] = useState(null);
   const [weaponAttacker, setWeaponAttacker] = useState(null);
   const [weaponEnemy, setWeaponEnemy] = useState(null);
+  const [weaponAnimation, setWeaponAnimation] = useState(null);
   const navigate = useNavigate();
   const [teamCharge, setTeamCharge] = useState(0);
   const [enemyCharge, setEnemyCharge] = useState(0);
@@ -149,6 +150,7 @@ const Battle = () => {
 
       // Pass in the appropriate team, setTeam function, and whether it's the player team
       setWeather(turnWeather);
+      setWeaponAnimation(null);
       handleTurn(
         playerTeam,
         setPlayerTeam,
@@ -490,6 +492,7 @@ const Battle = () => {
         enemyTeam: enemyTeamWithHeal,
         setWeaponPlayed,
       });
+      setWeaponAnimation(weaponEnemy);
       finalPlayerTeam = updatedPlayerTeam;
       finalEnemyTeam = updatedEnemyTeam;
     } else {
@@ -536,7 +539,7 @@ const Battle = () => {
     setWeaponEnemy(null);
     setWeaponPlayed(null);
   };
-  
+
   const calcBuffs = (team, teamBuffs) => {
     team.forEach((teammate) => {
       if (teammate.health <= 0) return; // Skip dead teammates
@@ -644,14 +647,40 @@ const Battle = () => {
             // Apply damage to all enemies
             enemies.forEach((enemy, enemyIndex) => {
               if (enemy.health > 0) {
-                applyDamage(enemyIndex, totalAttackAll, true, teammateIndex); // Damage to all enemies
+                let finalDamage = totalAttackAll;
+
+                // Apply battleFatigue modifier if applicable
+                if (enemy.battleFatigue !== null) {
+                  if (turn > enemy.battleFatigue) {
+                    finalDamage *= (turn - enemy.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (turn > (enemy.battleFatigue / 2 + enemy.battleFatigue / 4)){
+                    finalDamage *= 4;
+                  } else if (turn > enemy.battleFatigue / 2) {
+                    finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
+                  } 
+                }
+
+                applyDamage(enemyIndex, finalDamage, true, teammateIndex); // Damage to all enemies
               }
             });
           } else {
             // Apply damage to all teammates
             playerTeam.forEach((member, memberIndex) => {
               if (member.health > 0) {
-                applyDamage(memberIndex, totalAttackAll, false, teammateIndex); // Damage to all teammates
+                let finalDamage = totalAttackAll;
+
+                // Apply battleFatigue modifier if applicable
+                if (member.battleFatigue !== null) {
+                  if (turn > member.battleFatigue) {
+                    finalDamage *= (turn - member.battleFatigue) + 3; // Apply scaling modifier if turn > battleFatigue
+                  } else if (turn > (member.battleFatigue / 2 + member.battleFatigue / 4)){
+                    finalDamage *= 4;
+                  } else if (turn > member.battleFatigue / 2) {
+                    finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
+                  } 
+                }
+
+                applyDamage(memberIndex, finalDamage, false, teammateIndex); // Damage to all teammates
               }
             });
           }
@@ -692,15 +721,38 @@ const Battle = () => {
 
           // Apply attack damage to the selected target
           if (targetIndex !== undefined) {
+            let finalDamage = totalAttack;
+
+            // Apply battleFatigue modifier if applicable
             if (isPlayerTeam) {
               const target = enemies[targetIndex];
               if (target && target.health > 0) {
-                applyDamage(targetIndex, totalAttack, true, teammateIndex); // Use refactored applyDamage
+                if (target.battleFatigue !== null) {
+                  if (turn > target.battleFatigue) {
+                    finalDamage *= (turn - target.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (turn > (target.battleFatigue / 2 + target.battleFatigue / 4)){
+                    finalDamage *= 4;
+                  } else if (turn > target.battleFatigue / 2) {
+                    finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
+                  } 
+                }
+
+                applyDamage(targetIndex, finalDamage, true, teammateIndex); // Use refactored applyDamage
               }
             } else {
               const target = playerTeam[targetIndex];
               if (target && target.health > 0) {
-                applyDamage(targetIndex, totalAttack, false, teammateIndex); // Use refactored applyDamage
+                if (target.battleFatigue !== null) {
+                  if (turn > target.battleFatigue) {
+                    finalDamage *= (turn - target.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (turn > (target.battleFatigue / 2 + target.battleFatigue / 4)){
+                    finalDamage *= 4;
+                  } else if (turn > target.battleFatigue / 2) {
+                    finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
+                  } 
+                }
+
+                applyDamage(targetIndex, finalDamage, false, teammateIndex); // Use refactored applyDamage
               }
             }
           }
@@ -816,8 +868,7 @@ const Battle = () => {
     playerTeam,
     enemyTeam,
     setWeaponPlayed,
-    weaponAttackerBuff = 0, // Buffs related to the weapon attacker
-    weaponEnemyBuff = 0, // Buffs related to the weapon enemy
+    weaponAttackerBuff = 0,
   }) => {
     console.log(`Triggered inside triggerWeapon ${playerTeam}`);
     const updatedPlayerTeam = [...playerTeam];
@@ -932,6 +983,7 @@ const Battle = () => {
         setOpponentTarget={setOpponentTarget}
         setWeaponAttacker={setWeaponAttacker}
         setWeaponEnemy={setWeaponEnemy}
+        weaponAnimation={weaponAnimation}
       />
 
       {/* Render Team Component */}
