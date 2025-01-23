@@ -1,0 +1,32 @@
+[
+  {
+    "id": "A1",
+    "name": "All Easy",
+    "difficulty": 1,
+    "class": "All",
+    "enemies": ["S1", "S2", "O1", "K1", "T1"],
+    "minDays": 12,
+    "maxDays": 15,
+    "rewards": "All"
+  },
+  {
+    "id": "S1",
+    "name": "Samurai Easy",
+    "difficulty": 1,
+    "class": "Samurai",
+    "enemies": ["S1", "S2"],
+    "minDays": 12,
+    "maxDays": 15,
+    "rewards": "Samurai"
+  },
+  {
+    "id": "S2",
+    "name": "Samurai Medium",
+    "difficulty": 2,
+    "class": "Samurai",
+    "enemies": ["S1", "S2"],
+    "minDays": 15,
+    "maxDays": 18,
+    "rewards": "Samurai"
+  }
+]

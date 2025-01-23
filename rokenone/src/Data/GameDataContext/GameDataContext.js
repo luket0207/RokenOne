@@ -7,11 +7,11 @@ export const GameDataContext = createContext();
 // Create the GameDataProvider
 export const GameDataProvider = ({ children }) => {
   // Initial dummy data for game states
-  const [gameStates, setGameStates] = useState([
+  const [expeditionData, setExpeditionData] = useState([
     { 
-      level: 1, 
-      currency: 0,
-     }
+      day: 0, 
+      expedition: null, 
+    }
   ]);
 
   // Initial dummy data for the player's team
@@ -28,17 +28,24 @@ export const GameDataProvider = ({ children }) => {
     },
   ]);
 
-  // Check if the player is forced to select a teammate (if only Roken exists)
-  useEffect(() => {
-    if (playerTeam.length === 1 && playerTeam[0].name === 'Roken') {
-      // Handle logic when Roken is the only character (for example, redirect to Start page)
-      // In GameDataListener.js, we will handle this redirect via `useNavigate`
-    }
-  }, [playerTeam]);
+  // Function to update the current day of the expedition
+  const updateCurrentDay = (newDay) => {
+    setExpeditionData((prevData) => [
+      {
+        ...prevData[0], 
+        day: newDay
+      }
+    ]);
+  };
+
+  const resetExpedition = () => {
+    setExpeditionData([{ expedition: null, day: 0 }]); // Reset the expedition and day
+  };
 
   // Add functions to modify game state or player team if needed later
+
   return (
-    <GameDataContext.Provider value={{ gameStates, playerTeam, setGameStates, setPlayerTeam }}>
+    <GameDataContext.Provider value={{ expeditionData, playerTeam, setExpeditionData, resetExpedition, setPlayerTeam, updateCurrentDay }}>
       {children}
     </GameDataContext.Provider>
   );

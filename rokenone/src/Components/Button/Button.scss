@@ -1,9 +1,11 @@
 @import "../../Assets/Scss/import.scss";
 
 .btn {
+  margin: 20px 0px;
   p {
     margin: 0;
     z-index: 3;
+    text-align: center;
   }
 }
 
@@ -20,7 +22,7 @@
   transform: scale(1) rotate(0deg);
   transition: all 0.8s ease;
   background-color: $white;
-  margin-bottom: 20px;
+  
 
   &::before,
   &::after {

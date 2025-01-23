@@ -10,6 +10,7 @@ import Battle from './Scenes/Battle/Battle';
 import ExpeditionHome from './Scenes/ExpeditionHome/ExpeditionHome';
 import ExpeditionChoice from './Scenes/ExpeditionChoice/ExpeditionChoice';
 import Home from './Scenes/Home/Home';
+import Cave from './Scenes/Cave/Cave';
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
       <Route path="/expeditionmap" element={<ExpeditionMap />} />
       <Route path="/edit/:characterId" element={<Edit />} />
       <Route path="/codebreaker" element={<CodeBreaker />} />
+      <Route path="/cave" element={<Cave />} />
       <Route path="/battle" element={<Battle />} />
     </Routes>
   );
