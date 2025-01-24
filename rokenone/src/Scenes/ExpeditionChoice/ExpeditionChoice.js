@@ -27,16 +27,48 @@ const ExpeditionChoice = () => {
       maxDays,
     } = expedition;
     const totalDays = getRandomNumber(minDays, maxDays);
-    const battleDaysCount = Math.floor(totalDays * 0.8); // 80% of days need to have battles
+
+    // Generate a random percentage between 0.75 and 0.9
+    const battleDaysPercentage = getRandomNumber(75, 90) / 100;
+
+    // Calculate the number of battle days using the random percentage
+    const battleDaysCount = Math.floor(totalDays * battleDaysPercentage);
 
     // Generate battle days in a random but spread-out manner
     const battleDays = generateBattleDays(battleDaysCount, totalDays);
-    const days = [];
+
+    // Randomly select 10-30% of battle days to have only the battle as a choice, starting from day 3
+    const minBattleOnly = Math.floor(battleDaysCount * 0.2);
+    const maxBattleOnly = Math.floor(battleDaysCount * 0.3);
+    const battleOnlyDaysCount = getRandomNumber(minBattleOnly, maxBattleOnly);
+
+    // Exclude the first 3 days when selecting battle-only days
+    const eligibleBattleDays = battleDays.filter((day) => day >= 3);
+
+    // Select a portion of eligible battle days to be battle-only
+    const battleOnlyDays = [];
+    let lastBattleOnlyDay = -2; // Start with a number to allow the first comparison
+
+    for (const day of eligibleBattleDays) {
+      if (battleOnlyDays.length >= battleOnlyDaysCount) break; // Stop once we've selected enough battle-only days
+
+      // Ensure it's not consecutive to the last battle-only day
+      if (day !== lastBattleOnlyDay + 1) {
+        battleOnlyDays.push(day);
+        lastBattleOnlyDay = day;
+      }
+    }
+
+    // Now process the entire `days` array and ensure no consecutive battle-only days
+    // Now process the entire `days` array and ensure no consecutive battle-only days
+    let days = []; // Use let instead of const to allow reassignment
 
     for (let i = 0; i < totalDays; i++) {
       const shouldHaveBattle = battleDays.includes(i); // Check if this day should have a battle
+      const isBattleOnly = battleOnlyDays.includes(i); // Check if this day is battle-only
       const dayChoices = generateDayChoices(
         shouldHaveBattle,
+        isBattleOnly, // Pass whether it's a battle-only day
         i,
         totalDays,
         difficulty,
@@ -45,10 +77,54 @@ const ExpeditionChoice = () => {
       days.push(dayChoices);
     }
 
+    // Check and swap any consecutive battle-only days
+    let hasSwaps = true;
+    let iterationCount = 0; // Counter to track the number of iterations
+    const maxIterations = 1000; // Maximum allowed iterations before we stop
+    let lastValidState = [...days]; // Store the array's last valid state
+
+    while (hasSwaps && iterationCount < maxIterations) {
+      hasSwaps = false;
+      iterationCount++; // Increment the iteration counter
+
+      for (let i = 0; i < days.length - 1; i++) {
+        const currentDay = days[i];
+        const nextDay = days[i + 1];
+
+        // If both the current day and next day are battle-only (length of 1)
+        if (currentDay.length === 1 && nextDay.length === 1) {
+          // If next day is not the last day, swap with the day after it
+          if (i + 2 < days.length) {
+            [days[i + 1], days[i + 2]] = [days[i + 2], days[i + 1]]; // Swap the days
+            hasSwaps = true; // A swap occurred, so we need to check again
+            break; // Exit the loop early to start checking again after the swap
+          }
+        }
+      }
+
+      // If a swap occurred, store the current state as last valid state
+      if (hasSwaps) {
+        lastValidState = [...days];
+      }
+
+      // If we've reached the maximum number of iterations, break the loop
+      if (iterationCount >= maxIterations) {
+        console.warn(
+          "Max iterations reached while attempting to resolve consecutive battle-only days."
+        );
+        break;
+      }
+    }
+
+    // After max iterations or successful resolution, set days to the last valid state
+    days = lastValidState; // Reassign days to the last valid state
+
+    // Final expedition data with adjusted days
     const expeditionData = {
       name,
       class: expClass,
       days,
+      started: false,
     };
 
     setGeneratedExpedition(expeditionData);
@@ -56,11 +132,11 @@ const ExpeditionChoice = () => {
       {
         ...prevData[0],
         expedition: expeditionData,
-        expeditionId: expeditionId,
       },
-    ]); // Set the expedition in the context
+    ]);
 
-    navigate("/expeditionhome"); // Navigate to /expeditionhome
+    console.log(expeditionData);
+    navigate("/expeditionhome");
   };
 
   const generateBattleDays = (battleDaysCount, totalDays) => {
@@ -83,13 +159,15 @@ const ExpeditionChoice = () => {
 
   const generateDayChoices = (
     shouldHaveBattle,
+    isBattleOnly, // New parameter
     dayIndex,
     totalDays,
     difficulty,
     availableEnemies
   ) => {
-    const numberOfChoices = getRandomNumber(2, 5);
-    const choices = [];
+    const numberOfChoices = getRandomNumber(2, 4); // Max choices per day is 4
+    let choices = []; // Change const to let since we're modifying it
+    const choiceTypes = new Set(); // To keep track of the types already added for the day
 
     if (shouldHaveBattle) {
       const battle = generateBattle(
@@ -98,14 +176,24 @@ const ExpeditionChoice = () => {
         difficulty,
         availableEnemies
       );
-      choices.push({ type: "battle", enemies: battle });
+      choices.push({ name: "Battle", type: "battle", enemies: battle });
+      choiceTypes.add("battle"); // Add battle type
     }
 
-    // Generate remaining choices based on weighted selection
-    while (choices.length < numberOfChoices) {
-      const randomChoice = generateWeightedChoice();
-      if (!choices.includes(randomChoice)) {
-        choices.push(randomChoice);
+    if (!isBattleOnly && choices.length < numberOfChoices) {
+      while (choices.length < numberOfChoices) {
+        const randomChoice = generateWeightedChoice(
+          dayIndex, // Pass the dayIndex
+          totalDays, // Pass the totalDays
+          difficulty, // Pass the difficulty
+          availableEnemies // Pass the availableEnemies
+        );
+
+        // Ensure the choice type and name aren't already added for the day
+        if (!choiceTypes.has(`${randomChoice.type}-${randomChoice.name}`)) {
+          choices.push(randomChoice);
+          choiceTypes.add(`${randomChoice.type}-${randomChoice.name}`); // Add both type and name to the set
+        }
       }
     }
 
@@ -151,23 +239,42 @@ const ExpeditionChoice = () => {
     return selectedEnemies;
   };
 
-  const generateWeightedChoice = () => {
+  const generateWeightedChoice = (
+    dayIndex,
+    totalDays,
+    difficulty,
+    availableEnemies
+  ) => {
     const random = Math.random();
+    let choice = {};
+    const choiceEnemies = generateBattle(
+      dayIndex,
+      totalDays,
+      difficulty,
+      availableEnemies
+    );
+
     if (random <= 0.25) {
-      return { type: "unknown(battle)" };
+      choice = {
+        name: "?",
+        type: "battle",
+        enemies: choiceEnemies,
+      }; // unknown (battle)
     } else if (random <= 0.45) {
-      return { type: "unknown(izakaya)" };
+      choice = { name: "?", type: "izakaya" }; // unknown (izakaya)
     } else if (random <= 0.65) {
-      return { type: "unknown(minigame)" };
+      choice = { name: "?", type: "minigame" }; // unknown (minigame)
     } else if (random <= 0.79) {
-      return { type: "unknown(loot)" };
+      choice = { name: "?", type: "loot" }; // unknown (loot)
     } else if (random <= 0.8) {
-      return { type: "unknown(easteregg)" };
+      choice = { name: "?", type: "easteregg" }; // unknown (easteregg)
     } else if (random <= 0.9) {
-      return { type: "izakaya" };
+      choice = { name: "izakaya", type: "izakaya" }; // known izakaya
     } else {
-      return { type: "minigame" };
+      choice = { name: "minigame", type: "minigame" }; // known minigame
     }
+
+    return choice;
   };
 
   const getRandomNumber = (min, max) => {

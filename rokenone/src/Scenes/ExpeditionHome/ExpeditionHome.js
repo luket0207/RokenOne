@@ -6,7 +6,8 @@ import "./ExpeditionHome.scss";
 import Button from "../../Components/Button/Button";
 
 const ExpeditionHome = () => {
-  const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
+  const { playerTeam, setPlayerTeam, expeditionData, updateCurrentDay, setExpeditionData } =
+    useContext(GameDataContext);
   const navigate = useNavigate();
   const [selectedEnemies, setSelectedEnemies] = useState([]); // Store selected enemies
 
@@ -24,9 +25,24 @@ const ExpeditionHome = () => {
     );
   };
 
-  // Function to handle starting the battle with selected enemies
   const continueExpedition = () => {
-    navigate("/expeditionmap");
+
+    if (!expeditionData[0].started) {
+      setExpeditionData((prevData) => [
+        {
+          ...prevData[0],
+          started: true, // Set 'started' to true
+        },
+      ]);
+    } else {
+      // Update the day before navigating to the Expedition Map
+      const currentDay = expeditionData[0]?.day || 0; // Get the current day
+      if (currentDay < expeditionData[0]?.expedition?.days.length) {
+        const newDay = currentDay + 1; // Move to the next day
+        updateCurrentDay(newDay); // Update the day in GameDataContext
+      }
+    }
+    navigate("/expeditionmap"); // Navigate to the Expedition Map
   };
 
   const backToHome = () => {

@@ -8,8 +8,7 @@ import "./ExpeditionMap.scss";
 const ExpeditionMap = () => {
   const [selectedEnemies, setSelectedEnemies] = useState([]);
   const [showDebugMenu, setShowDebugMenu] = useState(false); // New state to toggle debug menu visibility
-  const { expeditionData, updateCurrentDay, resetExpedition } =
-    useContext(GameDataContext); // Access expedition data and reset function
+  const { expeditionData, resetExpedition } = useContext(GameDataContext); // Access expedition data and reset function
   const navigate = useNavigate();
 
   // Access the current day directly from the GameDataContext
@@ -19,6 +18,19 @@ const ExpeditionMap = () => {
   const currentDayData = days[currentDay] || {}; // Get data for the current day
 
   const currentChoices = Object.values(currentDayData); // Get all choices for the current day as an array
+
+  // Function to shuffle an array (Fisher-Yates Shuffle)
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    }
+    return shuffled;
+  };
+
+  // Shuffle choices when component mounts or currentDay changes
+  const shuffledChoices = shuffleArray(currentChoices);
 
   // Function to add an enemy to the selected list
   const addEnemyToList = (enemy) => {
@@ -34,7 +46,8 @@ const ExpeditionMap = () => {
     );
   };
 
-  const navigateBack = () => {
+  const handleCompleteExpedition = () => {
+    resetExpedition();
     navigate("/home");
   };
 
@@ -47,25 +60,30 @@ const ExpeditionMap = () => {
     setShowDebugMenu((prevState) => !prevState);
   };
 
-  // Function to move to the next day
-  const handleNextDay = () => {
-    if (currentDay < days.length - 1) {
-      const newDay = currentDay + 1; // Move to the next day
-      updateCurrentDay(newDay); // Update the day in GameDataContext
-    } else {
-      // Expedition complete
-      console.log("Expedition complete");
+  // Function to handle advancing to the next day or completing the expedition
+  const handleChoice = (type, enemies) => {
+    console.log(`Type of choice is: ${type}`);
 
-      // Reset expedition data and day
-      resetExpedition();
-
-      // Show the end screen
-      setShowDebugMenu(false); // Hide debug menu (or remove all content)
+    if (enemies) {
+      console.log(`Enemies for battle: ${enemies}`);
     }
   };
 
   // Check if expedition is complete
   const isExpeditionComplete = currentDay >= days.length;
+
+  // Effect to handle expedition completion on load
+  useEffect(() => {
+    if (isExpeditionComplete && expeditionData.expedition) {
+      console.log("Expedition complete");
+
+      // Reset expedition data and day
+      
+
+      // Hide the debug menu or remove all content
+      setShowDebugMenu(false);
+    }
+  }, [isExpeditionComplete, resetExpedition, expeditionData]);
 
   return (
     <div className="expedition-map">
@@ -75,14 +93,31 @@ const ExpeditionMap = () => {
       {isExpeditionComplete ? (
         <div className="expedition-complete">
           <h2>Expedition Complete!</h2>
-          <Button text="Back to Home" onClick={navigateBack} type="primary" />
+          <Button text="Back to Home" onClick={handleCompleteExpedition} type="primary" />
         </div>
       ) : (
         <>
+          {/* Display choices for the current day */}
+          <h2>Day {currentDay + 1}</h2>
+
+          <div className="choices">
+            {shuffledChoices.map((choice, index) => (
+              <div
+                key={index}
+                className="choice"
+                onClick={() => handleChoice(choice.type, choice.enemies)}
+              >
+                <p>{choice.type ? `${choice.name}` : "Unknown Choice"}</p>{" "}
+                {/* Display the choice type and enemies (if available) */}
+              </div>
+            ))}
+          </div>
+
           {/* Button to toggle the visibility of the debug menu */}
           <Button
             text={showDebugMenu ? "Hide Debug Menu" : "Show Debug Menu"}
             onClick={toggleDebugMenu}
+            type="secondary"
           />
 
           {/* Conditionally render the debugging menu based on state */}
@@ -93,24 +128,6 @@ const ExpeditionMap = () => {
               removeEnemyFromList={removeEnemyFromList}
             />
           )}
-
-          {/* Display choices for the current day */}
-          <div className="choices">
-            <h2>Day {currentDay + 1}</h2>
-            {currentChoices.map((choice, index) => (
-              <Button
-                key={index}
-                text={
-                  choice.type
-                    ? `${choice.type} ${
-                        choice.enemies ? choice.enemies.join(", ") : ""
-                      }`
-                    : "Unknown Choice"
-                } // Display the choice type and enemies (if available)
-                onClick={handleNextDay} // For now, just move to the next day on click
-              />
-            ))}
-          </div>
         </>
       )}
 

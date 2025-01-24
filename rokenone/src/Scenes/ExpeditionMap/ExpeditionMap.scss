@@ -56,5 +56,22 @@
 }
 
 .choices {
- text-align: center;
+ display: flex;
+
+  .choice {
+    background-color: $white;
+    margin: 20px;
+    width: 160px;
+    height: 100px;
+    @include boxShadowHover;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    p {
+      margin: 0;
+    }
+  }
 }

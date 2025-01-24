@@ -5,7 +5,7 @@
     "difficulty": 1,
     "class": "All",
     "enemies": ["S1", "S2", "O1", "K1", "T1"],
-    "minDays": 12,
+    "minDays": 10,
     "maxDays": 15,
     "rewards": "All"
   },
@@ -15,8 +15,8 @@
     "difficulty": 1,
     "class": "Samurai",
     "enemies": ["S1", "S2"],
-    "minDays": 12,
-    "maxDays": 15,
+    "minDays": 20,
+    "maxDays": 25,
     "rewards": "Samurai"
   },
   {
@@ -25,8 +25,8 @@
     "difficulty": 2,
     "class": "Samurai",
     "enemies": ["S1", "S2"],
-    "minDays": 15,
-    "maxDays": 18,
+    "minDays": 25,
+    "maxDays": 30,
     "rewards": "Samurai"
   }
 ]

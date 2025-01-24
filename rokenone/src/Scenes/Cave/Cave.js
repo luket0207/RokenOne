@@ -16,7 +16,6 @@ const Cave = () => {
   useEffect(() => {
     const randomBearPosition = Math.floor(Math.random() * 11) + 6;
     setBearPosition(randomBearPosition);
-    console.log(randomBearPosition);
   }, []);
 
   // Handle the "twist" action

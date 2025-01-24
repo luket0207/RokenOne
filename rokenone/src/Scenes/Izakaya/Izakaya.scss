@@ -1,0 +1,9 @@
+@import "../../Assets/Scss/import.scss";
+
+.izakaya {
+  @include sceneContainer;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}

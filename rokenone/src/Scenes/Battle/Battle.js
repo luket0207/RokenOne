@@ -7,6 +7,7 @@ import "./Battle.scss";
 import Button from "../../Components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import ChargeBar from "./Components/ChargeBar/ChargeBar";
 
 const Battle = () => {
   const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
@@ -27,6 +28,7 @@ const Battle = () => {
   const [opponentTarget, setOpponentTarget] = useState(null);
   const intervalRef = useRef(null); // Use ref for interval
   const [intervalTime, setIntervalTime] = useState(1000);
+  const [paused, setPaused] = useState(false); 
   const availableWeather = [
     "clear",
     "cloudy",
@@ -39,20 +41,25 @@ const Battle = () => {
   ];
 
   useEffect(() => {
-    if (isBattleStarted && !battleEnded) {
+    if (isBattleStarted && !battleEnded && !paused) { // Check if not paused
       clearInterval(intervalRef.current); // Clear previous interval
       intervalRef.current = setInterval(() => {
         setTurn((prevTurn) => prevTurn + 1); // Increment turn
       }, intervalTime);
     }
-
-    // Cleanup the interval when the component unmounts or battle ends
+  
+    // Cleanup the interval when the component unmounts or battle ends or pauses
     return () => clearInterval(intervalRef.current);
-  }, [intervalTime, isBattleStarted, battleEnded]);
+  }, [intervalTime, isBattleStarted, battleEnded, paused]); // Add paused to the dependencies
 
   const handleSlowSpeed = () => setIntervalTime(2000); // 2 seconds interval
   const handleNormalSpeed = () => setIntervalTime(1000); // 1 second interval
   const handleFastSpeed = () => setIntervalTime(500); // 0.5 second interval
+
+  const handlePause = () => {
+    setPaused((prevPaused) => !prevPaused); // Toggle paused state
+  };
+  
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
@@ -954,6 +961,7 @@ const Battle = () => {
             <p>Weather: {weather}</p>
             <p>Target: {opponentTarget}</p>
             <div>
+              <button onClick={handlePause}>{paused ? 'Resume' : 'Pause'}</button>
               <button onClick={handleSlowSpeed}>Slow</button>
               <button onClick={handleNormalSpeed}>Normal</button>
               <button onClick={handleFastSpeed}>Fast</button>
@@ -963,17 +971,7 @@ const Battle = () => {
         )}
       </div>
 
-      <div className="team-charge">
-        <div className="team-charge-icons">
-          {/* Render 10 icons, conditionally applying the 'filled' class based on teamCharge */}
-          {[...Array(10)].map((_, index) => (
-            <span
-              key={index}
-              className={`charge-icon ${index < enemyCharge ? "filled" : ""}`} // Add 'filled' class for filled icons
-            ></span>
-          ))}
-        </div>
-      </div>
+      <ChargeBar charge={enemyCharge} isPlayerTeam={false} />
 
       {/* Render Enemy Component */}
       <Enemy
@@ -989,17 +987,7 @@ const Battle = () => {
       {/* Render Team Component */}
       <Team playerTeam={playerTeam} teamCharge={teamCharge} turn={turn} />
 
-      <div className="team-charge">
-        <div className="team-charge-icons">
-          {/* Render 10 icons, conditionally applying the 'filled' class based on teamCharge */}
-          {[...Array(10)].map((_, index) => (
-            <span
-              key={index}
-              className={`charge-icon ${index < teamCharge ? "filled" : ""}`} // Add 'filled' class for filled icons
-            ></span>
-          ))}
-        </div>
-      </div>
+      <ChargeBar charge={teamCharge} isPlayerTeam={true} />
     </div>
   );
 };
