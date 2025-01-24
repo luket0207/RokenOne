@@ -262,8 +262,10 @@ const ExpeditionChoice = () => {
       }; // unknown (battle)
     } else if (random <= 0.45) {
       choice = { name: "?", type: "izakaya" }; // unknown (izakaya)
+    } else if (random <= 0.55) {
+      choice = { name: "?", type: "cave" }; // unknown (cave)
     } else if (random <= 0.65) {
-      choice = { name: "?", type: "minigame" }; // unknown (minigame)
+      choice = { name: "?", type: "code" }; // unknown (code)
     } else if (random <= 0.79) {
       choice = { name: "?", type: "loot" }; // unknown (loot)
     } else if (random <= 0.8) {

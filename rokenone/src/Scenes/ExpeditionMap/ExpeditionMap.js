@@ -64,8 +64,47 @@ const ExpeditionMap = () => {
   const handleChoice = (type, enemies) => {
     console.log(`Type of choice is: ${type}`);
 
-    if (enemies) {
-      console.log(`Enemies for battle: ${enemies}`);
+    // Check if the type is 'battle' and if enemies are provided for the choice
+    if (type === "battle" && enemies && enemies.length > 0) {
+      // Create a new array to store the full enemy objects
+      const fullEnemyObjects = [];
+
+      // Loop over the enemy names provided by the choice
+      enemies.forEach((enemyName) => {
+        // Find the corresponding enemy object from goonsData by matching the name
+        const enemyObject = goonsData.find((goon) => goon.name === enemyName);
+
+        if (enemyObject) {
+          // Add the enemy object to the fullEnemyObjects array
+          fullEnemyObjects.push(enemyObject);
+        }
+      });
+
+      // If there are any enemies to battle, start the battle
+      if (fullEnemyObjects.length > 0) {
+        console.log(`Enemies for battle: `, fullEnemyObjects);
+
+        // Navigate to the battle screen with the fullEnemyObjects array passed via state
+        navigate("/battle", { state: { enemies: fullEnemyObjects } });
+      }
+    }
+
+    // Add conditions for other types of choices
+    switch (type) {
+      case "cave":
+        navigate("/cave");
+        break;
+      case "code":
+        navigate("/codebreaker");
+        break;
+      case "loot":
+        navigate("/loot");
+        break;
+      case "izakaya":
+        navigate("/izakaya");
+        break;
+      default:
+        console.log("Unknown type of choice");
     }
   };
 
@@ -78,7 +117,6 @@ const ExpeditionMap = () => {
       console.log("Expedition complete");
 
       // Reset expedition data and day
-      
 
       // Hide the debug menu or remove all content
       setShowDebugMenu(false);
@@ -93,7 +131,11 @@ const ExpeditionMap = () => {
       {isExpeditionComplete ? (
         <div className="expedition-complete">
           <h2>Expedition Complete!</h2>
-          <Button text="Back to Home" onClick={handleCompleteExpedition} type="primary" />
+          <Button
+            text="Back to Home"
+            onClick={handleCompleteExpedition}
+            type="primary"
+          />
         </div>
       ) : (
         <>

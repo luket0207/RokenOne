@@ -30,22 +30,12 @@ const Home = () => {
     navigate("/editteam");
   };
 
-  const navigateToCodeBreaker = () => {
-    navigate("/codebreaker");
-  };
-
-  const navigateToCave = () => {
-    navigate("/cave");
-  };
-
   return (
     <div className="home">
       <Button text={"Shop"} onClick={navigateToShop} />
       <Button text={"Expeditions"} onClick={navigateToExpedition} />
       <Button text={"Cards"} onClick={navigateToCards} />
       <Button text={"Edit Team"} onClick={navigateToEditTeam} />
-      <Button text={"Code Breaker"} onClick={navigateToCodeBreaker} />
-      <Button text={"Cave"} onClick={navigateToCave} />
     </div>
   );
 };

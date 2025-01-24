@@ -11,12 +11,16 @@ import ExpeditionHome from './Scenes/ExpeditionHome/ExpeditionHome';
 import ExpeditionChoice from './Scenes/ExpeditionChoice/ExpeditionChoice';
 import Home from './Scenes/Home/Home';
 import Cave from './Scenes/Cave/Cave';
+import Loot from './Scenes/Loot/Loot';
+import Izakaya from './Scenes/Izakaya/Izakaya';
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Start />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/loot" element={<Loot />} />
+      <Route path="/izakaya" element={<Izakaya />} />
       <Route path="/expeditionchoice" element={<ExpeditionChoice />} />
       <Route path="/expeditionhome" element={<ExpeditionHome />} />
       <Route path="/expeditionmap" element={<ExpeditionMap />} />

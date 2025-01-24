@@ -45,7 +45,7 @@ const Cave = () => {
 
   // Navigate back to home
   const goBackHome = () => {
-    navigate("/home");
+    navigate("/expeditionhome");
   };
 
   return (
