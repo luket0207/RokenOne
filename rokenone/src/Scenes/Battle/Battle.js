@@ -10,7 +10,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ChargeBar from "./Components/ChargeBar/ChargeBar";
 
 const Battle = () => {
-  const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
+  const { playerTeam, setPlayerTeam, resetExpedition } = useContext(GameDataContext);
   const { state } = useLocation(); // Retrieve the enemies passed from Home
   const [isBattleStarted, setIsBattleStarted] = useState(false);
   const [turn, setTurn] = useState(0);
@@ -28,7 +28,7 @@ const Battle = () => {
   const [opponentTarget, setOpponentTarget] = useState(null);
   const intervalRef = useRef(null); // Use ref for interval
   const [intervalTime, setIntervalTime] = useState(1000);
-  const [paused, setPaused] = useState(false); 
+  const [paused, setPaused] = useState(false);
   const availableWeather = [
     "clear",
     "cloudy",
@@ -41,13 +41,14 @@ const Battle = () => {
   ];
 
   useEffect(() => {
-    if (isBattleStarted && !battleEnded && !paused) { // Check if not paused
+    if (isBattleStarted && !battleEnded && !paused) {
+      // Check if not paused
       clearInterval(intervalRef.current); // Clear previous interval
       intervalRef.current = setInterval(() => {
         setTurn((prevTurn) => prevTurn + 1); // Increment turn
       }, intervalTime);
     }
-  
+
     // Cleanup the interval when the component unmounts or battle ends or pauses
     return () => clearInterval(intervalRef.current);
   }, [intervalTime, isBattleStarted, battleEnded, paused]); // Add paused to the dependencies
@@ -59,7 +60,6 @@ const Battle = () => {
   const handlePause = () => {
     setPaused((prevPaused) => !prevPaused); // Toggle paused state
   };
-  
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
@@ -132,6 +132,12 @@ const Battle = () => {
     clearInterval(intervalRef.current);
     navigate("/expeditionhome");
   };
+
+  //Return the player to home because they fainted and clear the expedition
+  const handleFainted = () => {
+    resetExpedition();
+    navigate("/home");
+  }
 
   // Start the battle and set up the turn ticking mechanism
   const handleStartBattle = () => {
@@ -659,12 +665,15 @@ const Battle = () => {
                 // Apply battleFatigue modifier if applicable
                 if (enemy.battleFatigue !== null) {
                   if (turn > enemy.battleFatigue) {
-                    finalDamage *= (turn - enemy.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
-                  } else if (turn > (enemy.battleFatigue / 2 + enemy.battleFatigue / 4)){
+                    finalDamage *= turn - enemy.battleFatigue + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (
+                    turn >
+                    enemy.battleFatigue / 2 + enemy.battleFatigue / 4
+                  ) {
                     finalDamage *= 4;
                   } else if (turn > enemy.battleFatigue / 2) {
                     finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
-                  } 
+                  }
                 }
 
                 applyDamage(enemyIndex, finalDamage, true, teammateIndex); // Damage to all enemies
@@ -679,12 +688,15 @@ const Battle = () => {
                 // Apply battleFatigue modifier if applicable
                 if (member.battleFatigue !== null) {
                   if (turn > member.battleFatigue) {
-                    finalDamage *= (turn - member.battleFatigue) + 3; // Apply scaling modifier if turn > battleFatigue
-                  } else if (turn > (member.battleFatigue / 2 + member.battleFatigue / 4)){
+                    finalDamage *= turn - member.battleFatigue + 3; // Apply scaling modifier if turn > battleFatigue
+                  } else if (
+                    turn >
+                    member.battleFatigue / 2 + member.battleFatigue / 4
+                  ) {
                     finalDamage *= 4;
                   } else if (turn > member.battleFatigue / 2) {
                     finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
-                  } 
+                  }
                 }
 
                 applyDamage(memberIndex, finalDamage, false, teammateIndex); // Damage to all teammates
@@ -736,12 +748,15 @@ const Battle = () => {
               if (target && target.health > 0) {
                 if (target.battleFatigue !== null) {
                   if (turn > target.battleFatigue) {
-                    finalDamage *= (turn - target.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
-                  } else if (turn > (target.battleFatigue / 2 + target.battleFatigue / 4)){
+                    finalDamage *= turn - target.battleFatigue + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (
+                    turn >
+                    target.battleFatigue / 2 + target.battleFatigue / 4
+                  ) {
                     finalDamage *= 4;
                   } else if (turn > target.battleFatigue / 2) {
                     finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
-                  } 
+                  }
                 }
 
                 applyDamage(targetIndex, finalDamage, true, teammateIndex); // Use refactored applyDamage
@@ -751,12 +766,15 @@ const Battle = () => {
               if (target && target.health > 0) {
                 if (target.battleFatigue !== null) {
                   if (turn > target.battleFatigue) {
-                    finalDamage *= (turn - target.battleFatigue) + 2; // Apply scaling modifier if turn > battleFatigue
-                  } else if (turn > (target.battleFatigue / 2 + target.battleFatigue / 4)){
+                    finalDamage *= turn - target.battleFatigue + 2; // Apply scaling modifier if turn > battleFatigue
+                  } else if (
+                    turn >
+                    target.battleFatigue / 2 + target.battleFatigue / 4
+                  ) {
                     finalDamage *= 4;
                   } else if (turn > target.battleFatigue / 2) {
                     finalDamage *= 2; // Double the damage if turn > battleFatigue / 2
-                  } 
+                  }
                 }
 
                 applyDamage(targetIndex, finalDamage, false, teammateIndex); // Use refactored applyDamage
@@ -942,15 +960,22 @@ const Battle = () => {
           <div className="battle-modal-container">
             <div className="battle-modal">
               {win ? (
-                <h3>All Enemies Defeated! You Win!</h3>
+                <>
+                  <h3>All Enemies Defeated! You Win!</h3>
+                  <Button
+                    text={"Back to Home"}
+                    onClick={handleCloseBattle}
+                  ></Button>
+                </>
               ) : (
-                <h3>You're Dead</h3>
+                <>
+                  <h3>You fainted!</h3>
+                  <Button
+                    text={"Back to Home"}
+                    onClick={handleFainted}
+                  ></Button>
+                </>
               )}
-
-              <Button
-                text={"Back to Home"}
-                onClick={handleCloseBattle}
-              ></Button>
             </div>
           </div>
         )}
@@ -961,7 +986,9 @@ const Battle = () => {
             <p>Weather: {weather}</p>
             <p>Target: {opponentTarget}</p>
             <div>
-              <button onClick={handlePause}>{paused ? 'Resume' : 'Pause'}</button>
+              <button onClick={handlePause}>
+                {paused ? "Resume" : "Pause"}
+              </button>
               <button onClick={handleSlowSpeed}>Slow</button>
               <button onClick={handleNormalSpeed}>Normal</button>
               <button onClick={handleFastSpeed}>Fast</button>

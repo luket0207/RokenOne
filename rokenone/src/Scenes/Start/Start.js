@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useNavigate } from "react-router-dom";
 import teammates from "../../Data/Characters/Teammates.json";
+import sittingRoken from "../../Assets/Images/sittingRoken.png"; // Corrected import
 import actions from "../../Data/Actions/Actions.json";
 import "./Start.scss";
 import Button from "../../Components/Button/Button";
@@ -15,9 +16,8 @@ const Start = () => {
     setPlayerTeam([roken]);
   }, [setPlayerTeam]);
 
-  const handleSelection = (character) => {
-    const updatedTeam = [teammates.find((c) => c.id === 1), character];
-    const teamWithActions = addActionsToTeam(updatedTeam);
+  const handleStart = () => {
+    const teamWithActions = addActionsToTeam([teammates[0]]); // Pass the first item wrapped in an array
     setPlayerTeam(teamWithActions);
     navigate("/home");
   };
@@ -35,19 +35,12 @@ const Start = () => {
 
   return (
     <div className="start">
-      <h1>Select a character to join your team:</h1>
+      <h1>
+        ROKEN
+        <img src={sittingRoken} alt="Sitting Roken" /> {/* Corrected img usage */}
+      </h1>
       <div className="teammate-buttons">
-        {teammates
-          .filter((character) => character.id !== 1)
-          .map((character) => (
-            <div key={character.id}>
-              <Button
-                text={character.name}
-                onClick={() => handleSelection(character)}
-                type={"secondary"}
-              ></Button>
-            </div>
-          ))}
+        <Button text={"Start"} onClick={handleStart}></Button>
       </div>
     </div>
   );

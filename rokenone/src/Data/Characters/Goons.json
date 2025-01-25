@@ -35,7 +35,7 @@
         "name": "Blade Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 1
+        "attack": 6
       },
       {
         "name": "Samurai Guard",
@@ -172,8 +172,8 @@
     "id": "T1",
     "name": "Raruzu",
     "class": "Taiko",
-    "health": 100,
-    "maxHealth": 100,
+    "health": 30,
+    "maxHealth": 30,
     "currentIllusion": 0,
     "level": 1,
     "actionArray": [
@@ -187,13 +187,13 @@
         "name": "Fortified Guard",
         "action": "Action B",
         "type": "defence",
-        "defence": 2
+        "defence": 3
       },
       {
         "name": "Taiko Pulse",
         "action": "Action C",
         "type": "charge",
-        "charge": 2
+        "charge": 1
       }
     ],
     "actionPatterns": ["B,C,B,A", "A,B,A,C"]
@@ -202,8 +202,8 @@
     "id": "T2",
     "name": "Yukiyama",
     "class": "Taiko",
-    "health": 30,
-    "maxHealth": 30,
+    "health": 40,
+    "maxHealth": 40,
     "currentIllusion": 0,
     "level": 2,
     "actionArray": [

@@ -10,7 +10,7 @@
     "actionPool": [],
     "currentDefence": 0,
     "currentIllusion": 0,
-    "battleFatigue": 400,
+    "battleFatigue": 300,
     "weapon": [{
       "name": "Bamboo",
       "attack": 20,
@@ -28,58 +28,6 @@
     "actionPool": [],
     "currentDefence": 0,
     "currentIllusion": 0,
-    "battleFatigue": 40
-  },
-  {
-    "id": 3,
-    "name": "Yoshimune",
-    "class": "Oyoroi",
-    "health": 100,
-    "maxHealth": 100,
-    "timeline": [],
-    "timelineSlots": 3,
-    "actionPool": [],
-    "currentDefence": 0,
-    "currentIllusion": 0,
-    "battleFatigue": 40
-  },
-  {
-    "id": 4,
-    "name": "Miyamoto",
-    "class": "Kobo",
-    "health": 100,
-    "maxHealth": 100,
-    "timeline": [],
-    "timelineSlots": 3,
-    "actionPool": [],
-    "currentDefence": 0,
-    "currentIllusion": 0,
-    "battleFatigue": 40
-  },
-  {
-    "id": 5,
-    "name": "Keiji",
-    "class": "Taiko",
-    "health": 100,
-    "maxHealth": 100,
-    "timeline": [],
-    "timelineSlots": 3,
-    "actionPool": [],
-    "currentDefence": 0,
-    "currentIllusion": 0,
-    "battleFatigue": 40
-  },
-  {
-    "id": 6,
-    "name": "Ryuji",
-    "class": "Genso",
-    "health": 100,
-    "maxHealth": 100,
-    "timeline": [],
-    "timelineSlots": 3,
-    "actionPool": [],
-    "currentDefence": 0,
-    "currentIllusion": 0,
-    "battleFatigue": 40
+    "battleFatigue": 300
   }
 ]

@@ -1,0 +1,21 @@
+@import '../../Assets/Scss/import.scss';
+
+.help {
+    @include sceneContainer;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+
+    h3 {
+        margin-top: 40px;
+    }
+
+    p, ul {
+        max-width: 800px;
+    }
+
+    .btn {
+        margin-top: 40px;
+    }
+}

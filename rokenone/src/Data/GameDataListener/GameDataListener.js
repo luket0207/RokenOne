@@ -10,7 +10,7 @@ const GameDataListener = ({ children }) => {
   // Effect to check if there is only one player and redirect if it's Roken
   useEffect(() => {
     // Only redirect if we're not already on the /start page
-    if (playerTeam.length === 1 && playerTeam[0].name === 'Roken' && location.pathname !== '/') {
+    if (playerTeam.length < 1 && location.pathname !== '/') {
       navigate('/'); // Redirect to the start page
     }
   }, [playerTeam, navigate, location]);

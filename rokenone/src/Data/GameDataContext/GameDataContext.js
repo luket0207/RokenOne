@@ -15,18 +15,7 @@ export const GameDataProvider = ({ children }) => {
   ]);
 
   // Initial dummy data for the player's team
-  const [playerTeam, setPlayerTeam] = useState([
-    {
-      id: 1,
-      name: 'Roken',
-      maxHealth: 100,
-      health: 100,
-      timeline: [],
-      actionPool: actions.filter(action => action.player === 'All' && !action.locked), // Add actions to the pool
-      currentDefence: 0,
-      currentIllusion: 0
-    },
-  ]);
+  const [playerTeam, setPlayerTeam] = useState([]);
 
   // Function to update the current day of the expedition
   const updateCurrentDay = (newDay) => {

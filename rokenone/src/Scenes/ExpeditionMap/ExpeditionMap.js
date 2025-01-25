@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext"; // Correct import for GameDataContext
 import Button from "../../Components/Button/Button";
 import goonsData from "../../Data/Characters/Goons.json";
+import bossesData from "../../Data/Characters/Bosses.json";
 import "./ExpeditionMap.scss";
 
 const ExpeditionMap = () => {
@@ -72,8 +73,14 @@ const ExpeditionMap = () => {
       // Loop over the enemy names provided by the choice
       enemies.forEach((enemyName) => {
         // Find the corresponding enemy object from goonsData by matching the name
-        const enemyObject = goonsData.find((goon) => goon.name === enemyName);
+        let enemyObject = goonsData.find((goon) => goon.name === enemyName);
 
+        // If not found in goonsData, check in bossesData
+        if (!enemyObject) {
+          enemyObject = bossesData.find((boss) => boss.name === enemyName);
+        }
+
+        // If an enemyObject was found (either from goonsData or bossesData)
         if (enemyObject) {
           // Add the enemy object to the fullEnemyObjects array
           fullEnemyObjects.push(enemyObject);
@@ -164,20 +171,21 @@ const ExpeditionMap = () => {
 
           {/* Conditionally render the debugging menu based on state */}
           {showDebugMenu && (
-            <EnemySelection
-              selectedEnemies={selectedEnemies}
-              addEnemyToList={addEnemyToList}
-              removeEnemyFromList={removeEnemyFromList}
-            />
+            <>
+              <EnemySelection
+                selectedEnemies={selectedEnemies}
+                addEnemyToList={addEnemyToList}
+                removeEnemyFromList={removeEnemyFromList}
+              />
+              <Button
+                text={"Back to Expedition Home"}
+                onClick={navigateBackExpedition}
+                type="secondary"
+              ></Button>
+            </>
           )}
         </>
       )}
-
-      <Button
-        text={"Back to Expedition Home"}
-        onClick={navigateBackExpedition}
-        type="secondary"
-      ></Button>
     </div>
   );
 };

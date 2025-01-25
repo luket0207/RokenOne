@@ -30,12 +30,17 @@ const Home = () => {
     navigate("/editteam");
   };
 
+  const navigateToHelp = () => {
+    navigate("/help");
+  };
+
   return (
     <div className="home">
-      <Button text={"Shop"} onClick={navigateToShop} />
+      <Button text={"Shop"} onClick={navigateToShop} disabled={true} />
       <Button text={"Expeditions"} onClick={navigateToExpedition} />
-      <Button text={"Cards"} onClick={navigateToCards} />
-      <Button text={"Edit Team"} onClick={navigateToEditTeam} />
+      <Button text={"Cards"} onClick={navigateToCards} disabled={true} />
+      <Button text={"Edit Team"} onClick={navigateToEditTeam} disabled={true} />
+      <Button text={"Help"} onClick={navigateToHelp} />
     </div>
   );
 };

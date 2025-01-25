@@ -13,6 +13,7 @@ import Home from './Scenes/Home/Home';
 import Cave from './Scenes/Cave/Cave';
 import Loot from './Scenes/Loot/Loot';
 import Izakaya from './Scenes/Izakaya/Izakaya';
+import Help from './Scenes/Help/Help';
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Route path="/codebreaker" element={<CodeBreaker />} />
       <Route path="/cave" element={<Cave />} />
       <Route path="/battle" element={<Battle />} />
+      <Route path="/help" element={<Help />} />
     </Routes>
   );
 };

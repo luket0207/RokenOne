@@ -94,9 +94,6 @@ const ExpeditionHome = () => {
         })}
       </div>
 
-      {/* Button to heal the entire team */}
-      <Button text={"Heal All"} onClick={healTeam} type={"secondary"}></Button>
-
       <Button
         text={"Continue"}
         onClick={continueExpedition}

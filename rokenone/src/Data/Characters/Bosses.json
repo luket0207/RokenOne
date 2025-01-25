@@ -1,0 +1,66 @@
+[
+  {
+    "id": "BS1",
+    "name": "Mecha Kachi",
+    "class": "Samurai",
+    "health": 80,
+    "maxHealth": 80,
+    "currentIllusion": 0,
+    "level": 1,
+    "actionArray": [
+      {
+        "name": "Samurai Slash",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 10
+      },
+      {
+        "action": "Action B",
+        "name": "Taunt",
+        "type": "missed"
+      },
+      {
+        "name": "Samurai Stab",
+        "action": "Action C",
+        "type": "attack",
+        "attack": 5
+      }
+    ],
+    "actionPatterns": ["A,B,C", "B,A,C"]
+  },
+  {
+    "id": "BO1",
+    "name": "Mecha Wakashū",
+    "class": "Ō-Yoroi",
+    "health": 60,
+    "maxHealth": 60,
+    "currentIllusion": 0,
+    "level": 1,
+    "actionArray": [
+      {
+        "name": "Armor Crush",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 6
+      },
+      {
+        "name": "Steel Guard",
+        "action": "Action B",
+        "type": "defence",
+        "defence": 10
+      },
+      {
+        "action": "Action C",
+        "name": "Taunt",
+        "type": "missed"
+      },
+      {
+        "name": "Armor Smash",
+        "action": "Action A",
+        "type": "attack",
+        "attack": 3
+      }
+    ],
+    "actionPatterns": ["B,A,C,D", "A,B,C,D", "A,C,B"]
+  }
+]

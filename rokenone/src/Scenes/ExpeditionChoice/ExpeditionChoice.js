@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Button from "../../Components/Button/Button";
 import expeditionsData from "../../Data/Expeditions/Expeditions.json";
 import goonsData from "../../Data/Characters/Goons.json";
+import bossesData from "../../Data/Characters/Bosses.json";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext"; // Import context
 import "./ExpeditionChoice.scss";
 
 const ExpeditionChoice = () => {
   const [generatedExpedition, setGeneratedExpedition] = useState(null);
-  const { setExpeditionData } = useContext(GameDataContext); // Get context function
+  const { setExpeditionData, playerTeam, setPlayerTeam } =
+    useContext(GameDataContext); // Get context function
   const navigate = useNavigate(); // Initialize useNavigate
 
   const generateExpedition = (expeditionId) => {
@@ -25,50 +27,35 @@ const ExpeditionChoice = () => {
       enemies,
       minDays,
       maxDays,
+      boss: bossIds, // Added bossIds from the expedition data
     } = expedition;
+
     const totalDays = getRandomNumber(minDays, maxDays);
-
-    // Generate a random percentage between 0.75 and 0.9
     const battleDaysPercentage = getRandomNumber(75, 90) / 100;
-
-    // Calculate the number of battle days using the random percentage
     const battleDaysCount = Math.floor(totalDays * battleDaysPercentage);
-
-    // Generate battle days in a random but spread-out manner
     const battleDays = generateBattleDays(battleDaysCount, totalDays);
-
-    // Randomly select 10-30% of battle days to have only the battle as a choice, starting from day 3
     const minBattleOnly = Math.floor(battleDaysCount * 0.2);
     const maxBattleOnly = Math.floor(battleDaysCount * 0.3);
     const battleOnlyDaysCount = getRandomNumber(minBattleOnly, maxBattleOnly);
-
-    // Exclude the first 3 days when selecting battle-only days
     const eligibleBattleDays = battleDays.filter((day) => day >= 3);
-
-    // Select a portion of eligible battle days to be battle-only
     const battleOnlyDays = [];
-    let lastBattleOnlyDay = -2; // Start with a number to allow the first comparison
+    let lastBattleOnlyDay = -2;
 
     for (const day of eligibleBattleDays) {
-      if (battleOnlyDays.length >= battleOnlyDaysCount) break; // Stop once we've selected enough battle-only days
-
-      // Ensure it's not consecutive to the last battle-only day
+      if (battleOnlyDays.length >= battleOnlyDaysCount) break;
       if (day !== lastBattleOnlyDay + 1) {
         battleOnlyDays.push(day);
         lastBattleOnlyDay = day;
       }
     }
 
-    // Now process the entire `days` array and ensure no consecutive battle-only days
-    // Now process the entire `days` array and ensure no consecutive battle-only days
-    let days = []; // Use let instead of const to allow reassignment
-
+    let days = [];
     for (let i = 0; i < totalDays; i++) {
-      const shouldHaveBattle = battleDays.includes(i); // Check if this day should have a battle
-      const isBattleOnly = battleOnlyDays.includes(i); // Check if this day is battle-only
+      const shouldHaveBattle = battleDays.includes(i);
+      const isBattleOnly = battleOnlyDays.includes(i);
       const dayChoices = generateDayChoices(
         shouldHaveBattle,
-        isBattleOnly, // Pass whether it's a battle-only day
+        isBattleOnly,
         i,
         totalDays,
         difficulty,
@@ -77,37 +64,29 @@ const ExpeditionChoice = () => {
       days.push(dayChoices);
     }
 
-    // Check and swap any consecutive battle-only days
+    // Ensure no consecutive battle-only days
     let hasSwaps = true;
-    let iterationCount = 0; // Counter to track the number of iterations
-    const maxIterations = 1000; // Maximum allowed iterations before we stop
-    let lastValidState = [...days]; // Store the array's last valid state
+    let iterationCount = 0;
+    const maxIterations = 1000;
+    let lastValidState = [...days];
 
     while (hasSwaps && iterationCount < maxIterations) {
       hasSwaps = false;
-      iterationCount++; // Increment the iteration counter
-
+      iterationCount++;
       for (let i = 0; i < days.length - 1; i++) {
         const currentDay = days[i];
         const nextDay = days[i + 1];
-
-        // If both the current day and next day are battle-only (length of 1)
         if (currentDay.length === 1 && nextDay.length === 1) {
-          // If next day is not the last day, swap with the day after it
           if (i + 2 < days.length) {
-            [days[i + 1], days[i + 2]] = [days[i + 2], days[i + 1]]; // Swap the days
-            hasSwaps = true; // A swap occurred, so we need to check again
-            break; // Exit the loop early to start checking again after the swap
+            [days[i + 1], days[i + 2]] = [days[i + 2], days[i + 1]];
+            hasSwaps = true;
+            break;
           }
         }
       }
-
-      // If a swap occurred, store the current state as last valid state
       if (hasSwaps) {
         lastValidState = [...days];
       }
-
-      // If we've reached the maximum number of iterations, break the loop
       if (iterationCount >= maxIterations) {
         console.warn(
           "Max iterations reached while attempting to resolve consecutive battle-only days."
@@ -116,10 +95,26 @@ const ExpeditionChoice = () => {
       }
     }
 
-    // After max iterations or successful resolution, set days to the last valid state
-    days = lastValidState; // Reassign days to the last valid state
+    // Assign last valid state
+    days = lastValidState;
 
-    // Final expedition data with adjusted days
+    // Fetch a random boss ID from the boss array
+    const bossId = bossIds[getRandomNumber(0, bossIds.length - 1)];
+
+    // Fetch boss data from Bosses.json using bossId
+    const bossData = bossesData.find((boss) => boss.id === bossId);
+
+    // Insert the boss battle as the final day
+    if (bossData) {
+      const bossBattleDay = {
+        name: "Boss Battle",
+        type: "battle",
+        enemies: [bossData.name], // Put the boss in the enemies array
+      };
+      days.push([bossBattleDay]); // Add the boss battle as the last day, wrapped in an array
+    }
+
+    // Final expedition data
     const expeditionData = {
       name,
       class: expClass,
@@ -136,6 +131,7 @@ const ExpeditionChoice = () => {
     ]);
 
     console.log(expeditionData);
+    healTeam();
     navigate("/expeditionhome");
   };
 
@@ -155,6 +151,15 @@ const ExpeditionChoice = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
+  };
+
+  // Function to heal the entire team to their maxHealth
+  const healTeam = () => {
+    const healedTeam = playerTeam.map((character) => ({
+      ...character,
+      health: character.maxHealth, // Heal to maxHealth
+    }));
+    setPlayerTeam(healedTeam); // Update the playerTeam in the context
   };
 
   const generateDayChoices = (
@@ -272,8 +277,10 @@ const ExpeditionChoice = () => {
       choice = { name: "?", type: "easteregg" }; // unknown (easteregg)
     } else if (random <= 0.9) {
       choice = { name: "izakaya", type: "izakaya" }; // known izakaya
+    } else if (random <= 0.95) {
+      choice = { name: "code", type: "code" }; // known code
     } else {
-      choice = { name: "minigame", type: "minigame" }; // known minigame
+      choice = { name: "cave", type: "cave" }; // known cave
     }
 
     return choice;

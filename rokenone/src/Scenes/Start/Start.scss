@@ -2,11 +2,23 @@
 
 .start {
     @include sceneContainer;
-}
-
-.teammate-buttons {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 20px;
-    margin: auto;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+
+    h1 {
+        padding-left: 80px;
+        padding-right: 350px;
+        position: relative;
+        font-size: 80px;
+
+        img {
+            height: 400px;
+            position: absolute;
+            bottom: -138px;
+            right: 50px;
+            z-index: 1;
+        }
+    }
 }
