@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import actions from '../../Data/Actions/Actions.json'; // Import the Actions.json file
 
 // Create the GameDataContext
 export const GameDataContext = createContext();
@@ -10,7 +9,8 @@ export const GameDataProvider = ({ children }) => {
   const [expeditionData, setExpeditionData] = useState([
     { 
       day: 0, 
-      expedition: null, 
+      expedition: null,
+      started: false,
     }
   ]);
 

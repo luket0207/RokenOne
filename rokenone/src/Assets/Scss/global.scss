@@ -1,6 +1,24 @@
-;
 @import './import.scss';
 
 body {
     background-color: $darkerGrey  ;
 }
+
+.save-game {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: $lightGrey;
+    cursor: pointer;
+    @include boxShadowHover;
+    
+    .icon {
+        color: $darkerGrey;
+    }
+  }

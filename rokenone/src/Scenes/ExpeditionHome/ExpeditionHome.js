@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { Link, useNavigate } from "react-router-dom";
-import goonsData from "../../Data/Characters/Goons.json"; // Import the Goons data
 import "./ExpeditionHome.scss";
 import Button from "../../Components/Button/Button";
 
@@ -11,21 +10,8 @@ const ExpeditionHome = () => {
   const navigate = useNavigate();
   const [selectedEnemies, setSelectedEnemies] = useState([]); // Store selected enemies
 
-  // Function to add an enemy to the selected list
-  const addEnemyToList = (enemy) => {
-    if (selectedEnemies.length < 5) {
-      setSelectedEnemies((prevEnemies) => [...prevEnemies, enemy]);
-    }
-  };
-
-  // Function to remove an enemy from the selected list
-  const removeEnemyFromList = (indexToRemove) => {
-    setSelectedEnemies((prevEnemies) =>
-      prevEnemies.filter((_, index) => index !== indexToRemove)
-    );
-  };
-
   const continueExpedition = () => {
+    console.log(expeditionData);
 
     if (!expeditionData[0].started) {
       setExpeditionData((prevData) => [

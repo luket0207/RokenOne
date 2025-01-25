@@ -15,7 +15,6 @@ function App() {
         <GameDataListener>
           <DndProvider backend={HTML5Backend}>
             <div>
-              {/* <Nav /> */}
               <AppRoutes />
             </div>
           </DndProvider>
