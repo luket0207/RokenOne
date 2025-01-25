@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/RokenOne/static/css/main.4f7cab8c.css",
-    "main.js": "/RokenOne/static/js/main.1b4c067a.js",
+    "main.css": "/RokenOne/static/css/main.97169010.css",
+    "main.js": "/RokenOne/static/js/main.339b4d6c.js",
     "static/js/151.6af7596a.chunk.js": "/RokenOne/static/js/151.6af7596a.chunk.js",
     "static/media/sittingRoken.png": "/RokenOne/static/media/sittingRoken.88dce8c76e3ca8c8b954.png",
     "static/media/Roken_Battle_Back.png": "/RokenOne/static/media/Roken_Battle_Back.797c0b4797e413b99ac8.png",
@@ -11,12 +11,12 @@
     "static/media/dash-chevron.png": "/RokenOne/static/media/dash-chevron.8881ad42c31f69d5e738.png",
     "static/media/dash-straight-fade.png": "/RokenOne/static/media/dash-straight-fade.8a3445ab8f3e63d0599e.png",
     "index.html": "/RokenOne/index.html",
-    "main.4f7cab8c.css.map": "/RokenOne/static/css/main.4f7cab8c.css.map",
-    "main.1b4c067a.js.map": "/RokenOne/static/js/main.1b4c067a.js.map",
+    "main.97169010.css.map": "/RokenOne/static/css/main.97169010.css.map",
+    "main.339b4d6c.js.map": "/RokenOne/static/js/main.339b4d6c.js.map",
     "151.6af7596a.chunk.js.map": "/RokenOne/static/js/151.6af7596a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f7cab8c.css",
-    "static/js/main.1b4c067a.js"
+    "static/css/main.97169010.css",
+    "static/js/main.339b4d6c.js"
   ]
 }
