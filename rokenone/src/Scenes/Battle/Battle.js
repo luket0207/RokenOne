@@ -10,7 +10,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ChargeBar from "./Components/ChargeBar/ChargeBar";
 
 const Battle = () => {
-  const { playerTeam, setPlayerTeam, resetExpedition } = useContext(GameDataContext);
+  const { playerTeam, setPlayerTeam, resetExpedition, moveToNextDay } = useContext(GameDataContext);
   const { state } = useLocation(); // Retrieve the enemies passed from Home
   const [isBattleStarted, setIsBattleStarted] = useState(false);
   const [turn, setTurn] = useState(0);
@@ -130,6 +130,7 @@ const Battle = () => {
       }))
     );
     clearInterval(intervalRef.current);
+    moveToNextDay();
     navigate("/expeditionhome");
   };
 

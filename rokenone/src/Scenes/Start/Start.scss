@@ -1,31 +1,29 @@
-@import '../../Assets/Scss/import.scss';
+@import "../../Assets/Scss/import.scss";
 
 .start {
-    @include sceneContainer;
-    display: grid;
-    grid-template-rows: 400px auto auto;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
+  @include sceneContainer;
+  display: grid;
+  grid-template-rows: 450px auto auto;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 
-    h1 {
-        padding-left: 80px;
-        padding-right: 350px;
-        position: relative;
-        font-size: 80px;
+  h1 {
+    padding-left: 80px;
+    padding-right: 350px;
+    position: relative;
+    font-size: 80px;
 
-        img {
-            height: 400px;
-            position: absolute;
-            bottom: -138px;
-            right: 50px;
-            z-index: 1;
-        }
+    img {
+      height: 400px;
+      position: absolute;
+      bottom: -138px;
+      right: 50px;
+      z-index: 1;
     }
+  }
 
-    .load-game {
-        @include cardFrame;
-        padding: 30px;
-        text-align: center;
-    }
+  .load-game input[type="file"] {
+    display: none; // Hide the default file input button
+  }
 }

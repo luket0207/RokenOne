@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 // Create the GameDataContext
 export const GameDataContext = createContext();
@@ -7,11 +7,11 @@ export const GameDataContext = createContext();
 export const GameDataProvider = ({ children }) => {
   // Initial dummy data for game states
   const [expeditionData, setExpeditionData] = useState([
-    { 
-      day: 0, 
+    {
+      day: 0,
       expedition: null,
       started: false,
-    }
+    },
   ]);
 
   // Initial dummy data for the player's team
@@ -21,20 +21,39 @@ export const GameDataProvider = ({ children }) => {
   const updateCurrentDay = (newDay) => {
     setExpeditionData((prevData) => [
       {
-        ...prevData[0], 
-        day: newDay
-      }
+        ...prevData[0],
+        day: newDay,
+      },
     ]);
   };
 
   const resetExpedition = () => {
-    setExpeditionData([{ expedition: null, day: 0 }]); // Reset the expedition and day
+    setExpeditionData([{ day: 0, expedition: null, started: false }]); // Reset the expedition and day
+  };
+
+  const moveToNextDay = () => {
+    setExpeditionData((prevData) => [
+      {
+        ...prevData[0],
+        day: prevData[0].day + 1, // Increment day by 1
+      },
+    ]);
   };
 
   // Add functions to modify game state or player team if needed later
 
   return (
-    <GameDataContext.Provider value={{ expeditionData, playerTeam, setExpeditionData, resetExpedition, setPlayerTeam, updateCurrentDay }}>
+    <GameDataContext.Provider
+      value={{
+        expeditionData,
+        playerTeam,
+        setExpeditionData,
+        resetExpedition,
+        setPlayerTeam,
+        updateCurrentDay,
+        moveToNextDay,
+      }}
+    >
       {children}
     </GameDataContext.Provider>
   );

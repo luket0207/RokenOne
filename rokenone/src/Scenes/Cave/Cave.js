@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button/Button";
 import "./Cave.scss";
+import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 
 const Cave = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // Player's current position in the cave
@@ -9,6 +10,7 @@ const Cave = () => {
   const [gameOver, setGameOver] = useState(false); // Flag to indicate if the game is over
   const [result, setResult] = useState(""); // Result message
   const variableProximity = 2; // Variable proximity for winning
+  const { moveToNextDay } = useContext(GameDataContext);
 
   const navigate = useNavigate();
 
@@ -45,6 +47,7 @@ const Cave = () => {
 
   // Navigate back to home
   const goBackHome = () => {
+    moveToNextDay();
     navigate("/expeditionhome");
   };
 

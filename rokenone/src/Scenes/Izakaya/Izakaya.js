@@ -6,7 +6,7 @@ import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 
 const Izakaya = () => {
   const navigate = useNavigate(); // Initialize useNavigate
-  const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
+  const { playerTeam, setPlayerTeam, moveToNextDay } = useContext(GameDataContext);
 
   // Initialize isHealed state using useState correctly
   const [isHealed, setIsHealed] = useState(false);
@@ -22,6 +22,7 @@ const Izakaya = () => {
   };
 
   const handleContinue = () => {
+    moveToNextDay();
     setIsHealed(false); // Reset isHealed when continuing
     navigate("/expeditionhome"); // Navigate to /expeditionhome when the button is clicked
   };

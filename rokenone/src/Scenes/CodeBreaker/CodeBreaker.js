@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"; // Example icons
 import "./CodeBreaker.scss";
 import Button from "../../Components/Button/Button";
+import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 
 const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   const [hiddenCode, setHiddenCode] = useState([]);
@@ -24,6 +25,7 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isCorrectGuess, setIsCorrectGuess] = useState(false);
   const navigate = useNavigate();
+  const { moveToNextDay } = useContext(GameDataContext);
 
   const numberToIconMap = {
     1: faAppleAlt,
@@ -45,7 +47,6 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   useEffect(() => {
     const randomCode = generateRandomCode();
     setHiddenCode(randomCode);
-    console.log("Hidden Code:", randomCode);
   }, [codeLength]);
 
   const handleGuess = (playerGuess) => {
@@ -102,6 +103,7 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   };
 
   const navigateToHome = () => {
+    moveToNextDay();
     navigate("/expeditionhome");
   };
 

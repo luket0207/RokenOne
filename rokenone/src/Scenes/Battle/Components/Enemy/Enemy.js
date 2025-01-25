@@ -63,7 +63,6 @@ const Enemy = ({
             onDrop={(e) => {
               const characterIndex = e.dataTransfer.getData("characterIndex");
               // Call the passed in functions to set the weapon attacker and enemy
-              console.log(`${characterIndex} ${index} set for weapon drag`);
               setWeaponAttacker(characterIndex);
               setWeaponEnemy(index);
               setDraggedOverIndex(null); // Clear the drag state when dropped

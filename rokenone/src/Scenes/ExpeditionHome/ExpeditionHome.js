@@ -11,24 +11,7 @@ const ExpeditionHome = () => {
   const [selectedEnemies, setSelectedEnemies] = useState([]); // Store selected enemies
 
   const continueExpedition = () => {
-    console.log(expeditionData);
-
-    if (!expeditionData[0].started) {
-      setExpeditionData((prevData) => [
-        {
-          ...prevData[0],
-          started: true, // Set 'started' to true
-        },
-      ]);
-    } else {
-      // Update the day before navigating to the Expedition Map
-      const currentDay = expeditionData[0]?.day || 0; // Get the current day
-      if (currentDay < expeditionData[0]?.expedition?.days.length) {
-        const newDay = currentDay + 1; // Move to the next day
-        updateCurrentDay(newDay); // Update the day in GameDataContext
-      }
-    }
-    navigate("/expeditionmap"); // Navigate to the Expedition Map
+     navigate("/expeditionmap"); // Navigate to the Expedition Map
   };
 
   const backToHome = () => {
