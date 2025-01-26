@@ -1,0 +1,42 @@
+@import "../../Assets/Scss/import.scss";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); // Background overlay
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff; // Background color of modal
+  padding: 50px;
+  border-radius: 10px;
+  position: relative;
+  min-width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $burgendy;
+  top: -10px;
+  right: -10px;
+  color: $lightGrey;
+  cursor: pointer;
+  border: none;
+  @include boxShadowHover(-3px);
+  font-size: 20px;
+}

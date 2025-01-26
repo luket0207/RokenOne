@@ -6,6 +6,7 @@
     justify-content: center;
     justify-items: center;
     align-items: center;
+    @include homeBackground;
 
     h3 {
         margin-top: 40px;
@@ -13,9 +14,41 @@
 
     p, ul {
         max-width: 800px;
+        width: 100%;
     }
 
     .btn {
         margin-top: 40px;
+    }
+
+    .sample {
+        margin-left: 10px;
+        height: 26px;
+        width: 26px;
+        display: inline-block;
+        border: solid 2px black;
+        border-radius: 5px;
+        position: relative;
+        top: 8px;
+
+        &.grey {
+            background-color: $grey;
+        }
+
+        &.dark-grey {
+            background-color: $darkerGrey;
+        }
+
+        &.green {
+            background-color: $green;
+        }
+
+        &.gold {
+            background-color: $gold;
+        }
+
+        &.purple {
+            background-color: $purple;
+        }
     }
 }

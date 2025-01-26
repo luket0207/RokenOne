@@ -8,7 +8,7 @@ import "./Start.scss";
 import Button from "../../Components/Button/Button";
 
 const Start = () => {
-  const { setPlayerTeam, setExpeditionData } = useContext(GameDataContext);
+  const { setPlayerTeam, setExpeditionData, setPlayerData } = useContext(GameDataContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,37 +17,40 @@ const Start = () => {
   }, [setPlayerTeam]);
 
   const handleStart = () => {
-    const teamWithActions = addActionsToTeam([teammates[0]]);
+    const teamWithActions = addActionsToRoken([teammates[0]]);
     setPlayerTeam(teamWithActions);
     navigate("/home");
   };
 
-  const addActionsToTeam = (team) => {
+  const addActionsToRoken = (team) => {
     return team.map((character) => {
-      const availableActions = actions.filter(
-        (action) =>
-          !action.locked &&
-          (action.class === "All" || action.class === character.class)
-      );
-      return { ...character, actionPool: availableActions };
+      if (character.class === "Roken") {
+        const availableActions = actions.filter(
+          (action) => action.id === "A1" || action.id === "D1"
+        );
+        return { ...character, actionPool: availableActions };
+      }
+      return character; // Return other characters unchanged
     });
-  };
+  };  
 
   const handleLoadGame = async (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        const [base64ExpeditionData, base64PlayerTeam] =
+        const [base64ExpeditionData, base64PlayerTeam, base64PlayerData] =
           reader.result.split("\n");
 
         // Convert Base64 back to original data
         let expeditionData = JSON.parse(atob(base64ExpeditionData));
         const playerTeam = JSON.parse(atob(base64PlayerTeam));
+        const playerData = JSON.parse(atob(base64PlayerData));
 
         // Set the context with the loaded data
         setExpeditionData(expeditionData);
         setPlayerTeam(playerTeam);
+        setPlayerData(playerData);
 
         // Navigate to home to continue the game
         navigate("/home");

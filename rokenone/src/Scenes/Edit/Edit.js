@@ -1,23 +1,35 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useDrag, useDrop } from "react-dnd";
 import "./Edit.scss"; // Make sure the styles are applied
 import Button from "../../Components/Button/Button";
-import Carousel from "../../Components/Carousel/Carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPlusCircle,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import ActionCard from "../../Components/ActionCard/ActionCard";
+import Modal from "../../Components/Modal/Modal";
 
 const ItemType = {
   ACTION: "action",
 };
 
 const Edit = () => {
-  const { characterId } = useParams();
-  const { playerTeam, setPlayerTeam } = useContext(GameDataContext);
+  const { navString, characterId } = useParams();
+  const { playerTeam, setPlayerTeam, playerData, setPlayerData } =
+    useContext(GameDataContext);
   const navigate = useNavigate();
 
   const character = playerTeam.find((char) => char.id === Number(characterId));
+  const cardBank = playerData.cardBank || [];
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   if (!character) {
     return <div>Character not found or not selected yet!</div>;
@@ -26,28 +38,23 @@ const Edit = () => {
   const handleDrop = (action, index) => {
     if (index >= character.timelineSlots) return;
 
-    // Ensure the timeline length matches character.timelineSlots
     const newTimeline = Array(character.timelineSlots)
       .fill(null)
       .map((slot, idx) => character.timeline[idx] || null);
 
-    // Find the existing action in the slot (if any) and unlock it
     const replacedAction = newTimeline[index];
     let updatedActionPool = [...character.actionPool];
 
     if (replacedAction) {
-      // Unlock the replaced action by setting locked to false
       updatedActionPool = updatedActionPool.map((a) =>
         a.id === replacedAction.id ? { ...a, locked: false } : a
       );
     }
 
-    // Lock the new action being added to the timeline
     updatedActionPool = updatedActionPool.map((a) =>
       a.id === action.id ? { ...a, locked: true } : a
     );
 
-    // Place the new action in the timeline
     newTimeline[index] = action;
 
     const updatedCharacter = {
@@ -64,7 +71,6 @@ const Edit = () => {
   };
 
   const handleReturnToPool = (action) => {
-    // Remove the action from the timeline but preserve the length with nulls
     const newTimeline = Array(character.timelineSlots)
       .fill(null)
       .map((slot, idx) =>
@@ -73,7 +79,6 @@ const Edit = () => {
           : character.timeline[idx]
       );
 
-    // Unlock the action when it is returned to the pool
     const updatedActionPool = character.actionPool.map((a) =>
       a.id === action.id ? { ...a, locked: false } : a
     );
@@ -91,63 +96,75 @@ const Edit = () => {
     );
   };
 
-  // Function to generate description based on action attributes
-  const generateDescription = (action) => {
-    let description = [];
+  const handleUpgrade = (action) => {
+    const cardBankAction = cardBank.find((c) => c.id === action.id);
 
-    // Handle the attack and defence properties
-    if (action.attack) {
-      description.push(`Attack ${action.attack}`);
-    } else if (action.defence) {
-      description.push(`Defence ${action.defence}`);
-    } else if (action.heal) {
-      description.push(`Heal ${action.heal}`);
-    } else if (action.healAll) {
-      description.push(`Heal All ${action.healAll}`);
-    } else if (action.charge) {
-      description.push(`Charge ${action.charge}`);
-    } else if (action.illusion) {
-      description.push(`Illusion ${action.illusion}`);
-    } else if (action.buffAttack && action.buffDefence) {
-      description.push(
-        `Buff Attack ${action.buffAttack}, Buff Defence ${action.buffDefence}`
-      );
-    } else if (action.attackAll) {
-      description.push(`Attack All ${action.attackAll}`);
-    } else if (action.defenceAll) {
-      description.push(`Defence All ${action.defenceAll}`);
+    if (!cardBankAction || cardBankAction.quantity < action.level + 1) {
+      alert("Not enough cards in the cardBank to upgrade!");
+      return;
     }
 
-    // Handle the weatherBoostEffect and weatherBoost properties
-    if (action.weatherBoost && action.weatherBoostEffect.length > 0) {
-      const weatherEffect = action.weatherBoostEffect[0];
-      description.push(
-        `Plus ${weatherEffect[1]} ${weatherEffect[0]} if ${action.weatherBoost}.`
-      );
-    }
+    // Update the cardBank by reducing the quantity of the action
+    const updatedCardBank = cardBank
+      .map((c) =>
+        c.id === action.id
+          ? { ...c, quantity: c.quantity - (action.level + 1) }
+          : c
+      )
+      .filter((c) => c.quantity > 0); // Remove actions with 0 quantity
 
-    // Join the description array with <br /> for line breaks
-    return description.join("<br />");
+    // Update the character's action pool with the upgraded action
+    const updatedActionPool = character.actionPool.map((a) =>
+      a.id === action.id ? { ...a, level: a.level + 1 } : a
+    );
+
+    const updatedPlayerData = {
+      ...playerData,
+      cardBank: updatedCardBank,
+    };
+
+    const updatedCharacter = {
+      ...character,
+      actionPool: updatedActionPool,
+    };
+
+    // Update the state with the new character and player data
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((char) =>
+        char.id === character.id ? updatedCharacter : char
+      )
+    );
+
+    setPlayerData(updatedPlayerData);
   };
 
   const Action = ({ action }) => {
     const [, drag] = useDrag({
       type: ItemType.ACTION,
       item: { action },
-      canDrag: () => !action.locked, // Prevent dragging of disabled actions
+      canDrag: () => !action.locked,
     });
 
+    const cardBankAction = cardBank.find((c) => c.id === action.id);
+    const cardsNeeded = action.level + 1;
+    const canUpgrade = cardBankAction && cardBankAction.quantity >= cardsNeeded;
+    const additionalCardsNeeded = cardBankAction
+      ? cardsNeeded - cardBankAction.quantity
+      : cardsNeeded;
+
     return (
-      <div
-        ref={drag}
-        className={`action-item ${action.locked ? "disabled" : ""}`}
-      >
-        <h5>{action.name}</h5>
-        {/* Render description with dangerouslySetInnerHTML to parse the HTML line breaks */}
-        <p
-          className="small-text"
-          dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
-        ></p>
+      <div className="edit-action" ref={drag}>
+        <ActionCard action={action} />
+        <div
+          onClick={() => canUpgrade && handleUpgrade(action)}
+          className={`upgrade-button ${!canUpgrade ? "disabled" : ""}`}
+        >
+          {canUpgrade ? (
+            <p>Upgrade {`(${action.level + 1})`}</p>
+          ) : (
+            <p>{additionalCardsNeeded} more needed</p>
+          )}
+        </div>
       </div>
     );
   };
@@ -170,7 +187,10 @@ const Edit = () => {
         {action ? (
           <div className="timeline-slot-action">
             <h5 className="timeline-slot-text">{action.name}</h5>
-            <div className="timeline-slot-remove" onClick={() => handleReturnToPool(action)}>
+            <div
+              className="timeline-slot-remove"
+              onClick={() => handleReturnToPool(action)}
+            >
               <FontAwesomeIcon icon={faXmark} />
             </div>
           </div>
@@ -181,7 +201,10 @@ const Edit = () => {
                 Add to Timeline
               </p>
             ) : (
-              <p className="timeline-slot-text timeline-slot-empty" style={{ color: "#333" }}>
+              <p
+                className="timeline-slot-text timeline-slot-empty"
+                style={{ color: "#333" }}
+              >
                 Empty Slot
               </p>
             )}
@@ -191,14 +214,69 @@ const Edit = () => {
     );
   };
 
-  const handleGoExpeditionHome = () => {
-    navigate("/expeditionhome");
+  const handleGoHome = () => {
+    if (navString === "e") {
+      navigate("/expeditionhome");
+    } else if (navString === "t") {
+      navigate("/editteam");
+    }
   };
+
+  const addToCharacter = (id) => {
+    // Find the action from the cardBank
+    const actionToAdd = cardBank.find((action) => action.id === id);
+
+    if (!actionToAdd || actionToAdd.quantity <= 0) {
+      alert("Not enough cards to add this action.");
+      return;
+    }
+
+    // Create a copy of the action with quantity set to 0
+    const newAction = { ...actionToAdd, quantity: 0 };
+
+    // Add the new action to the character's actionPool
+    const updatedActionPool = [...character.actionPool, newAction];
+
+    // Update the cardBank by reducing the quantity of the action
+    const updatedCardBank = cardBank
+      .map((action) =>
+        action.id === id ? { ...action, quantity: action.quantity - 1 } : action
+      )
+      .filter((action) => action.quantity > 0); // Remove actions with 0 quantity
+
+    // Update the character and player data
+    const updatedCharacter = {
+      ...character,
+      actionPool: updatedActionPool,
+    };
+
+    const updatedPlayerData = {
+      ...playerData,
+      cardBank: updatedCardBank,
+    };
+
+    // Update the state
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((char) =>
+        char.id === character.id ? updatedCharacter : char
+      )
+    );
+    setPlayerData(updatedPlayerData);
+    closeModal();
+  };
+
+  // Filter available actions based on character's class or 'All' class
+  const availableActions = cardBank.filter(
+    (action) => action.class === "All" || action.class === character.class // Filter for 'All' class or character's class
+  );
 
   return (
     <div className="edit-container">
       <h1>Edit {character.name}</h1>
-      <p className="edit-text">Drag actions from the left into your timeline. Timeline is played from the top down.</p>
+      <p className="edit-text">
+        Drag actions from the left into your timeline. Timeline is played from
+        the top down.
+      </p>
 
       <div className="edit-timeline-grid">
         <div className="action-pool">
@@ -208,6 +286,11 @@ const Edit = () => {
             .map((action) => (
               <Action key={action.id} action={action} />
             ))}
+          <div className="action-add">
+            <div className="action-add-icon" onClick={openModal}>
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </div>
+          </div>
         </div>
         <div className="timeline">
           <div>
@@ -223,11 +306,46 @@ const Edit = () => {
           ))}
         </div>
       </div>
-      {/* Make this container horizontally scrollable */}
 
       <div className="home-button">
-        <Button text={"Back to Home"} onClick={handleGoExpeditionHome}></Button>
+        <Button text={"Back"} onClick={handleGoHome}></Button>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <div className="add-action">
+          <h3>Add New Action to {character.name}</h3>
+          <div className="available-actions">
+            {availableActions.filter(
+              (action) =>
+                !character.actionPool.some(
+                  (poolAction) => poolAction.id === action.id
+                )
+            ).length > 0 ? (
+              availableActions
+                .filter(
+                  (action) =>
+                    !character.actionPool.some(
+                      (poolAction) => poolAction.id === action.id
+                    )
+                )
+                .map((action) => (
+                  <div
+                    key={action.id}
+                    className="available-actions-action"
+                    onClick={() => addToCharacter(action.id)}
+                  >
+                    <ActionCard action={action} />
+                    <span className="available-actions-action-icon">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </span>
+                  </div>
+                ))
+            ) : (
+              <p>No available actions to add.</p>
+            )}
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

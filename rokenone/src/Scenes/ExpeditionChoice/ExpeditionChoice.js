@@ -304,13 +304,6 @@ const ExpeditionChoice = () => {
         text={"Generate Samurai Medium Expedition"}
         onClick={() => generateExpedition("S2")}
       />
-
-      {generatedExpedition && (
-        <div className="expedition-output">
-          <h2>{generatedExpedition.name}</h2>
-          <pre>{JSON.stringify(generatedExpedition, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 };

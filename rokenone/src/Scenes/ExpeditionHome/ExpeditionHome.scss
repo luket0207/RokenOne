@@ -6,46 +6,49 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
-}
+  @include jungleBackground;
 
-.team {
-  display: flex;
-  margin-bottom: 30px;
-
-  &-teammate {
-    margin-right: 20px;
-    @include boxShadow;
-    @include cardFrame(true);
-    padding: 30px;
-    display: grid;
-    justify-items: center;
-    position: relative;
-
-    .no-timeline-flag {
-      position: absolute;
-      height: 36px;
-      width: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $burgendy;
-      color: $lightGrey;
-      top: -12px;
-      left: -12px;
-      border-radius: 50%;
-      animation: scaleShake 6s ease-in-out infinite;
+  .team {
+    display: flex;
+    margin-bottom: 30px;
+  
+    &-teammate {
+      margin-right: 20px;
       @include boxShadow;
-
-      h3 {
-        margin: 0;
+      @include cardFrame(true);
+      padding: 30px;
+      display: grid;
+      justify-items: center;
+      position: relative;
+  
+      .no-timeline-flag {
+        position: absolute;
+        height: 36px;
+        width: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $burgendy;
+        color: $lightGrey;
+        top: -12px;
+        left: -12px;
+        border-radius: 50%;
+        animation: scaleShake 6s ease-in-out infinite;
+        @include boxShadow;
+  
+        h3 {
+          margin: 0;
+        }
       }
-    }
-
-    &:last-of-type {
-      margin-right: 0;
+  
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
   }
 }
+
+
 
 @keyframes scaleShake {
   0% {

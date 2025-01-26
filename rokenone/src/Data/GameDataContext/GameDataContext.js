@@ -17,6 +17,45 @@ export const GameDataProvider = ({ children }) => {
   // Initial dummy data for the player's team
   const [playerTeam, setPlayerTeam] = useState([]);
 
+  const [playerData, setPlayerData] = useState([
+    {
+      xp: 0,
+      currency: 0,
+      maxTeammates: 2,
+      cardBank: [], 
+      unlockedTeammates: [
+        {
+          "id": 2,
+          "name": "Tadashi",
+          "class": "Samurai",
+          "health": 100,
+          "maxHealth": 100,
+          "timeline": [],
+          "timelineSlots": 3,
+          "actionPool": [],
+          "currentDefence": 0,
+          "currentIllusion": 0,
+          "battleFatigue": 300,
+          "weapon": []
+        },
+        {
+          "id": 3,
+          "name": "Kiyoshi",
+          "class": "Ō-Yoroi",
+          "health": 100,
+          "maxHealth": 100,
+          "timeline": [],
+          "timelineSlots": 3,
+          "actionPool": [],
+          "currentDefence": 0,
+          "currentIllusion": 0,
+          "battleFatigue": 300,
+          "weapon": []
+        }
+      ]
+    }
+  ])
+
   // Function to update the current day of the expedition
   const updateCurrentDay = (newDay) => {
     setExpeditionData((prevData) => [
@@ -47,9 +86,11 @@ export const GameDataProvider = ({ children }) => {
       value={{
         expeditionData,
         playerTeam,
+        playerData,
         setExpeditionData,
         resetExpedition,
         setPlayerTeam,
+        setPlayerData,
         updateCurrentDay,
         moveToNextDay,
       }}

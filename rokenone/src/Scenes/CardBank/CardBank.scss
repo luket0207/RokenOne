@@ -1,0 +1,25 @@
+@import "../../Assets/Scss/import.scss";
+
+.card-bank {
+  @include sceneContainer;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  @include homeBackground;
+
+  &-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    max-height: 465px;
+    overflow-y: auto;
+    margin-bottom: 50px;
+
+    .action-item {
+      margin: 20px;
+    }
+  }
+}

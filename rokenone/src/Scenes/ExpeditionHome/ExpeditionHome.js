@@ -19,7 +19,7 @@ const ExpeditionHome = () => {
   };
 
   const navigateToEdit = (id) => {
-    const navString = `/edit/${id}`;
+    const navString = `/edit/e/${id}`;
     navigate(navString);
   };
 

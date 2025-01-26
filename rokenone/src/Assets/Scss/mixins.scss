@@ -23,6 +23,75 @@
   }
 }
 
+@mixin bambooBackground {
+  z-index: 0;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('../../Assets/Images/bamboo-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.25;
+  }
+}
+
+@mixin homeBackground {
+  z-index: 0;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('../../Assets/Images/home-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.25;
+  }
+}
+
+@mixin jungleBackground {
+  z-index: 0;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('../../Assets/Images/jungle-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.25;
+  }
+}
+
+@mixin bottomDash {
+  padding-bottom: 30px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    min-width: 200px;
+    background-image: url("../Images/dashes/dash-straight-fade.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 30px;
+  }
+}
+
 @mixin cardFrame($darkMode: false) {
   @include boxShadow;
   position: relative;

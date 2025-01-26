@@ -18,15 +18,19 @@ import Loot from "./Scenes/Loot/Loot";
 import Izakaya from "./Scenes/Izakaya/Izakaya";
 import Help from "./Scenes/Help/Help";
 import EasterEgg from "./Scenes/EasterEgg/EasterEgg";
+import EditTeam from "./Scenes/EditTeam/EditTeam";
+import OpenPack from "./Scenes/OpenPack/OpenPack";
+import CardBank from "./Scenes/CardBank/CardBank";
 
 const AppRoutes = () => {
-  const { expeditionData, playerTeam } = useContext(GameDataContext);
+  const { expeditionData, playerTeam, playerData } = useContext(GameDataContext);
 
   const handleSaveGame = () => {
     try {
       // Convert to JSON strings
       const expeditionDataJSON = JSON.stringify(expeditionData);
       const playerTeamJSON = JSON.stringify(playerTeam);
+      const playerDataJSON = JSON.stringify(playerData);
 
       // Convert JSON strings to UTF-8 bytes and then base64 encode them
       const base64ExpeditionData = btoa(
@@ -35,9 +39,12 @@ const AppRoutes = () => {
       const base64PlayerTeam = btoa(
         unescape(encodeURIComponent(playerTeamJSON))
       );
+      const base64PlayerData = btoa(
+        unescape(encodeURIComponent(playerDataJSON))
+      );
 
       // Create a Blob with the base64 encoded data
-      const blob = new Blob([base64ExpeditionData, "\n", base64PlayerTeam], {
+      const blob = new Blob([base64ExpeditionData, "\n", base64PlayerTeam, "\n", base64PlayerData], {
         type: "text/plain;charset=utf-8",
       });
 
@@ -66,12 +73,15 @@ const AppRoutes = () => {
         <Route path="/expeditionchoice" element={<ExpeditionChoice />} />
         <Route path="/expeditionhome" element={<ExpeditionHome />} />
         <Route path="/expeditionmap" element={<ExpeditionMap />} />
-        <Route path="/edit/:characterId" element={<Edit />} />
+        <Route path="/edit/:navString/:characterId" element={<Edit />} />
+        <Route path="/editteam" element={<EditTeam />} />
         <Route path="/codebreaker" element={<CodeBreaker />} />
         <Route path="/cave" element={<Cave />} />
         <Route path="/battle" element={<Battle />} />
         <Route path="/help" element={<Help />} />
         <Route path="/easteregg" element={<EasterEgg />} />
+        <Route path="/openpack" element={<OpenPack />} />
+        <Route path="/cardbank" element={<CardBank />} />
       </Routes>
     </div>
   );

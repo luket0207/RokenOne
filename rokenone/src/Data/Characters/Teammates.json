@@ -28,6 +28,21 @@
     "actionPool": [],
     "currentDefence": 0,
     "currentIllusion": 0,
-    "battleFatigue": 300
+    "battleFatigue": 300,
+    "weapon": []
+  },
+  {
+    "id": 3,
+    "name": "Kiyoshi",
+    "class": "Ō-Yoroi",
+    "health": 100,
+    "maxHealth": 100,
+    "timeline": [],
+    "timelineSlots": 3,
+    "actionPool": [],
+    "currentDefence": 0,
+    "currentIllusion": 0,
+    "battleFatigue": 300,
+    "weapon": []
   }
 ]

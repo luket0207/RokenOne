@@ -6,9 +6,9 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
-}
+  @include jungleBackground;
 
-//Enemy Selection
+  //Enemy Selection
 
 .enemies {
   display: grid;
@@ -75,3 +75,6 @@
     }
   }
 }
+
+}
+

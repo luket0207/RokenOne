@@ -14,9 +14,10 @@ body {
     height: 60px;
     width: 60px;
     border-radius: 50%;
-    background-color: $lightGrey;
+    background-color: $grey;
     cursor: pointer;
     @include boxShadowHover;
+    z-index: 500;
     
     .icon {
         color: $darkerGrey;

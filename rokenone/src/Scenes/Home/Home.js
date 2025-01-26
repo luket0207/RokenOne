@@ -9,8 +9,8 @@ const Home = () => {
   const { expeditionData } = useContext(GameDataContext); // Access expedition data from context
 
   // Functions for handling button clicks
-  const navigateToShop = () => {
-    navigate("/shop");
+  const navigateToCardBank = () => {
+    navigate("/cardbank");
   };
 
   const navigateToExpedition = () => {
@@ -22,8 +22,8 @@ const Home = () => {
     }
   };
 
-  const navigateToCards = () => {
-    navigate("/cards");
+  const navigateToOpenPack = () => {
+    navigate("/openpack");
   };
 
   const navigateToEditTeam = () => {
@@ -36,10 +36,10 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Button text={"Shop"} onClick={navigateToShop} disabled={true} />
+      <Button text={"Card Bank"} onClick={navigateToCardBank} />
       <Button text={"Expeditions"} onClick={navigateToExpedition} />
-      <Button text={"Cards"} onClick={navigateToCards} disabled={true} />
-      <Button text={"Edit Team"} onClick={navigateToEditTeam} disabled={true} />
+      <Button text={"OpenPack"} onClick={navigateToOpenPack} />
+      <Button text={"Edit Team"} onClick={navigateToEditTeam} />
       <Button text={"Help"} onClick={navigateToHelp} />
     </div>
   );

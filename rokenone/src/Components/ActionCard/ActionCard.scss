@@ -1,50 +1,73 @@
 @import "../../Assets/Scss/import.scss";
 
-.action-card {
-    position: relative;
-    display: inline-block;
-    padding: 10px;
-    width: 200px;
-    height: 60px;
-    cursor: pointer;
-    @include cardFrame;
-  
-    .info-icon {
-      display: inline-block;
-      cursor: pointer;
-      font-size: 16px; /* Adjust size if necessary */
-      margin-left: 5px;
-    }
-  
-    .description {
-      position: absolute;
-      top: 100%; /* Adjust positioning as needed */
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: $lightGrey;
-      border: solid 2px $darkerGrey;
-      padding: 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: pre-wrap; /* Keeps line breaks */
-      z-index: 10;
-      max-width: 200px; /* Adjust size if necessary */
-      display: block;
+.action-title {
+  margin-bottom: 5px;
+}
 
-    }
-  }
-  
-  .action-class-all {
+.action-text {
+  margin-bottom: 0px;
+}
 
+.action-quantity {
+  position: absolute;
+  background-color: $darkerGrey;
+  height: 30px;
+  width: 45px;
+  border-bottom-left-radius: 5px;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: $gold;
+  }
+}
+
+.action-item {
+  @include cardFrame;
+  width: 144px; // Fixed width
+  height: 84px;
+  padding: 30px 14px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 0 0 auto; // Prevent flex from resizing the item
+
+  p {
+    margin: 0;
+    text-align: center;
   }
 
-  .action-class-samurai {
-    background-color: lightblue;
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
   }
-  
-  .action-class-oyoroi {
-    background-color: lightgreen;
+
+  &.animate {
+    @include boxShadowHover;
   }
-  
-  /* Add more classes as needed */
-  
+
+  //Rarities
+  &.rarity-0 {
+    border: solid 8px $grey;
+  }
+
+  &.rarity-1 {
+    border: solid 8px $darkerGrey;
+  }
+
+  &.rarity-2 {
+    border: solid 8px $green;
+  }
+
+  &.rarity-3 {
+    border: solid 8px $gold;
+  }
+
+  &.rarity-4 {
+    border: solid 8px $purple;
+  }
+}

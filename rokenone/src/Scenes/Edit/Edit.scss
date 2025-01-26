@@ -7,6 +7,8 @@
   justify-items: center;
   align-items: center;
 
+  @include bambooBackground;
+
   h1 {
     margin-bottom: 20px;
   }
@@ -19,6 +21,46 @@
 .edit-timeline-grid {
   display: grid;
   grid-template-columns: 720px 280px;
+  z-index: 1;
+}
+
+.edit-action {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 170px;
+
+  .upgrade-button {
+    background-color: $gold;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translate(-50%, 50%) scale(1) rotate(0deg);
+    transition: all 0.8s ease;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    @include font;
+    width: 135px;
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+
+    &.disabled {
+      background-color: $burgendy;
+      pointer-events: none;
+      p {
+        color: $lightGrey;
+      }
+    }
+
+    &:hover {
+      transform: translate(-50%, 50%) scale(1.2) rotate(-3deg);
+    }
+  }
 }
 
 .timeline {
@@ -51,8 +93,6 @@
       margin: 10px 0px;
       text-align: center;
     }
-
-    
 
     h5 {
       margin: 0px;
@@ -104,6 +144,39 @@
   }
 }
 
+.action-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+
+  &-icon {
+    font-size: 40px;
+    @include boxShadowHover;
+    border-radius: 50%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: $darkerGrey;
+  }
+}
+
+.action-pool {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 220px;
+  height: 460px;
+  overflow-y: scroll;
+  padding: 30px 20px;
+  max-width: 700px;
+
+  .action-item {
+    cursor: grab;
+  }
+}
+
 .timeline-slot-action {
   padding: 10px 20px;
   display: grid;
@@ -119,48 +192,49 @@
   }
 }
 
-.action-title {
-  margin-bottom: 5px;
+.home-button {
+  margin-top: 40px;
 }
 
-.action-text {
-  margin-bottom: 0px;
-}
+//Modal 
 
-.action-pool {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 150px;
-  height: 460px;
-  overflow-y: scroll;
-  padding: 30px 20px;
-  max-width: 700px;
-
-  .action-item {
-    @include cardFrame;
-    @include boxShadowHover;
-    width: 160px; // Fixed width
-    height: 100px;
-    padding: 10px 20px;
-    display: grid;
-    justify-content: center;
-    align-items: center;
+.add-action {
+  h3 {
     text-align: center;
-    cursor: grab;
-    flex: 0 0 auto; // Prevent flex from resizing the item
-
-    p {
-      margin: 0;
-      text-align: center;
-    }
-
-    &.disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
   }
 }
 
-.home-button {
-  margin-top: 40px;
+.available-actions {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-top: 30px;
+
+  &-action {
+    margin: 20px;
+    cursor: pointer;
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      pointer-events: none;
+      color: $darkerGrey;
+      opacity: 0;
+      transition: all .8s ease;
+    }
+
+    &:hover {
+      .available-actions-action-icon {
+        opacity: 1;
+      }
+    }
+  }
 }

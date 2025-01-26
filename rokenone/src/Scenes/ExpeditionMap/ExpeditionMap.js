@@ -63,7 +63,6 @@ const ExpeditionMap = () => {
 
   // Function to handle advancing to the next day or completing the expedition
   const handleChoice = (type, enemies) => {
-
     // Check if the type is 'battle' and if enemies are provided for the choice
     if (type === "battle" && enemies && enemies.length > 0) {
       // Create a new array to store the full enemy objects
@@ -88,7 +87,6 @@ const ExpeditionMap = () => {
 
       // If there are any enemies to battle, start the battle
       if (fullEnemyObjects.length > 0) {
-
         // Navigate to the battle screen with the fullEnemyObjects array passed via state
         navigate("/battle", { state: { enemies: fullEnemyObjects } });
       }
@@ -111,6 +109,9 @@ const ExpeditionMap = () => {
       case "izakaya":
         navigate("/izakaya");
         break;
+      case "battle":
+       console.log("Battle Started")
+        break;
       default:
         console.error("Unknown type of choice");
     }
@@ -122,7 +123,6 @@ const ExpeditionMap = () => {
   // Effect to handle expedition completion on load
   useEffect(() => {
     if (isExpeditionComplete && expeditionData.expedition) {
-
       // Reset expedition data and day
 
       // Hide the debug menu or remove all content
