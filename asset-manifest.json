@@ -1,9 +1,12 @@
 {
   "files": {
-    "main.css": "/RokenOne/static/css/main.97169010.css",
-    "main.js": "/RokenOne/static/js/main.339b4d6c.js",
+    "main.css": "/RokenOne/static/css/main.5e3da7aa.css",
+    "main.js": "/RokenOne/static/js/main.ebec0763.js",
     "static/js/151.6af7596a.chunk.js": "/RokenOne/static/js/151.6af7596a.chunk.js",
+    "static/media/home-bg.jpg": "/RokenOne/static/media/home-bg.3125725e1aac272e7460.jpg",
+    "static/media/jungle-bg.jpg": "/RokenOne/static/media/jungle-bg.7aaa15f5fe74dd4b891d.jpg",
     "static/media/sittingRoken.png": "/RokenOne/static/media/sittingRoken.88dce8c76e3ca8c8b954.png",
+    "static/media/bamboo-bg.jpg": "/RokenOne/static/media/bamboo-bg.c6c2b6f2bd79f9f997d4.jpg",
     "static/media/Roken_Battle_Back.png": "/RokenOne/static/media/Roken_Battle_Back.797c0b4797e413b99ac8.png",
     "static/media/dash-circle.png": "/RokenOne/static/media/dash-circle.c8c16653ab22b6d7ca49.png",
     "static/media/frame.png": "/RokenOne/static/media/frame.325183423c340274302c.png",
@@ -11,12 +14,12 @@
     "static/media/dash-chevron.png": "/RokenOne/static/media/dash-chevron.8881ad42c31f69d5e738.png",
     "static/media/dash-straight-fade.png": "/RokenOne/static/media/dash-straight-fade.8a3445ab8f3e63d0599e.png",
     "index.html": "/RokenOne/index.html",
-    "main.97169010.css.map": "/RokenOne/static/css/main.97169010.css.map",
-    "main.339b4d6c.js.map": "/RokenOne/static/js/main.339b4d6c.js.map",
+    "main.5e3da7aa.css.map": "/RokenOne/static/css/main.5e3da7aa.css.map",
+    "main.ebec0763.js.map": "/RokenOne/static/js/main.ebec0763.js.map",
     "151.6af7596a.chunk.js.map": "/RokenOne/static/js/151.6af7596a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.97169010.css",
-    "static/js/main.339b4d6c.js"
+    "static/css/main.5e3da7aa.css",
+    "static/js/main.ebec0763.js"
   ]
 }
