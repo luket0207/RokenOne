@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext"; // Import the context
 import "./Home.scss";
 import Button from "../../Components/Button/Button";
+import ManaIcon from "../../Components/ManaIcon/ManaIcon";
 
 const Home = () => {
   const navigate = useNavigate();

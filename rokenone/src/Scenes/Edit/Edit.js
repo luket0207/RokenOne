@@ -280,17 +280,17 @@ const Edit = () => {
 
       <div className="edit-timeline-grid">
         <div className="action-pool">
+          <div className="action-add" onClick={openModal}>
+            <div className="action-add-icon">
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </div>
+          </div>
           {character.actionPool
             .slice()
             .sort((a, b) => a.id - b.id)
             .map((action) => (
               <Action key={action.id} action={action} />
             ))}
-          <div className="action-add">
-            <div className="action-add-icon" onClick={openModal}>
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </div>
-          </div>
         </div>
         <div className="timeline">
           <div>

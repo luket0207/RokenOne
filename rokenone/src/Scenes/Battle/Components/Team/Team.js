@@ -26,7 +26,11 @@ const Team = ({ playerTeam, teamCharge, turn }) => {
             key={teammate.id}
             className={`battle-pod ${positionClass} 
             ${turn > teammate.battleFatigue / 2 ? "tired" : ""} 
-            ${turn > (teammate.battleFatigue / 2 + teammate.battleFatigue / 4)? "fatigued" : ""} 
+            ${
+              turn > teammate.battleFatigue / 2 + teammate.battleFatigue / 4
+                ? "fatigued"
+                : ""
+            } 
             ${turn > teammate.battleFatigue ? "exhausted" : ""}`}
           >
             <div
@@ -40,17 +44,19 @@ const Team = ({ playerTeam, teamCharge, turn }) => {
             </div>
 
             {/* Draggable Button: Check if teammate has weapon and chargeCost <= teamCharge */}
-            {teammate.weapon && teammate.weapon[0].chargeCost <= teamCharge && (
-              <div
-                draggable
-                onDragStart={(e) => {
-                  e.dataTransfer.setData("characterIndex", index);
-                }}
-                className="drag-weapon"
-              >
-                <FontAwesomeIcon icon={faWandMagic} />
-              </div>
-            )}
+            {teammate.weapon &&
+              teammate.weapon.length > 0 &&
+              teammate.weapon[0].chargeCost <= teamCharge && (
+                <div
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData("characterIndex", index);
+                  }}
+                  className="drag-weapon"
+                >
+                  <FontAwesomeIcon icon={faWandMagic} />
+                </div>
+              )}
 
             {/* Use CharacterCard Component */}
             <CharacterCard

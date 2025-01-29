@@ -64,6 +64,7 @@ const ExpeditionMap = () => {
   // Function to handle advancing to the next day or completing the expedition
   const handleChoice = (type, enemies) => {
     // Check if the type is 'battle' and if enemies are provided for the choice
+    console.log(enemies);
     if (type === "battle" && enemies && enemies.length > 0) {
       // Create a new array to store the full enemy objects
       const fullEnemyObjects = [];

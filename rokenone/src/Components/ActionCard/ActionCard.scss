@@ -1,45 +1,13 @@
 @import "../../Assets/Scss/import.scss";
 
-.action-title {
-  margin-bottom: 5px;
-}
-
-.action-text {
-  margin-bottom: 0px;
-}
-
-.action-quantity {
-  position: absolute;
-  background-color: $darkerGrey;
-  height: 30px;
-  width: 45px;
-  border-bottom-left-radius: 5px;
-  top: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    color: $gold;
-  }
-}
-
 .action-item {
-  @include cardFrame;
-  width: 144px; // Fixed width
-  height: 84px;
-  padding: 30px 14px;
+  width: 200px;
+  height: 260px;
+  border: solid 5px $black;
+  border-radius: 10px;
   display: grid;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex: 0 0 auto; // Prevent flex from resizing the item
-
-  p {
-    margin: 0;
-    text-align: center;
-  }
+  grid-template-columns: 50px 150px;
+  overflow: hidden;
 
   &.disabled {
     opacity: 0.4;
@@ -50,24 +18,156 @@
     @include boxShadowHover;
   }
 
-  //Rarities
-  &.rarity-0 {
-    border: solid 8px $grey;
+  &-bar {
+    width: 50px;
+    height: 260px;
+    display: grid;
+    grid-template-rows: 68px 46px 46px 46px 46px;
+    justify-items: center;
+    align-items: center;
+    background: $darkGrey;
+    background: linear-gradient(
+      0deg,
+      rgba($darkGrey, 1) 0%,
+      rgba($lightGrey, 1) 100%
+    );
+
+    &-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background-image: url("../../Assets/Images/dashes/dash-circle.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 100% 100%;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    &-rarity {
+      align-self: flex-start;
+
+      &-dash {
+        background-image: url("../../Assets/Images/dashes/dash-straight-even.png");
+        background-repeat: no-repeat;
+        background-size: 140% 140%;
+        background-position: center center;
+        height: 10px;
+        width: 50px;
+      }
+    }
+
+    .mana-circle {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .no-mana {
+      opacity: 0.2;
+    }
+
+    .mana-dark {
+      background-color: $black;
+
+      p {
+        color: $lightGrey;
+      }
+    }
+    .mana-light {
+      background-color: $white;
+    }
+    .mana-black {
+      background-color: $manaBlack;
+    }
+    .mana-grey {
+      background-color: $manaGrey;
+    }
+    .mana-orange {
+      background-color: $manaOrange;
+    }
+    .mana-teal {
+      background-color: $manaTeal;
+    }
+    .mana-gold {
+      background-color: $manaGold;
+    }
+    .mana-jade {
+      background-color: $manaJade;
+    }
+    .mana-crimson {
+      background-color: $manaCrimson;
+    }
+    .mana-emerald {
+      background-color: $manaEmerald;
+    }
   }
 
-  &.rarity-1 {
-    border: solid 8px $darkerGrey;
-  }
+  &-main {
+    width: 150px;
+    height: 260px;
+    display: grid;
+    grid-template-rows: 80px 140px 30px;
+    background: $black;
+    background: linear-gradient(
+      0deg,
+      rgba($darkerGrey, 1) 0%,
+      rgba($black, 1) 100%
+    );
+    justify-content: center;
+    justify-items: center;
+    color: $lightGrey;
+    padding-top: 15px;
 
-  &.rarity-2 {
-    border: solid 8px $green;
-  }
+    &-title {
+      border-bottom: solid 2px $lightGrey;
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  &.rarity-3 {
-    border: solid 8px $gold;
-  }
+    h4 {
+      font-size: 14px;
+      max-width: 130px;
+      text-align: center;
+      align-self: center;
+    }
 
-  &.rarity-4 {
-    border: solid 8px $purple;
+    p {
+      font-size: 12px;
+      font-weight: 400;
+      color: $lightGrey;
+      max-width: 130px;
+      text-align: center;
+      padding-top: 10px;
+      margin: 0;
+    }
+
+    &-quantity {
+      background: $darkGrey;
+      height: 30px;
+      width: 50px;
+      justify-self: flex-end;
+      border-top-left-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        padding: 0;
+        font-size: 16px;
+        position: relative;
+        top:-1px;
+      }
+    }
   }
 }

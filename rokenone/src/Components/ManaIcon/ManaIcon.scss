@@ -1,0 +1,109 @@
+@import "../../Assets/Scss/import.scss";
+
+$manaSize: 100px;
+
+.mana-icon {
+  position: relative;
+  width: $manaSize;
+  height: $manaSize;
+}
+
+.mana-icon-image {
+  width: $manaSize;
+  height: $manaSize;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
+    0 5px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: inline-block;
+  transition: background-color .5s ease;
+}
+.mana-icon-image:before,
+.mana-icon-image:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 45%;
+  top: -40%;
+  transition: background-color .2s ease;
+  animation: wave 5s linear infinite;
+}
+.mana-icon-image:before {
+  border-radius: 30%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: wave 5s linear infinite;
+}
+@keyframes wave {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.mana-icon-image.black {
+  background-color: $manaBlack;
+
+  &:after {
+    background-color: $darkerGrey;
+  }
+}
+
+.mana-icon-image.grey {
+  background-color: $manaGrey;
+
+  &:after {
+    background-color: $lightGrey;
+  }
+}
+
+.mana-icon-image.orange {
+    background-color: $manaOrange;
+  
+    &:after {
+      background-color: $darkerGrey;
+    }
+  }
+  
+  .mana-icon-image.teal {
+    background-color: $manaTeal;
+  
+    &:after {
+      background-color: $lightGrey;
+    }
+  }
+
+  .mana-icon-image.gold {
+    background-color: $manaGold;
+  
+    &:after {
+      background-color: $darkerGrey;
+    }
+  }
+  
+  .mana-icon-image.jade {
+    background-color: $manaJade;
+  
+    &:after {
+      background-color: $lightGrey;
+    }
+  }
+
+  .mana-icon-image.crimson {
+    background-color: $manaCrimson;
+  
+    &:after {
+      background-color: $darkerGrey;
+    }
+  }
+  
+  .mana-icon-image.emerald {
+    background-color: $manaEmerald;
+  
+    &:after {
+      background-color: $lightGrey;
+    }
+  }

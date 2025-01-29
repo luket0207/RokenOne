@@ -41,7 +41,7 @@ export const GameDataProvider = ({ children }) => {
         {
           "id": 3,
           "name": "Kiyoshi",
-          "class": "Ō-Yoroi",
+          "class": "O-Yoroi",
           "health": 100,
           "maxHealth": 100,
           "timeline": [],

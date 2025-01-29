@@ -28,12 +28,12 @@
   position: relative;
   display: flex;
   justify-content: center;
-  height: 170px;
+  height: 300px;
 
   .upgrade-button {
-    background-color: $gold;
+    background-color: $green;
     position: absolute;
-    bottom: 5px;
+    bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%) scale(1) rotate(0deg);
     transition: all 0.8s ease;
@@ -50,10 +50,10 @@
     }
 
     &.disabled {
-      background-color: $burgendy;
+      background-color: $gold;
       pointer-events: none;
       p {
-        color: $lightGrey;
+        color: $darkerGrey;
       }
     }
 
@@ -148,7 +148,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  background: $white;
+  width: 200px;
+  height: 260px;
+  border: solid 5px $black;
+  border-radius: 10px;
+  @include boxShadowHover;
+  cursor: pointer;  
 
   &-icon {
     font-size: 40px;
@@ -166,11 +172,12 @@
 .action-pool {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 220px;
+  grid-auto-rows: 370px;
   height: 460px;
   overflow-y: scroll;
   padding: 30px 20px;
   max-width: 700px;
+  justify-items: center;
 
   .action-item {
     cursor: grab;
@@ -226,7 +233,7 @@
       transform: translate(-50%, -50%);
       font-size: 50px;
       pointer-events: none;
-      color: $darkerGrey;
+      color: $green;
       opacity: 0;
       transition: all .8s ease;
     }

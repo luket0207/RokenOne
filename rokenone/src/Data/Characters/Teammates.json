@@ -29,12 +29,12 @@
     "currentDefence": 0,
     "currentIllusion": 0,
     "battleFatigue": 300,
-    "weapon": []
+    "weapon": null
   },
   {
     "id": 3,
     "name": "Kiyoshi",
-    "class": "Ō-Yoroi",
+    "class": "O-Yoroi",
     "health": 100,
     "maxHealth": 100,
     "timeline": [],
@@ -43,6 +43,6 @@
     "currentDefence": 0,
     "currentIllusion": 0,
     "battleFatigue": 300,
-    "weapon": []
+    "weapon": null
   }
 ]

@@ -1,7 +1,16 @@
 import React from "react";
 import "./ActionCard.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHandFist,
+  faShieldHalved,
+  faHeart,
+  faBolt,
+  faArrowUpRightDots,
+  faHandSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 
-const ActionCard = ({action, noAnimation}) => {
+const ActionCard = ({ action, noAnimation }) => {
   // Function to generate description based on action attributes
   const generateDescription = (action) => {
     let description = [];
@@ -9,31 +18,40 @@ const ActionCard = ({action, noAnimation}) => {
     // Handle the attack and defence properties
     if (action.attack) {
       description.push(`Attack ${action.attack}`);
-    } if (action.defence) {
+    }
+    if (action.defence) {
       description.push(`Defence ${action.defence}`);
-    } if (action.heal) {
+    }
+    if (action.heal) {
       description.push(`Heal ${action.heal}`);
-    } if (action.healAll) {
+    }
+    if (action.healAll) {
       description.push(`Heal All ${action.healAll}`);
-    } if (action.charge) {
+    }
+    if (action.charge) {
       description.push(`Charge ${action.charge}`);
-    } if (action.illusion) {
+    }
+    if (action.illusion) {
       description.push(`Illusion ${action.illusion}`);
-    } if (action.buffAttack) {
+    }
+    if (action.buffAttack) {
       description.push(`Buff Attack ${action.buffAttack}`);
-    } if (action.buffDefence) {
+    }
+    if (action.buffDefence) {
       description.push(`Buff Defence ${action.buffDefence}`);
-    } if (action.attackAll) {
+    }
+    if (action.attackAll) {
       description.push(`Attack All ${action.attackAll}`);
-    } if (action.defenceAll) {
+    }
+    if (action.defenceAll) {
       description.push(`Defence All ${action.defenceAll}`);
     }
 
-    // Handle the weatherBoostEffect and weatherBoost properties
-    if (action.weatherBoost && action.weatherBoostEffect.length > 0) {
-      const weatherEffect = action.weatherBoostEffect[0];
+    // Handle the manaBoostEffect and manaBoost properties
+    if (action.manaBoost && action.manaBoostEffect.length > 0) {
+      const manaEffect = action.manaBoostEffect[0];
       description.push(
-        `Plus ${weatherEffect[1]} ${weatherEffect[0]} if ${action.weatherBoost}.`
+        `Plus ${manaEffect[1]} ${manaEffect[0]} if ${action.manaBoost}.`
       );
     }
 
@@ -42,16 +60,62 @@ const ActionCard = ({action, noAnimation}) => {
   };
 
   return (
-    <div className={`action-item ${!noAnimation ? `animate` : ""} ${action.locked ? "disabled" : ""} rarity-${action.rarity}`}>
-      <h5>{action.name} {action.level > 0 && `(${action.level})`}</h5>
-      {action.quantity > 1 && <div className="action-quantity">
-        <p>{action.quantity}</p>
-      </div>}
-      {/* Render description with dangerouslySetInnerHTML to parse the HTML line breaks */}
-      <p
-        className="small-text"
-        dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
-      ></p>
+    <div
+      className={`action-item ${!noAnimation ? `animate` : ""} ${
+        action.locked ? "disabled" : ""
+      }`}
+    >
+      <div className="action-item-bar">
+        <div className="action-item-bar-rarity">
+          {[...Array(action.rarity + 1)].map((_, index) => (
+            <div key={index} className="action-item-bar-rarity-dash"></div>
+          ))}
+        </div>
+        <div>
+          {action.level > 0 && (
+            <div className="action-item-bar-circle action-item-bar-level">
+              <p>{action.level}</p>
+            </div>
+          )}
+        </div>
+        <div className="action-item-bar-circle action-item-bar-type">
+          {action.type === "attack" && <FontAwesomeIcon icon={faHandFist} />}
+          {action.type === "defence" && (
+            <FontAwesomeIcon icon={faShieldHalved} />
+          )}
+          {action.type === "heal" && <FontAwesomeIcon icon={faHeart} />}
+          {action.type === "charge" && <FontAwesomeIcon icon={faBolt} />}
+          {action.type === "buff" && (
+            <FontAwesomeIcon icon={faArrowUpRightDots} />
+          )}
+          {action.type === "illusion" && (
+            <FontAwesomeIcon icon={faHandSparkles} />
+          )}
+        </div>
+
+        <div className="action-item-bar-circle action-item-bar-class">
+          <p>{action.class ? action.class.charAt(0).toUpperCase() : ""}</p>
+        </div>
+
+        <div className={`action-item-bar-circle ${action.manaBoost === "none" && "no-mana"}`}>
+          <div className={`mana-circle mana-${action.manaBoost}`}>
+          {action.manaBoost === "dark" && <p>D</p>}
+          {action.manaBoost === "light" && <p>L</p>}
+          </div>
+        </div>
+      </div>
+      <div className="action-item-main">
+        <div className="action-item-main-title">
+          <h4>{action.name}</h4>
+        </div>
+        <p
+          className="small-text"
+          dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
+        ></p>
+        {action.quantity > 1 &&<div className="action-item-main-quantity">
+           <p>{action.quantity}</p>
+        </div>}
+      </div>
     </div>
   );
 };

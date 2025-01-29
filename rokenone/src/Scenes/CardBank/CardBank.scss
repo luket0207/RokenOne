@@ -22,4 +22,13 @@
       margin: 20px;
     }
   }
+
+  .sort-buttons {
+    display: flex;
+    margin-bottom: 10px;
+
+    .btn {
+      margin: 0px 8px;
+    }
+  }
 }

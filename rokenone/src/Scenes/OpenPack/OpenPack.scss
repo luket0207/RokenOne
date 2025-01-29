@@ -8,9 +8,13 @@
   align-items: center;
   @include homeBackground;
 
+  h1 {
+    margin: 0;
+  }
+
   .pack {
     width: 780px;
-    height: 450px;
+    height: 500px;
     flex-wrap: wrap;
     opacity: 0;
     position: relative;
@@ -28,23 +32,27 @@
     }
     
     .card-1 {
-      top: 40px;
-      left: 20px;
+      top: 75px;
+      left: 115px;
+      transform: scale(0.7) rotate(-20deg);
     }
     
     .card-2 {
       top: 40px;
-      left: 200px;
+      left: 230px;
+      transform: scale(0.7) rotate(-5deg);
     }
     
     .card-3 {
       top: 40px;
-      left: 380px;
+      left: 350px;
+      transform: scale(0.7) rotate(5deg);
     }
     
     .card-4 {
-      top: 40px;
-      left: 560px;
+      top: 75px;
+      left: 465px;
+      transform: scale(0.7) rotate(20deg);
     }
 
     // Apply initial transform to set position for the pack
@@ -88,57 +96,57 @@
 @keyframes actionCardAnimation {
   0% {
     opacity: 0;
-    top: 290px;
+    top: 320px;
     left: 295px;
-    transform: scale(0.5);
+    transform: scale(0.5) rotate(0deg);
   }
   1% {
     opacity: 1;
-    top: 290px;
+    top: 320px;
     left: 295px;
-    transform: scale(0.5);
+    transform: scale(0.4) rotate(0deg);
   }
   20% {
     opacity: 1;
-    top: 200px;
+    top: 180px;
     left: 295px;
-    transform: scale(0.5);
+    transform: scale(0.4) rotate(0deg);
   }
   40% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.6);
+    transform: scale(1.3) rotate(0deg);
   }
   45% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.5);
+    transform: scale(1.2) rotate(0deg);
   }
   50% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.6);
+    transform: scale(1.3) rotate(0deg);
   }
   55% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.5);
+    transform: scale(1.2) rotate(0deg);
   }
   80% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.5);
+    transform: scale(1.2) rotate(0deg);
   }
   85% {
     opacity: 1;
-    top: 80px;
+    top: 60px;
     left: 295px;
-    transform: scale(1.6);
+    transform: scale(1.3) rotate(0deg);
   }
   100% {
     opacity: 1;

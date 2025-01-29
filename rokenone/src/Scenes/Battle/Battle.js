@@ -8,9 +8,11 @@ import Button from "../../Components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ChargeBar from "./Components/ChargeBar/ChargeBar";
+import ManaIcon from "../../Components/ManaIcon/ManaIcon";
 
 const Battle = () => {
-  const { playerTeam, setPlayerTeam, resetExpedition, moveToNextDay } = useContext(GameDataContext);
+  const { playerTeam, setPlayerTeam, resetExpedition, moveToNextDay } =
+    useContext(GameDataContext);
   const { state } = useLocation(); // Retrieve the enemies passed from Home
   const [isBattleStarted, setIsBattleStarted] = useState(false);
   const [turn, setTurn] = useState(0);
@@ -24,20 +26,20 @@ const Battle = () => {
   const navigate = useNavigate();
   const [teamCharge, setTeamCharge] = useState(0);
   const [enemyCharge, setEnemyCharge] = useState(0);
-  const [weather, setWeather] = useState(null);
+  const [mana, setMana] = useState(null);
   const [opponentTarget, setOpponentTarget] = useState(null);
   const intervalRef = useRef(null); // Use ref for interval
   const [intervalTime, setIntervalTime] = useState(1000);
   const [paused, setPaused] = useState(false);
-  const availableWeather = [
-    "clear",
-    "cloudy",
-    "rainy",
-    "sunny",
-    "windy",
-    "snowy",
-    "thunderstorms",
-    "blizzard",
+  const availableMana = [
+    "black",
+    "grey",
+    "orange",
+    "teal",
+    "gold",
+    "jade",
+    "crimson",
+    "emerald",
   ];
 
   useEffect(() => {
@@ -138,7 +140,7 @@ const Battle = () => {
   const handleFainted = () => {
     resetExpedition();
     navigate("/home");
-  }
+  };
 
   // Start the battle and set up the turn ticking mechanism
   const handleStartBattle = () => {
@@ -160,17 +162,17 @@ const Battle = () => {
         setOpponentTarget(null);
       }
 
-      const turnWeather = generateWeather(availableWeather);
+      const turnMana = generateMana(availableMana);
 
       // Pass in the appropriate team, setTeam function, and whether it's the player team
-      setWeather(turnWeather);
+      setMana(turnMana);
       setWeaponAnimation(null);
       handleTurn(
         playerTeam,
         setPlayerTeam,
         enemies,
         setEnemies,
-        turnWeather,
+        turnMana,
         weaponAttacker,
         weaponEnemy,
         opponentTarget
@@ -178,37 +180,46 @@ const Battle = () => {
     }
   }, [turn]);
 
-  const weatherList = [
-    { type: "clear", rarity: "common", baseProbability: 0.5 },
-    { type: "cloudy", rarity: "common", baseProbability: 0.5 },
-    { type: "rainy", rarity: "uncommon", baseProbability: 0.3 },
-    { type: "sunny", rarity: "uncommon", baseProbability: 0.3 },
-    { type: "windy", rarity: "rare", baseProbability: 0.15 },
-    { type: "snowy", rarity: "rare", baseProbability: 0.15 },
-    { type: "thunderstorms", rarity: "very rare", baseProbability: 0.05 },
-    { type: "blizzard", rarity: "very rare", baseProbability: 0.05 },
+  const manaList = [
+    { colour: "black", type: "dark", rarity: "common", baseProbability: 0.7 },
+    { colour: "grey", type: "light", rarity: "common", baseProbability: 0.7 },
+    {
+      colour: "orange",
+      type: "dark",
+      rarity: "uncommon",
+      baseProbability: 0.4,
+    },
+    { colour: "teal", type: "light", rarity: "uncommon", baseProbability: 0.4 },
+    { colour: "gold", type: "dark", rarity: "rare", baseProbability: 0.2 },
+    { colour: "jade", type: "light", rarity: "rare", baseProbability: 0.2 },
+    {
+      colour: "crimson",
+      type: "dark",
+      rarity: "veryRare",
+      baseProbability: 0.05,
+    },
+    {
+      colour: "emerald",
+      type: "light",
+      rarity: "veryRare",
+      baseProbability: 0.05,
+    },
   ];
 
-  // Function to generate weather
-  const generateWeather = (availableWeather) => {
-    if (stickWeather(weather)) {
-      // Filter available weather from the weather list
-      const filteredWeather = weatherList.filter((weather) =>
-        availableWeather.includes(weather.type)
+  // Function to generate mana
+  const generateMana = (availableMana) => {
+    if (stickMana(mana)) {
+      // Filter available mana from the mana list
+      const filteredMana = manaList.filter((mana) =>
+        availableMana.includes(mana.colour)
       );
 
-      // Group the filtered weather by their rarities
+      // Group the filtered mana by their rarities
       const rarityGroups = {
-        common: filteredWeather.filter(
-          (weather) => weather.rarity === "common"
-        ),
-        uncommon: filteredWeather.filter(
-          (weather) => weather.rarity === "uncommon"
-        ),
-        rare: filteredWeather.filter((weather) => weather.rarity === "rare"),
-        "very rare": filteredWeather.filter(
-          (weather) => weather.rarity === "very rare"
-        ),
+        common: filteredMana.filter((mana) => mana.rarity === "common"),
+        uncommon: filteredMana.filter((mana) => mana.rarity === "uncommon"),
+        rare: filteredMana.filter((mana) => mana.rarity === "rare"),
+        veryRare: filteredMana.filter((mana) => mana.rarity === "veryRare"),
       };
 
       // Adjust probabilities based on what's available
@@ -216,7 +227,7 @@ const Battle = () => {
         common: rarityGroups.common.length > 0 ? 0.5 : 0,
         uncommon: rarityGroups.uncommon.length > 0 ? 0.3 : 0,
         rare: rarityGroups.rare.length > 0 ? 0.15 : 0,
-        "very rare": rarityGroups["very rare"].length > 0 ? 0.05 : 0,
+        veryRare: rarityGroups.veryRare.length > 0 ? 0.05 : 0,
       };
 
       // Calculate total available probability
@@ -230,89 +241,100 @@ const Battle = () => {
         rarityWeights[rarity] = rarityWeights[rarity] / totalWeight;
       });
 
-      // Assign adjusted probabilities to each available weather
-      const weatherProbabilities = filteredWeather.map((weather) => {
-        const rarityProbability = rarityWeights[weather.rarity];
-        const groupSize = rarityGroups[weather.rarity].length;
+      // Assign adjusted probabilities to each available mana
+      const manaProbabilities = filteredMana.map((mana) => {
+        const rarityProbability = rarityWeights[mana.rarity];
+        const groupSize = rarityGroups[mana.rarity].length;
         return {
-          ...weather,
+          ...mana,
           adjustedProbability: rarityProbability / groupSize,
         };
       });
 
-      // Randomly choose a weather based on probabilities
+      // Randomly choose a mana based on probabilities
       const randomValue = Math.random();
       let cumulativeProbability = 0;
 
-      for (const weather of weatherProbabilities) {
-        cumulativeProbability += weather.adjustedProbability;
+      for (const mana of manaProbabilities) {
+        cumulativeProbability += mana.adjustedProbability;
         if (randomValue <= cumulativeProbability) {
-          return weather.type;
+          return mana.colour;
         }
       }
     } else {
-      return weather;
+      return mana;
     }
   };
 
-  const stickWeather = (weather) => {
-    // Define the stick chances based on the weather type
+  const stickMana = (mana) => {
+    // Define the stick chances based on the mana type
 
-    const stickChanceByWeather = {
-      clear: 0.6, // 100% chance to stay the same
-      cloudy: 0.6, // 50% chance to stay the same
-      rainy: 0.4, // 40% chance to stay the same
-      sunny: 0.4, // 50% chance to stay the same
-      windy: 0.3, // 40% chance to stay the same
-      snowy: 0.3, // 40% chance to stay the same
-      thunderstorms: 0.2, // 30% chance to stay the same
-      blizzard: 0.2, // 30% chance to stay the same
+    const stickChanceByMana = {
+      black: 0.6,
+      grey: 0.6,
+      orange: 0.5,
+      teal: 0.5,
+      gold: 0.4,
+      jade: 0.4,
+      crimson: 0.3,
+      emerald: 0.3,
     };
 
-    // Check if the weather type exists in the stickChanceByWeather
-    const stickChance = stickChanceByWeather[weather];
+    // Check if the mana type exists in the stickChanceByMana
+    const stickChance = stickChanceByMana[mana];
 
-    // If the weather type is not recognized, assume it should change (true)
+    // If the mana type is not recognized, assume it should change (true)
     if (stickChance === undefined) {
       return true;
     }
 
-    // Generate a random number to see if the weather should change
+    // Generate a random number to see if the mana should change
     const randomValue = Math.random(); // Generates a number between 0 and 1
 
-    // Return false if the weather should stick (not change), true otherwise
+    // Return false if the mana should stick (not change), true otherwise
     return randomValue >= stickChance;
   };
 
-  const checkWeatherBoost = (
-    weather,
-    weatherBoost,
-    weatherBoostEffect,
-    action
-  ) => {
-    // If the weather matches the boost for this action
-    if (weather === weatherBoost) {
-      // Apply the weather boost effect to the action attributes
-      if (Array.isArray(weatherBoostEffect)) {
-        weatherBoostEffect.forEach(([attribute, boostValue]) => {
-          // Check if the attribute exists and its current value is greater than 0
-          if (action[attribute] !== undefined && action[attribute] > 0) {
-            action[attribute] += boostValue; // Apply the boost to the corresponding attribute
+  const checkManaBoost = (mana, manaBoost, manaBoostEffect, action) => {
+    // Define mana types
+    const manaTypes = {
+      dark: ["black", "orange", "gold", "crimson"],
+      light: ["grey", "teal", "jade", "emerald"],
+    };
+
+    // Determine mana type
+    const manaType = Object.keys(manaTypes).find((type) =>
+      manaTypes[type].includes(mana)
+    );
+
+    // If the mana matches either the manaBoost or the manaType
+    if (mana === manaBoost || manaType === manaBoost) {
+      // Apply the mana boost effect to the action attributes
+      if (Array.isArray(manaBoostEffect)) {
+        manaBoostEffect.forEach(([attribute, boostValue]) => {
+          // Track original value, even if attribute is being created
+          if (action.originalValues === undefined) {
+            action.originalValues = {}; // Initialize if not present
+          }
+
+          if (action[attribute] !== undefined) {
+            action.originalValues[attribute] = action[attribute]; // Save the original value
+            action[attribute] += boostValue; // Apply the boost value
             console.log(
-              `${attribute} was boosted by ${boostValue} because it's ${weather}`
-            );
-          } else if (action[attribute] <= 0) {
-            console.log(
-              `${attribute} not boosted because its value is ${action[attribute]} (<= 0)`
+              `${attribute} was boosted by ${boostValue} because mana is ${mana}`
             );
           } else {
-            action[attribute] = boostValue; // If the attribute is missing, set the boosted value
+            action.originalValues[attribute] = undefined; // Track created attribute
+            action[attribute] = boostValue; // Set the boost value
+            console.log(
+              `${attribute} was created and set to ${boostValue} because mana is ${mana}`
+            );
           }
         });
       } else {
         console.error(
-          "weatherBoostEffect is not an iterable array:",
-          weatherBoostEffect
+          "manaBoostEffect is not an iterable array:",
+          manaBoostEffect
         );
       }
     }
@@ -349,7 +371,7 @@ const Battle = () => {
     setPlayerTeam,
     enemies,
     setEnemies,
-    turnWeather,
+    turnMana,
     weaponAttacker,
     weaponEnemy,
     opponentTargetIndex = null
@@ -357,7 +379,7 @@ const Battle = () => {
     let playerTeamBuffs = { attack: 0, defence: 0, heal: 0 };
     let enemyTeamBuffs = { attack: 0, defence: 0, heal: 0 };
 
-    console.log(`Turn ${turn} with weather: ${turnWeather}`);
+    console.log(`!!!NEW TURN!!! turn: ${turn} mana: ${turnMana}`);
 
     // Step 2: Apply illusion effects to both teams before any action processing
     const applyIllusionEffects = (team, enemyTeam) => {
@@ -422,23 +444,14 @@ const Battle = () => {
         // Store the action to be played
         teammate.actionPlayed = action;
 
-        // Apply weather boost and any other adjustments
-        if (action.weatherBoost) {
-          const originalValues = {};
-          if (Array.isArray(action.weatherBoostEffect)) {
-            action.weatherBoostEffect.forEach(([attribute]) => {
-              if (action[attribute] !== undefined) {
-                originalValues[attribute] = action[attribute]; // Save original value
-              }
-            });
-          }
-          action = checkWeatherBoost(
-            turnWeather,
-            action.weatherBoost,
-            action.weatherBoostEffect,
+        // Apply mana boost and any other adjustments
+        if (action.manaBoost) {
+          action = checkManaBoost(
+            turnMana,
+            action.manaBoost,
+            action.manaBoostEffect,
             action
           );
-          action.originalValues = originalValues;
         }
         return action;
       });
@@ -493,11 +506,9 @@ const Battle = () => {
       enemyTeamBuffs.heal
     );
 
-    // Declare finalPlayerTeam and finalEnemyTeam outside the if/else block
-    let finalPlayerTeam;
-    let finalEnemyTeam;
-
     // Trigger weapon if played
+    let finalPlayerTeam = playerTeamWithHeal;
+    let finalEnemyTeam = enemyTeamWithHeal;
     if (weaponAttacker !== null && weaponEnemy !== null) {
       const { updatedPlayerTeam, updatedEnemyTeam } = triggerWeapon({
         weaponAttacker,
@@ -509,46 +520,36 @@ const Battle = () => {
       setWeaponAnimation(weaponEnemy);
       finalPlayerTeam = updatedPlayerTeam;
       finalEnemyTeam = updatedEnemyTeam;
-    } else {
-      finalPlayerTeam = playerTeamWithHeal;
-      finalEnemyTeam = enemyTeamWithHeal;
     }
 
-    // Step 10: Remove weather boost effects at the end of the turn and reset illusions for both teams
+    // Step 10: Remove mana boost effects and reset illusions
     const resetEffectsAndIllusions = (team) => {
       return team.map((teammate) => {
-        if (teammate.actionPlayed && teammate.actionPlayed.originalValues) {
-          const { originalValues } = teammate.actionPlayed;
+        const { actionPlayed } = teammate;
+        if (actionPlayed && actionPlayed.originalValues) {
+          const { originalValues } = actionPlayed;
           Object.keys(originalValues).forEach((attribute) => {
-            if (teammate.actionPlayed[attribute] !== undefined) {
-              teammate.actionPlayed[attribute] = originalValues[attribute]; // Restore original value
+            if (originalValues[attribute] === undefined) {
+              delete actionPlayed[attribute]; // Remove newly created attribute
+            } else {
+              actionPlayed[attribute] = originalValues[attribute]; // Restore original value
             }
           });
-          delete teammate.actionPlayed.originalValues;
+          delete actionPlayed.originalValues;
         }
         teammate.currentIllusion = 0; // Reset illusion
         return teammate;
       });
     };
 
-    console.log(finalPlayerTeam);
+    // Reset effects and update both teams' state
+    const finalProcessedPlayerTeam = resetEffectsAndIllusions(finalPlayerTeam);
+    const finalProcessedEnemyTeam = resetEffectsAndIllusions(finalEnemyTeam);
 
-    // Ensure both finalPlayerTeam and finalEnemyTeam are arrays before calling the reset function
-    if (Array.isArray(finalPlayerTeam) && Array.isArray(finalEnemyTeam)) {
-      const finalProcessedPlayerTeam =
-        resetEffectsAndIllusions(finalPlayerTeam);
-      const finalProcessedEnemyTeam = resetEffectsAndIllusions(finalEnemyTeam);
+    setPlayerTeam(finalProcessedPlayerTeam);
+    setEnemies(finalProcessedEnemyTeam);
 
-      // Step 11: Update both teams' state
-      setPlayerTeam(finalProcessedPlayerTeam);
-      setEnemies(finalProcessedEnemyTeam);
-    } else {
-      console.error(
-        "Error: finalPlayerTeam or finalEnemyTeam is not an array."
-      );
-    }
-
-    //Reset Weapon Stuff
+    // Reset weapon-related variables
     setWeaponAttacker(null);
     setWeaponEnemy(null);
     setWeaponPlayed(null);
@@ -984,7 +985,6 @@ const Battle = () => {
         {!battleEnded && (
           <div className="turn-info">
             <p>Turn: {turn}</p>
-            <p>Weather: {weather}</p>
             <p>Target: {opponentTarget}</p>
             <div>
               <button onClick={handlePause}>
@@ -995,6 +995,7 @@ const Battle = () => {
               <button onClick={handleFastSpeed}>Fast</button>
             </div>
             <div>{weaponPlayed && <p>{weaponPlayed.name}</p>}</div>
+            {mana && <ManaIcon colour={mana} />}
           </div>
         )}
       </div>
