@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/RokenOne/static/css/main.172fcb55.css",
-    "main.js": "/RokenOne/static/js/main.31936dba.js",
+    "main.css": "/RokenOne/static/css/main.9901d836.css",
+    "main.js": "/RokenOne/static/js/main.ad81bb34.js",
     "static/js/151.6af7596a.chunk.js": "/RokenOne/static/js/151.6af7596a.chunk.js",
     "static/media/home-bg.jpg": "/RokenOne/static/media/home-bg.3125725e1aac272e7460.jpg",
     "static/media/jungle-bg.jpg": "/RokenOne/static/media/jungle-bg.7aaa15f5fe74dd4b891d.jpg",
@@ -15,12 +15,12 @@
     "static/media/dash-straight-fade.png": "/RokenOne/static/media/dash-straight-fade.8a3445ab8f3e63d0599e.png",
     "static/media/dash-straight-even.png": "/RokenOne/static/media/dash-straight-even.3931488edbe10538e520.png",
     "index.html": "/RokenOne/index.html",
-    "main.172fcb55.css.map": "/RokenOne/static/css/main.172fcb55.css.map",
-    "main.31936dba.js.map": "/RokenOne/static/js/main.31936dba.js.map",
+    "main.9901d836.css.map": "/RokenOne/static/css/main.9901d836.css.map",
+    "main.ad81bb34.js.map": "/RokenOne/static/js/main.ad81bb34.js.map",
     "151.6af7596a.chunk.js.map": "/RokenOne/static/js/151.6af7596a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.172fcb55.css",
-    "static/js/main.31936dba.js"
+    "static/css/main.9901d836.css",
+    "static/js/main.ad81bb34.js"
   ]
 }
