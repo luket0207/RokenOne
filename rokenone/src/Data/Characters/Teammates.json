@@ -11,11 +11,7 @@
     "currentDefence": 0,
     "currentIllusion": 0,
     "battleFatigue": 300,
-    "weapon": [{
-      "name": "Bamboo",
-      "attack": 20,
-      "chargeCost": 2
-    }]
+    "weapon": null
   },
   {
     "id": 2,

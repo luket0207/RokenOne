@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Bamboo Stick",
+    "chargeCost": 2,
+    "slots": 1
+  },
+  {
+    "name": "Sword",
+    "chargeCost": 2,
+    "slots": 1
+  },
+  {
+    "name": "Mace",
+    "chargeCost": 2,
+    "slots": 1
+  }
+]

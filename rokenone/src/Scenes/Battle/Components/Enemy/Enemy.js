@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CharacterCard from "../../../../Components/CharacterCard/CharacterCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullseye, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -42,11 +42,11 @@ const Enemy = ({
 
         return (
           <div
+            key={`${index}-${turn}`}  // Use turn as part of the key to trigger re-render on turn change
             className={`enemy ${index === opponentTarget ? "targeted" : ""} 
               ${index === weaponAnimation ? "weapon-attacked" : ""} 
               ${index === draggedOverIndex ? "dragged-on" : ""} 
               ${enemy.health === 0 ? "dead" : ""}`}
-            key={enemy.id}
             onClick={() => setTarget(index, enemy.health)}
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={(e) => {

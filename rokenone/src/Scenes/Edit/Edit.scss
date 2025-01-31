@@ -203,7 +203,7 @@
   margin-top: 40px;
 }
 
-//Modal 
+//Action Modal 
 
 .add-action {
   h3 {
@@ -242,6 +242,30 @@
       .available-actions-action-icon {
         opacity: 1;
       }
+    }
+  }
+}
+
+//Weapon Modal 
+
+.weapon-selection {
+  min-width: 600px;
+
+  p {
+    margin: 20px 0px;
+  }
+
+  .weapon-item {
+    @include boxShadowHover;
+    display: inline-flex;
+    margin: 5px;
+    padding: 5px 20px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    h4 {
+      margin: 0;
     }
   }
 }

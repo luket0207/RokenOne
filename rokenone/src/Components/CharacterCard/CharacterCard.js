@@ -13,7 +13,7 @@ const CharacterCard = ({ teammate, currentActionIndex, enemy = false }) => {
         {teammate.actionPlayed && teammate.actionPlayed.name !== "No Action" && (
           <div
             className={`action-played action-${teammate.actionPlayed.type}`}
-            key={teammate.actionPlayed.name}
+            key={teammate.actionPlayed.id}
           >
             <p>{teammate.actionPlayed.name}</p>
           </div>

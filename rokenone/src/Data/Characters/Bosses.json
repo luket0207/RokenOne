@@ -9,17 +9,20 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "BS1A",
         "name": "Samurai Slash",
         "action": "Action A",
         "type": "attack",
         "attack": 10
       },
       {
+        "id": "BS1B",
         "action": "Action B",
         "name": "Taunt",
         "type": "missed"
       },
       {
+        "id": "BS1C",
         "name": "Samurai Stab",
         "action": "Action C",
         "type": "attack",
@@ -38,29 +41,33 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "BO1A",
         "name": "Armor Crush",
         "action": "Action A",
         "type": "attack",
-        "attack": 6
+        "attack": 5
       },
       {
+        "id": "BO1B",
         "name": "Steel Guard",
         "action": "Action B",
         "type": "defence",
-        "defence": 10
+        "defence": 5
       },
       {
+        "id": "BO1C",
         "action": "Action C",
         "name": "Taunt",
         "type": "missed"
       },
       {
+        "id": "BO1D",
         "name": "Armor Smash",
-        "action": "Action A",
-        "type": "attack",
-        "attack": 3
+        "action": "Action D",
+        "type": "attackAll",
+        "attack": 2
       }
     ],
-    "actionPatterns": ["B,A,C,D", "A,B,C,D", "A,C,B"]
+    "actionPatterns": ["B,A,C,D", "A,B,C,D", "A,D,B,C"]
   }
 ]

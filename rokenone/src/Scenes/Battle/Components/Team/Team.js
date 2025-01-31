@@ -5,7 +5,7 @@ import CharacterCard from "../../../../Components/CharacterCard/CharacterCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWandMagic } from "@fortawesome/free-solid-svg-icons";
 
-const Team = ({ playerTeam, teamCharge, turn }) => {
+const Team = ({ playerTeam, teamCharge, turn, autoWeaponStatus }) => {
   const positionClasses = [
     "char-one",
     "char-two",
@@ -44,7 +44,8 @@ const Team = ({ playerTeam, teamCharge, turn }) => {
             </div>
 
             {/* Draggable Button: Check if teammate has weapon and chargeCost <= teamCharge */}
-            {teammate.weapon &&
+            {autoWeaponStatus === "off" &&
+              teammate.weapon &&
               teammate.weapon.length > 0 &&
               teammate.weapon[0].chargeCost <= teamCharge && (
                 <div

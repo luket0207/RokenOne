@@ -21,22 +21,22 @@ const OpenPack = () => {
         0: 100,
         1: 40,
         2: 10,
-        3: 3,
-        4: 0.5, // Low tier pack (common cards are more frequent, legendaries are rare)
+        3: 0.9,
+        4: 0.1, // Low tier pack (common cards are more frequent, legendaries are rare)
       },
       medium: {
-        0: 60,
-        1: 30,
-        2: 15,
-        3: 7,
+        0: 30,
+        1: 40,
+        2: 30,
+        3: 10,
         4: 2, // Medium tier pack (balanced)
       },
       high: {
-        0: 30,
-        1: 20,
+        0: 10,
+        1: 30,
         2: 40,
-        3: 8,
-        4: 5, // High tier pack (legendaries are more frequent, common cards are less frequent)
+        3: 30,
+        4: 10, // High tier pack (legendaries are more frequent, common cards are less frequent)
       },
     };
 

@@ -9,10 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ChargeBar from "./Components/ChargeBar/ChargeBar";
 import ManaIcon from "../../Components/ManaIcon/ManaIcon";
+import {
+  triggerWeapon,
+  playerTeamWithWeapons,
+} from "../../Utils/Battle/WeaponUtils";
 
 const Battle = () => {
-  const { playerTeam, setPlayerTeam, resetExpedition, moveToNextDay } =
-    useContext(GameDataContext);
+  const {
+    playerTeam,
+    setPlayerTeam,
+    playerData,
+    setPlayerData,
+    resetExpedition,
+    moveToNextDay,
+  } = useContext(GameDataContext);
   const { state } = useLocation(); // Retrieve the enemies passed from Home
   const [isBattleStarted, setIsBattleStarted] = useState(false);
   const [turn, setTurn] = useState(0);
@@ -22,6 +32,7 @@ const Battle = () => {
   const [weaponPlayed, setWeaponPlayed] = useState(null);
   const [weaponAttacker, setWeaponAttacker] = useState(null);
   const [weaponEnemy, setWeaponEnemy] = useState(null);
+  const [currentWeaponIndex, setCurrentWeaponIndex] = useState(0);
   const [weaponAnimation, setWeaponAnimation] = useState(null);
   const navigate = useNavigate();
   const [teamCharge, setTeamCharge] = useState(0);
@@ -41,6 +52,10 @@ const Battle = () => {
     "crimson",
     "emerald",
   ];
+
+  const [teamWeapons, setTeamWeapons] = useState(
+    playerTeamWithWeapons(playerTeam)
+  );
 
   useEffect(() => {
     if (isBattleStarted && !battleEnded && !paused) {
@@ -270,14 +285,14 @@ const Battle = () => {
     // Define the stick chances based on the mana type
 
     const stickChanceByMana = {
-      black: 0.6,
-      grey: 0.6,
+      black: 0.5,
+      grey: 0.5,
       orange: 0.5,
       teal: 0.5,
       gold: 0.4,
       jade: 0.4,
-      crimson: 0.3,
-      emerald: 0.3,
+      crimson: 0.4,
+      emerald: 0.4,
     };
 
     // Check if the mana type exists in the stickChanceByMana
@@ -311,25 +326,55 @@ const Battle = () => {
     if (mana === manaBoost || manaType === manaBoost) {
       // Apply the mana boost effect to the action attributes
       if (Array.isArray(manaBoostEffect)) {
-        manaBoostEffect.forEach(([attribute, boostValue]) => {
-          // Track original value, even if attribute is being created
+        manaBoostEffect.forEach(([attribute, operation, boostValue]) => {
           if (action.originalValues === undefined) {
             action.originalValues = {}; // Initialize if not present
           }
 
-          if (action[attribute] !== undefined) {
-            action.originalValues[attribute] = action[attribute]; // Save the original value
-            action[attribute] += boostValue; // Apply the boost value
-            console.log(
-              `${attribute} was boosted by ${boostValue} because mana is ${mana}`
-            );
-          } else {
-            action.originalValues[attribute] = undefined; // Track created attribute
-            action[attribute] = boostValue; // Set the boost value
-            console.log(
-              `${attribute} was created and set to ${boostValue} because mana is ${mana}`
-            );
+          // Determine the original value of the attribute, default to 0 if it doesn't exist
+          const originalValue =
+            action[attribute] !== undefined ? action[attribute] : 0;
+
+          // Handle different operations
+          switch (operation) {
+            case "plus":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue + boostValue;
+              break;
+
+            case "minus":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue - boostValue;
+              break;
+
+            case "times":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue * boostValue;
+              break;
+
+            case "divide":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue / boostValue;
+              break;
+
+            case "equals":
+              // If boostValue is a string, fetch the value from the corresponding attribute
+              const targetValue =
+                typeof boostValue === "string"
+                  ? action[boostValue] || 0
+                  : boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = targetValue;
+              break;
+
+            default:
+              console.error(`Unknown operation: ${operation}`);
           }
+
+          // Log the operation result
+          console.log(
+            `${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action[attribute]}`
+          );
         });
       } else {
         console.error(
@@ -509,13 +554,34 @@ const Battle = () => {
     // Trigger weapon if played
     let finalPlayerTeam = playerTeamWithHeal;
     let finalEnemyTeam = enemyTeamWithHeal;
-    if (weaponAttacker !== null && weaponEnemy !== null) {
+
+    if (playerData[0].autoWeaponStatus !== "off") {
+      if (finalPlayerTeam && finalPlayerTeam.length > 0) {
+        setWeaponAnimation("");
+        const attackedEnemy = autoTriggerWeapon({
+          teamWeapons: teamWeapons,
+          playerTeam: finalPlayerTeam,
+          enemyTeam: finalEnemyTeam,
+          teamCharge: teamCharge,
+          triggerWeapon: triggerWeapon,
+          currentWeaponIndex: currentWeaponIndex,
+          setCurrentWeaponIndex: setCurrentWeaponIndex,
+          autoWeaponStatus: playerData[0].autoWeaponStatus,
+        });
+        setWeaponAnimation(attackedEnemy);
+      }
+      finalPlayerTeam = updatedPlayerTeam;
+      finalEnemyTeam = updatedEnemyTeam;
+    } else if (weaponAttacker !== null && weaponEnemy !== null) {
       const { updatedPlayerTeam, updatedEnemyTeam } = triggerWeapon({
-        weaponAttacker,
-        weaponEnemy,
-        playerTeam: playerTeamWithHeal,
-        enemyTeam: enemyTeamWithHeal,
-        setWeaponPlayed,
+        weaponAttacker: weaponAttacker,
+        weaponEnemy: weaponEnemy,
+        playerTeam: finalPlayerTeam,
+        enemyTeam: finalEnemyTeam,
+        setWeaponPlayed: setWeaponPlayed,
+        applyDamage: applyDamage,
+        teamCharge: teamCharge,
+        setTeamCharge: setTeamCharge,
       });
       setWeaponAnimation(weaponEnemy);
       finalPlayerTeam = updatedPlayerTeam;
@@ -888,60 +954,139 @@ const Battle = () => {
     }
   };
 
-  // Weapon Stuff
-  const triggerWeapon = ({
-    weaponAttacker,
-    weaponEnemy,
+  const autoTriggerWeapon = ({
+    teamWeapons,
     playerTeam,
     enemyTeam,
-    setWeaponPlayed,
-    weaponAttackerBuff = 0,
+    teamCharge,
+    triggerWeapon,
+    currentWeaponIndex,
+    setCurrentWeaponIndex,
+    autoWeaponStatus,
   }) => {
-    console.log(`Triggered inside triggerWeapon ${playerTeam}`);
-    const updatedPlayerTeam = [...playerTeam];
-    const updatedEnemyTeam = [...enemyTeam];
-
-    // Check if the attacker has a weapon
-    const attacker = updatedPlayerTeam[weaponAttacker];
-
-    console.log(
-      `Weapon Attack - Attacker id: ${weaponAttacker} - Enemy id: ${weaponEnemy}`
-    );
-
-    if (attacker && attacker.weapon && attacker.weapon.length > 0) {
-      const weapon = attacker.weapon[0]; // Assuming only one weapon per character for simplicity
-      const weaponAttack = weapon.attack + weaponAttackerBuff; // Weapon attack value + any buffs
-
-      if (weaponAttacker !== null && weaponEnemy !== null) {
-        // Get the enemy who will receive the damage
-        const targetEnemy = updatedEnemyTeam[weaponEnemy];
-
-        if (targetEnemy && targetEnemy.health > 0) {
-          // Apply damage to the enemy, just like calcAttack
-          applyDamage(weaponEnemy, weaponAttack, true, weaponAttacker);
-
-          console.log(
-            `${attacker.name} attacked ${targetEnemy.name} with ${weapon.name}, causing ${weaponAttack} damage!`
-          );
-        } else {
-          console.log(`${targetEnemy.name} is already defeated.`);
-        }
-
-        const updatedCharge = teamCharge - weapon.chargeCost;
-        setTeamCharge(updatedCharge);
-
-        // Set the weaponPlayed for the current turn
-        setWeaponPlayed(weapon);
+    // If there are no teammates with weapons, do nothing
+    if (teamWeapons.length === 0) {
+      return;
+    }
+  
+    // Get the current teammate index from the teamWeapons array
+    let currentTeammateIndex = teamWeapons[currentWeaponIndex];
+  
+    // Find the teammate in playerTeam using the index
+    let currentTeammate = playerTeam[currentTeammateIndex];
+  
+    // Check if the current teammate is dead (health is 0)
+    while (currentTeammate && currentTeammate.health === 0) {
+      // Remove the dead teammate from the teamWeapons array
+      teamWeapons = teamWeapons.filter(index => index !== currentTeammateIndex);
+      
+      // If there are no more teammates with weapons, break the loop
+      if (teamWeapons.length === 0) {
+        return;
       }
-    } else {
-      console.log("This character doesn't have a weapon.");
+  
+      // Move to the next teammate in the teamWeapons array
+      currentWeaponIndex = (currentWeaponIndex + 1) % teamWeapons.length;
+      currentTeammateIndex = teamWeapons[currentWeaponIndex];
+      currentTeammate = playerTeam[currentTeammateIndex];
+    }
+  
+    if (
+      currentTeammate &&
+      currentTeammate.weapon &&
+      currentTeammate.weapon.length > 0
+    ) {
+      const weapon = currentTeammate.weapon[0]; // Assuming one weapon per teammate
+  
+      // Check if the teamCharge is enough to trigger the weapon
+      if (teamCharge >= weapon.chargeCost) {
+        // Get valid enemies (with health > 0)
+        const validEnemies = enemyTeam
+          .map((enemy, index) =>
+            enemy.health > 0 ? { index, health: enemy.health } : null
+          )
+          .filter((enemy) => enemy !== null);
+  
+        let targetEnemyIndex = null;
+  
+        // Determine the enemy to target based on autoWeaponStatus
+        if (validEnemies.length > 0) {
+          if (autoWeaponStatus === "random") {
+            // Randomly select an enemy
+            targetEnemyIndex =
+              validEnemies[Math.floor(Math.random() * validEnemies.length)]
+                .index;
+          } else if (autoWeaponStatus === "highest health") {
+            // Select the enemy with the highest health
+            targetEnemyIndex = validEnemies.reduce((prev, curr) =>
+              prev.health > curr.health ? prev : curr
+            ).index;
+          } else if (autoWeaponStatus === "lowest health") {
+            // Select the enemy with the lowest health
+            targetEnemyIndex = validEnemies.reduce((prev, curr) =>
+              prev.health < curr.health ? prev : curr
+            ).index;
+          } else {
+            // "off" or any invalid status, use random selection
+            targetEnemyIndex =
+              validEnemies[Math.floor(Math.random() * validEnemies.length)]
+                .index;
+          }
+  
+          // Trigger the weapon
+          triggerWeapon({
+            weaponAttacker: currentTeammateIndex,
+            weaponEnemy: targetEnemyIndex,
+            playerTeam: playerTeam,
+            enemyTeam: enemyTeam,
+            setWeaponPlayed: setWeaponPlayed,
+            applyDamage: applyDamage,
+            teamCharge: teamCharge,
+            setTeamCharge: setTeamCharge,
+          });
+  
+          // Reduce the teamCharge by the weapon's charge cost
+          teamCharge -= weapon.chargeCost;
+  
+          // Move to the next weapon in the teamWeapons array
+          setCurrentWeaponIndex((currentWeaponIndex + 1) % teamWeapons.length); // Loop back if we reach the end
+  
+          return targetEnemyIndex;
+        }
+      }
+    }
+  };
+  
+
+  const toggleAutoWeaponStatus = () => {
+    const currentStatus = playerData[0].autoWeaponStatus;
+    let newStatus;
+
+    switch (currentStatus) {
+      case "off":
+        newStatus = "random";
+        break;
+      case "random":
+        newStatus = "highest health";
+        break;
+      case "highest health":
+        newStatus = "lowest health";
+        break;
+      case "lowest health":
+        newStatus = "off";
+        break;
+      default:
+        newStatus = "off";
+        break;
     }
 
-    // Return the updated teams after the weapon is triggered
-    return {
-      updatedPlayerTeam,
-      updatedEnemyTeam,
-    };
+    // Update playerData with the new status
+    setPlayerData((prevData) => [
+      {
+        ...prevData[0],
+        autoWeaponStatus: newStatus,
+      },
+    ]);
   };
 
   return (
@@ -994,6 +1139,10 @@ const Battle = () => {
               <button onClick={handleNormalSpeed}>Normal</button>
               <button onClick={handleFastSpeed}>Fast</button>
             </div>
+            <button onClick={toggleAutoWeaponStatus}>
+              Toggle Auto Weapon Status (Current:{" "}
+              {playerData[0].autoWeaponStatus})
+            </button>
             <div>{weaponPlayed && <p>{weaponPlayed.name}</p>}</div>
             {mana && <ManaIcon colour={mana} />}
           </div>
@@ -1014,7 +1163,12 @@ const Battle = () => {
       />
 
       {/* Render Team Component */}
-      <Team playerTeam={playerTeam} teamCharge={teamCharge} turn={turn} />
+      <Team
+        playerTeam={playerTeam}
+        teamCharge={teamCharge}
+        turn={turn}
+        autoWeaponStatus={playerData[0].autoWeaponStatus}
+      />
 
       <ChargeBar charge={teamCharge} isPlayerTeam={true} />
     </div>

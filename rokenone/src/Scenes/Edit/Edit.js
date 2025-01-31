@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ActionCard from "../../Components/ActionCard/ActionCard";
 import Modal from "../../Components/Modal/Modal";
+import weaponsData from "../../Data/Weapons/Weapons.json";
 
 const ItemType = {
   ACTION: "action",
@@ -22,14 +23,69 @@ const Edit = () => {
   const { playerTeam, setPlayerTeam, playerData, setPlayerData } =
     useContext(GameDataContext);
   const navigate = useNavigate();
+  const [selectedWeapon, setSelectedWeapon] = useState(null);
+  const [selectedActions, setSelectedActions] = useState([]);
 
   const character = playerTeam.find((char) => char.id === Number(characterId));
   const cardBank = playerData.cardBank || [];
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActionSelectionModalOpen, setIsActionSelectionModalOpen] =
+    useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openActionSelectionModal = () => setIsActionSelectionModalOpen(true);
+  const closeActionSelectionModal = () => setIsActionSelectionModalOpen(false);
+
+  const [isWeaponSelectionModalOpen, setIsWeaponSelectionModalOpen] =
+    useState(false);
+
+  const closeWeaponSelectionModal = () => {
+    // Unlock any actions that were locked by the weapon
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((teammate) => {
+        if (teammate.id === character.id) {
+          // Iterate through the actionPool and unlock actions locked by the weapon
+          const updatedActionPool = teammate.actionPool.map((a) =>
+            a.lockedByWeapon
+              ? { ...a, locked: false, lockedByWeapon: false }
+              : a
+          );
+
+          // Return the updated teammate
+          return { ...teammate, actionPool: updatedActionPool, weapon: null };
+        }
+        return teammate;
+      })
+    );
+
+    // Reset the selectedWeapon and selectedActions (optional, based on your use case)
+    setSelectedWeapon(null);
+    setSelectedActions([]);
+    setIsWeaponSelectionModalOpen(false);
+  };
+  const openWeaponSelectionModal = () => {
+    // Unlock any actions that were locked by the weapon
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((teammate) => {
+        if (teammate.id === character.id) {
+          // Iterate through the actionPool and unlock actions locked by the weapon
+          const updatedActionPool = teammate.actionPool.map((a) =>
+            a.lockedByWeapon
+              ? { ...a, locked: false, lockedByWeapon: false }
+              : a
+          );
+
+          // Return the updated teammate
+          return { ...teammate, actionPool: updatedActionPool, weapon: null };
+        }
+        return teammate;
+      })
+    );
+
+    // Reset the selectedWeapon and selectedActions (optional, based on your use case)
+    setSelectedWeapon(null);
+    setSelectedActions([]);
+    setIsWeaponSelectionModalOpen(true);
+  };
 
   if (!character) {
     return <div>Character not found or not selected yet!</div>;
@@ -113,10 +169,37 @@ const Edit = () => {
       )
       .filter((c) => c.quantity > 0); // Remove actions with 0 quantity
 
+    // Apply upgrades to the action
+    const applyUpgrades = (action) => {
+      // Determine which upgrade to apply based on the current level
+      const upgradeIndex = action.level % action.upgrade.length;
+
+      // Apply the upgrade at the calculated index
+      const [attribute, upgradeValue] = action.upgrade[upgradeIndex];
+
+      if (attribute === "manaBoostEffect") {
+        // Upgrade manaBoostEffect value (third element in array)
+        if (
+          Array.isArray(action.manaBoostEffect) &&
+          action.manaBoostEffect[0]
+        ) {
+          action.manaBoostEffect[0][2] += upgradeValue; // Increase the numerical value
+        }
+      } else {
+        // Upgrade the appropriate attribute
+        action[attribute] += upgradeValue;
+      }
+    };
+
     // Update the character's action pool with the upgraded action
-    const updatedActionPool = character.actionPool.map((a) =>
-      a.id === action.id ? { ...a, level: a.level + 1 } : a
-    );
+    const updatedActionPool = character.actionPool.map((a) => {
+      if (a.id === action.id) {
+        const upgradedAction = { ...a, level: a.level + 1 };
+        applyUpgrades(upgradedAction); // Apply upgrades to the action
+        return upgradedAction;
+      }
+      return a;
+    });
 
     const updatedPlayerData = {
       ...playerData,
@@ -262,13 +345,150 @@ const Edit = () => {
       )
     );
     setPlayerData(updatedPlayerData);
-    closeModal();
+    closeActionSelectionModal();
   };
 
   // Filter available actions based on character's class or 'All' class
   const availableActions = cardBank.filter(
     (action) => action.class === "All" || action.class === character.class // Filter for 'All' class or character's class
   );
+
+  //WEAPONS STUFF///////////////////////
+
+  // Handle weapon selection
+  const handleWeaponSelect = (weapon) => {
+    setSelectedWeapon(weapon);
+
+    // Remove all selected actions when a new weapon is selected
+    setSelectedActions([]);
+
+    // Unlock all actions in the character's actionPool that were locked by the weapon
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((teammate) => {
+        if (teammate.id === character.id) {
+          // Iterate through the actionPool and unlock actions locked by the weapon
+          const updatedActionPool = teammate.actionPool.map((a) => ({
+            ...a,
+            locked: a.lockedByWeapon ? false : a.locked, // Only unlock if locked by weapon
+            lockedByWeapon: false, // Reset lockedByWeapon flag
+          }));
+
+          // Return the updated teammate with the actionPool and weapon reset
+          return { ...teammate, actionPool: updatedActionPool, weapon: null };
+        }
+        return teammate;
+      })
+    );
+  };
+
+  const handleActionSelect = (action) => {
+    // Check if there's room in selected actions based on the weapon slots
+    if (selectedActions.length < selectedWeapon.slots) {
+      // Add the selected action to selectedActions
+      setSelectedActions((prevActions) => [...prevActions, action]);
+
+      // Lock the action in the character's actionPool and mark it as locked by the weapon
+      setPlayerTeam((prevTeam) =>
+        prevTeam.map((teammate) => {
+          if (teammate.id === character.id) {
+            // Update the action in the actionPool to mark it as locked by the weapon
+            const updatedActionPool = teammate.actionPool.map((a) =>
+              a.id === action.id
+                ? { ...a, locked: true, lockedByWeapon: true }
+                : a
+            );
+
+            // Return the updated teammate with the actionPool modified
+            return { ...teammate, actionPool: updatedActionPool };
+          }
+          return teammate;
+        })
+      );
+    }
+  };
+
+  // Handle removing action from selected actions
+  const handleActionRemove = (action) => {
+    // Remove the action from selectedActions
+    setSelectedActions((prevActions) =>
+      prevActions.filter((selectedAction) => selectedAction.id !== action.id)
+    );
+
+    // Unlock the action in the character's actionPool, but only if it was locked by the weapon
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((teammate) => {
+        if (teammate.id === character.id) {
+          // Update the action within the teammate's actionPool
+          const updatedActionPool = teammate.actionPool.map((a) =>
+            a.id === action.id && a.lockedByWeapon
+              ? { ...a, locked: false, lockedByWeapon: false }
+              : a
+          );
+
+          // Return the updated teammate with the actionPool modified
+          return {
+            ...teammate,
+            actionPool: updatedActionPool,
+            weapon: null,
+          };
+        }
+        return teammate;
+      })
+    );
+  };
+
+  const handleApplySelection = () => {
+    if (!selectedWeapon || selectedActions.length !== selectedWeapon.slots) {
+      alert("Please select enough actions to fill all slots.");
+      return;
+    }
+
+    // Calculate total attack from the selected actions
+    const totalAttack = selectedActions.reduce((total, action) => {
+      return total + (action.attack || 0) + (action.attackAll || 0); // Sum attack and attackAll values
+    }, 0);
+
+    // Get the attackWeaponBoost, defaulting to 0 if not present
+    const attackWeaponBoost = selectedActions.reduce((boost, action) => {
+      return boost + (action.attackWeaponBoost || 0); // Sum attackWeaponBoost values
+    }, 0);
+
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((teammate) => {
+        // Ensure we're updating the correct character by checking their ID
+        if (teammate.id === character.id) {
+          // If the character already has a weapon, replace it with the new one
+          const updatedWeapon = teammate.weapon
+            ? [
+                {
+                  ...teammate.weapon[0],
+                  name: selectedWeapon.name,
+                  chargeCost: selectedWeapon.chargeCost,
+                  attack: totalAttack, // Apply total attack
+                  attackBoost: attackWeaponBoost, // Apply attackWeaponBoost
+                },
+              ]
+            : [
+                {
+                  ...selectedWeapon,
+                  name: selectedWeapon.name,
+                  chargeCost: selectedWeapon.chargeCost,
+                  attack: totalAttack, // Apply total attack
+                  attackBoost: attackWeaponBoost, // Apply attackWeaponBoost
+                },
+              ];
+
+          return {
+            ...teammate,
+            weapon: updatedWeapon, // Add or replace the weapon for the teammate
+          };
+        }
+        return teammate;
+      })
+    );
+
+    setIsWeaponSelectionModalOpen(false); // Close the modal
+  };
 
   return (
     <div className="edit-container">
@@ -277,10 +497,43 @@ const Edit = () => {
         Drag actions from the left into your timeline. Timeline is played from
         the top down.
       </p>
+      <div className="edit-weapon">
+        {character.weapon ? (
+          <div className="edit-weapon-info">
+            <p>Weapon: {character.weapon[0].name}</p>
+            <p>Charge Cost: {character.weapon[0].chargeCost}</p>
+            <p>
+              Attack:{" "}
+              {character.weapon[0].attack + character.weapon[0].attackBoost}
+            </p>
+            <Button
+              text={"Change Weapon"}
+              onClick={openWeaponSelectionModal}
+              disabled={
+                !character.weapon && // Check if weapon is null
+                !character.actionPool.some(
+                  (action) => action.type === "attack" && !action.locked
+                )
+              }
+            />
+          </div>
+        ) : (
+          <Button
+            text={"Select Weapon"}
+            onClick={openWeaponSelectionModal}
+            disabled={
+              !character.weapon && // Check if weapon is null
+              !character.actionPool.some(
+                (action) => action.type === "attack" && !action.locked
+              )
+            }
+          />
+        )}
+      </div>
 
       <div className="edit-timeline-grid">
         <div className="action-pool">
-          <div className="action-add" onClick={openModal}>
+          <div className="action-add" onClick={openActionSelectionModal}>
             <div className="action-add-icon">
               <FontAwesomeIcon icon={faPlusCircle} />
             </div>
@@ -311,7 +564,10 @@ const Edit = () => {
         <Button text={"Back"} onClick={handleGoHome}></Button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal
+        isOpen={isActionSelectionModalOpen}
+        onClose={closeActionSelectionModal}
+      >
         <div className="add-action">
           <h3>Add New Action to {character.name}</h3>
           <div className="available-actions">
@@ -343,6 +599,95 @@ const Edit = () => {
             ) : (
               <p>No available actions to add.</p>
             )}
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isWeaponSelectionModalOpen}
+        onClose={closeWeaponSelectionModal}
+      >
+        <div className="weapon-selection">
+          <h3>Select a Weapon</h3>
+          <div className="weapon-selection-weapons">
+            {weaponsData.map((weapon) => (
+              <div
+                key={weapon.id}
+                className={`weapon-item ${
+                  selectedWeapon && selectedWeapon.id === weapon.id
+                    ? "selected"
+                    : ""
+                }`}
+                onClick={() => handleWeaponSelect(weapon)}
+              >
+                <h4>{weapon.name}</h4>
+                <p>{weapon.description}</p>
+              </div>
+            ))}
+
+            <p>
+              Selected Weapon: {selectedWeapon && <>{selectedWeapon.name}</>}
+            </p>
+          </div>
+
+          {selectedWeapon && (
+            <div className="weapon-selection-actions">
+              <h3>
+                Select {selectedWeapon.slots} Attacks to put into the weapon.
+              </h3>
+              <p>
+                The weapon will trigger these attack every time the weapon hits.
+                Weapons never attack all.
+              </p>
+              <div className="available-actions">
+                {character.actionPool
+                  .filter(
+                    (action) => action.type === "attack" && !action.locked
+                  )
+                  .map((action) => (
+                    <div
+                      key={action.id}
+                      className="available-actions-action"
+                      onClick={() => handleActionSelect(action)}
+                    >
+                      <ActionCard action={action} />
+                      {selectedActions.some(
+                        (selectedAction) => selectedAction.id === action.id
+                      ) && (
+                        <span
+                          className="available-actions-action-icon"
+                          onClick={() => handleActionRemove(action)}
+                        >
+                          <FontAwesomeIcon icon={faPlusCircle} />
+                        </span>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          <div className="selected-actions">
+            <h4>Selected Actions</h4>
+            <ul>
+              {selectedActions.map((action) => (
+                <li key={action.id}>
+                  <h5>{action.name}</h5>
+                  <p>{action.description}</p>
+                  <span onClick={() => handleActionRemove(action)}>Remove</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="weapon-selection-footer">
+            <Button
+              text="Apply Selection"
+              onClick={handleApplySelection}
+              disabled={
+                !selectedWeapon ||
+                selectedActions.length !== selectedWeapon.slots
+              }
+            />
           </div>
         </div>
       </Modal>

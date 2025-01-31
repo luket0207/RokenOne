@@ -4,28 +4,31 @@
     "class": "All",
     "name": "Punch",
     "type": "attack",
-    "attack": 3,
+    "attack": 2,
     "defence": 0,
+    "attackWeaponBoost": 8,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 1 ]]
   },
   {
     "id": "A002",
     "class": "All",
     "name": "Block",
     "type": "defence",
-    "attack": 0,
+    "charge": 2,
     "defence": 3,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["defence", 1 ]]
   },
   {
     "id": "A003",
@@ -40,7 +43,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["heal", 1 ]]
   },
   {
     "id": "A004",
@@ -55,7 +59,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["buffAttack", 1 ]]
   },
   {
     "id": "A005",
@@ -70,7 +75,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["buffDefence", 1 ]]
   },
   {
     "id": "A006",
@@ -86,7 +92,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["buffAttack", 1 ],["buffDefence", 1 ]]
   },
   {
     "id": "A007",
@@ -94,27 +101,29 @@
     "name": "Dark Punch Block",
     "type": "attack",
     "attack": 1,
-    "defence": 1,
+    "defence": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A008",
     "class": "All",
     "name": "Light Counter",
     "type": "defence",
-    "attack": 1,
+    "attack": 0,
     "defence": 1,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["defence", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A009",
@@ -128,7 +137,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A010",
@@ -142,7 +152,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A011",
@@ -156,27 +167,29 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A012",
     "class": "All",
-    "name": "Healing Light Punch",
+    "name": "Healing Punch",
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "heal": 1,
+    "heal": 0,
     "rarity": 2,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["heal", "plus", 1]],
+    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A013",
     "class": "All",
-    "name": "Healing Dark Punch",
+    "name": "Healing Punch",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -186,67 +199,72 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["heal", "plus", 1]],
+    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A014",
     "class": "All",
-    "name": "Gold Buff Bash",
+    "name": "Buff Bash",
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "buffAttack": 1,
+    "buffAttack": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A015",
     "class": "All",
-    "name": "Jade Buff Bash",
+    "name": "Buff Bash",
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "buffAttack": 1,
+    "buffAttack": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A016",
     "class": "All",
-    "name": "Orange Guard Heal",
+    "name": "Guard Heal",
     "type": "defence",
     "attack": 0,
     "defence": 2,
-    "heal": 1,
+    "heal": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["heal", "plus", 1]],
+    "upgrade": [["heal", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A017",
     "class": "All",
-    "name": "Teal Guard Heal",
+    "name": "Guard Heal",
     "type": "defence",
     "attack": 0,
     "defence": 2,
-    "heal": 1,
+    "heal": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "teal",
-    "manaBoostEffect": []
+    "manaBoost": "teal", 
+    "manaBoostEffect": [["heal", "plus", 1]],
+    "upgrade": [["heal", 1 ],["manaBoostEffect", 1 ]]
   },
   {
     "id": "A018",
@@ -255,13 +273,13 @@
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "buffAttack": 1,
     "rarity": 2,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A019",
@@ -270,13 +288,13 @@
     "type": "defence",
     "attack": 0,
     "defence": 1,
-    "buffDefence": 1,
     "rarity": 2,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A020",
@@ -290,7 +308,8 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A021",
@@ -305,12 +324,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A022",
     "class": "All",
-    "name": "dark mecha block",
+    "name": "Mecha Block",
     "type": "defence",
     "defence": 10,
     "attack": 0,
@@ -319,12 +339,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "times", 2]],
+    "upgrade": [["defence", 5]]
   },
   {
     "id": "A023",
     "class": "All",
-    "name": "light mecha block",
+    "name": "Mecha Block",
     "type": "defence",
     "defence": 10,
     "attack": 0,
@@ -333,12 +354,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "times", 2]],
+    "upgrade": [["defence", 5]]
   },
   {
     "id": "A024",
     "class": "All",
-    "name": "dark mecha punch",
+    "name": "Mecha Punch",
     "type": "attack",
     "attack": 10,
     "defence": 0,
@@ -347,12 +369,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "times", 2]],
+    "upgrade": [["attack", 5]]
   },
   {
     "id": "A025",
     "class": "All",
-    "name": "light mecha punch",
+    "name": "Mecha Punch",
     "type": "attack",
     "attack": 10,
     "defence": 0,
@@ -361,12 +384,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "times", 2]],
+    "upgrade": [["attack", 5]]
   },
   {
     "id": "A026",
     "class": "All",
-    "name": "black guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -375,12 +399,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A027",
     "class": "All",
-    "name": "grey guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -389,12 +414,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A028",
     "class": "All",
-    "name": "orange guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -403,12 +429,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A029",
     "class": "All",
-    "name": "teal guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -417,12 +444,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A030",
     "class": "All",
-    "name": "gold guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -431,12 +459,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A031",
     "class": "All",
-    "name": "jade guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -445,12 +474,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A032",
     "class": "All",
-    "name": "crimson guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -459,12 +489,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A033",
     "class": "All",
-    "name": "emerald guard upgrade",
+    "name": "Guard Upgrade",
     "type": "defence",
     "defence": 1,
     "attack": 0,
@@ -473,12 +504,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A034",
     "class": "All",
-    "name": "black attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -487,12 +519,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A035",
     "class": "All",
-    "name": "grey attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -501,12 +534,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A036",
     "class": "All",
-    "name": "orange attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -515,12 +549,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A037",
     "class": "All",
-    "name": "teal attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -529,12 +564,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A038",
     "class": "All",
-    "name": "gold attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -543,12 +579,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A039",
     "class": "All",
-    "name": "jade attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -557,12 +594,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A040",
     "class": "All",
-    "name": "crimson attack upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -571,12 +609,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A041",
     "class": "All",
-    "name": "Emerald Attack Upgrade",
+    "name": "Attack Upgrade",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -585,35 +624,38 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A042",
     "class": "All",
     "name": "Blinding Light Swing",
     "type": "attack",
-    "attack": 1,
+    "attackAll": 0,
     "defence": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A043",
     "class": "All",
     "name": "Swing in the Dark",
     "type": "attack",
-    "attack": 1,
+    "attackAll": 0,
     "defence": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A044",
@@ -621,13 +663,14 @@
     "name": "Grey Sheild",
     "type": "defence",
     "attack": 0,
-    "defence": 1,
+    "defenceAll": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A045",
@@ -635,41 +678,44 @@
     "name": "Black Sheild",
     "type": "defence",
     "attack": 0,
-    "defence": 1,
+    "defenceAll": 0,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A046",
     "class": "All",
     "name": "Spreading Light",
     "type": "attack",
-    "attack": 1,
+    "attackAll": 0,
     "defence": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A047",
     "class": "All",
     "name": "Covering Dark",
     "type": "attack",
-    "attack": 1,
+    "attackAll": 0,
     "defence": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A048",
@@ -677,13 +723,14 @@
     "name": "Light Sheild",
     "type": "defence",
     "attack": 0,
-    "defence": 1,
+    "defenceAll": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A049",
@@ -691,18 +738,19 @@
     "name": "Dark Sheild",
     "type": "defence",
     "attack": 0,
-    "defence": 1,
+    "defenceAll": 0,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
   },
   {
     "id": "A050",
     "class": "All",
-    "name": "Black Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -711,12 +759,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A051",
     "class": "All",
-    "name": "Grey Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -725,12 +774,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A052",
     "class": "All",
-    "name": "Orange Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -739,12 +789,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A053",
     "class": "All",
-    "name": "Teal Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -753,12 +804,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A054",
     "class": "All",
-    "name": "Gold Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -767,12 +819,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A055",
     "class": "All",
-    "name": "Jade Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -781,12 +834,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A056",
     "class": "All",
-    "name": "Crimson Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -795,12 +849,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A057",
     "class": "All",
-    "name": "Emerald Double Block",
+    "name": "Double Block",
     "type": "defence",
     "attack": 0,
     "defence": 1,
@@ -809,12 +864,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A058",
     "class": "All",
-    "name": "Black Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -823,12 +879,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A059",
     "class": "All",
-    "name": "Grey Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -837,12 +894,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A060",
     "class": "All",
-    "name": "Orange Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -851,13 +909,14 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
 
   {
     "id": "A061",
     "class": "All",
-    "name": "Teal Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -866,12 +925,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A062",
     "class": "All",
-    "name": "Gold Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -880,12 +940,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A063",
     "class": "All",
-    "name": "Jade Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -894,12 +955,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A064",
     "class": "All",
-    "name": "Crimson Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -908,12 +970,13 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A065",
     "class": "All",
-    "name": "Emerald Double Strike",
+    "name": "Double Strike",
     "type": "attack",
     "attack": 1,
     "defence": 0,
@@ -922,63 +985,68 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
   },
   {
     "id": "A066",
     "class": "All",
-    "name": "Dark Mecha Block All",
+    "name": "Mecha Block All",
     "type": "defence",
     "attack": 0,
-    "defence": 6,
+    "defenceAll": 6,
     "rarity": 4,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "times", 2]],
+    "upgrade": [["defenceAll", 3]]
   },
   {
     "id": "A067",
     "class": "All",
-    "name": "Light Mecha Block All",
+    "name": "Mecha Block All",
     "type": "defence",
     "attack": 0,
-    "defence": 6,
+    "defenceAll": 6,
     "rarity": 4,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["defenceAll", "times", 2]],
+    "upgrade": [["defenceAll", 3]]
   },
   {
     "id": "A068",
     "class": "All",
-    "name": "Dark Mecha Punch All",
+    "name": "Mecha Punch All",
     "type": "attack",
-    "attack": 6,
+    "attackAll": 6,
     "defence": 0,
     "rarity": 4,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "times", 2]],
+    "upgrade": [["attackAll", 3]]
   },
   {
     "id": "A069",
     "class": "All",
-    "name": "Light Mecha Punch All",
+    "name": "Mecha Punch All",
     "type": "attack",
-    "attack": 6,
+    "attackAll": 6,
     "defence": 0,
     "rarity": 4,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "light",
-    "manaBoostEffect": []
+    "manaBoostEffect": [["attackAll", "times", 2]],
+    "upgrade": [["attackAll", 3]]
   },
   {
     "id": "A070",
@@ -992,6 +1060,7 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
-    "manaBoostEffect": []
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 5]]
   }
 ]

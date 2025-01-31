@@ -64,7 +64,6 @@ const ExpeditionMap = () => {
   // Function to handle advancing to the next day or completing the expedition
   const handleChoice = (type, enemies) => {
     // Check if the type is 'battle' and if enemies are provided for the choice
-    console.log(enemies);
     if (type === "battle" && enemies && enemies.length > 0) {
       // Create a new array to store the full enemy objects
       const fullEnemyObjects = [];
@@ -208,9 +207,9 @@ const EnemySelection = ({
     <div className="enemies">
       <h2>Select Enemies to Battle</h2>
       <div className="enemy-selection">
-        {goonsData.map((enemy) => (
+        {goonsData.map((enemy, index) => (
           <Button
-            key={enemy.id}
+            key={index}
             text={enemy.name}
             onClick={() => addEnemyToList(enemy)}
             disabled={selectedEnemies.length >= 4}
@@ -220,8 +219,8 @@ const EnemySelection = ({
       </div>
       <h3>Selected Enemies: {selectedEnemies.length}/4</h3>
       <div className="selected-enemies">
-        {selectedEnemies.map((enemy) => (
-          <div className="selected-enemies-enemy" key={enemy.id}>
+        {selectedEnemies.map((enemy, index) => (
+          <div className="selected-enemies-enemy" key={index}>
             <h4>{enemy.name}</h4>
             <Button
               text={"Remove"}

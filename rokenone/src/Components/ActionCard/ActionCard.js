@@ -46,17 +46,21 @@ const ActionCard = ({ action, noAnimation }) => {
     if (action.defenceAll) {
       description.push(`Defence All ${action.defenceAll}`);
     }
+    if (action.attackWeaponBoost) {
+      description.push(`Will add ${action.attackWeaponBoost} if placed in a weapon`);
+    }
 
     // Handle the manaBoostEffect and manaBoost properties
     if (action.manaBoost && action.manaBoostEffect.length > 0) {
-      const manaEffect = action.manaBoostEffect[0];
-      description.push(
-        `Plus ${manaEffect[1]} ${manaEffect[0]} if ${action.manaBoost}.`
-      );
+      action.manaBoostEffect.forEach((manaEffect) => {
+        description.push(
+          `${manaEffect[0]} ${manaEffect[1]} ${manaEffect[2]} if ${action.manaBoost}.`
+        );
+      });
     }
 
     // Join the description array with <br /> for line breaks
-    return description.join("<br />");
+    return description.join("<br /><br />");
   };
 
   return (
@@ -97,10 +101,14 @@ const ActionCard = ({ action, noAnimation }) => {
           <p>{action.class ? action.class.charAt(0).toUpperCase() : ""}</p>
         </div>
 
-        <div className={`action-item-bar-circle ${action.manaBoost === "none" && "no-mana"}`}>
+        <div
+          className={`action-item-bar-circle ${
+            action.manaBoost === "none" && "no-mana"
+          }`}
+        >
           <div className={`mana-circle mana-${action.manaBoost}`}>
-          {action.manaBoost === "dark" && <p>D</p>}
-          {action.manaBoost === "light" && <p>L</p>}
+            {action.manaBoost === "dark" && <p>D</p>}
+            {action.manaBoost === "light" && <p>L</p>}
           </div>
         </div>
       </div>
@@ -112,9 +120,11 @@ const ActionCard = ({ action, noAnimation }) => {
           className="small-text"
           dangerouslySetInnerHTML={{ __html: generateDescription(action) }}
         ></p>
-        {action.quantity > 1 &&<div className="action-item-main-quantity">
-           <p>{action.quantity}</p>
-        </div>}
+        {action.quantity > 1 && (
+          <div className="action-item-main-quantity">
+            <p>{action.quantity}</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,12 +9,14 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "S1A",
         "name": "Samurai Stab",
         "action": "Action A",
         "type": "attack",
-        "attack": 5
+        "attack": 3
       },
       {
+        "id": "S1B",
         "action": "Action B",
         "name": "Taunt",
         "type": "missed"
@@ -32,18 +34,21 @@
     "level": 2,
     "actionArray": [
       {
+        "id": "S2A",
         "name": "Blade Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 6
+        "attack": 3
       },
       {
+        "id": "S2B",
         "name": "Samurai Guard",
         "action": "Action B",
         "type": "defence",
-        "defence": 2
+        "defence": 1
       },
       {
+        "id": "S2C",
         "action": "Action C",
         "name": "Taunt",
         "type": "missed"
@@ -61,18 +66,21 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "O1A",
         "name": "Armor Crush",
         "action": "Action A",
         "type": "attack",
         "attack": 2
       },
       {
+        "id": "O1B",
         "name": "Steel Guard",
         "action": "Action B",
         "type": "defence",
-        "defence": 4
+        "defence": 2
       },
       {
+        "id": "O1C",
         "action": "Action C",
         "name": "Taunt",
         "type": "missed"
@@ -90,18 +98,21 @@
     "level": 2,
     "actionArray": [
       {
+        "id": "O2A",
         "name": "Heavy Swing",
         "action": "Action A",
         "type": "attack",
-        "attackAll": 1
+        "attackAll": 2
       },
       {
+        "id": "O2B",
         "name": "Defensive Stance",
         "action": "Action B",
         "type": "defence",
-        "defence": 4
+        "defence": 3
       },
       {
+        "id": "O2C",
         "action": "Action C",
         "name": "Taunt",
         "type": "missed"
@@ -119,18 +130,21 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "K1A",
         "name": "Cleansing Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 4
+        "attack": 1
       },
       {
+        "id": "K1B",
         "name": "Healing Aura",
         "action": "Action B",
         "type": "heal",
-        "heal": 3
+        "heal": 2
       },
       {
+        "id": "K1C",
         "action": "Action C",
         "name": "Taunt",
         "type": "missed"
@@ -148,18 +162,21 @@
     "level": 2,
     "actionArray": [
       {
+        "id": "K2A",
         "name": "Energy Slash",
         "action": "Action A",
         "type": "attack",
-        "attack": 8
+        "attack": 2
       },
       {
+        "id": "K2B",
         "name": "Reinforced Barrier",
         "action": "Action B",
         "type": "defence",
-        "defence": 5
+        "defence": 3
       },
       {
+        "id": "K2C",
         "name": "Divine Restoration",
         "action": "Action C",
         "type": "heal",
@@ -178,18 +195,21 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "T1A",
         "name": "Charge Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 2
+        "attack": 1
       },
       {
+        "id": "T1B",
         "name": "Fortified Guard",
         "action": "Action B",
         "type": "defence",
-        "defence": 3
+        "defence": 2
       },
       {
+        "id": "T1C",
         "name": "Taiko Pulse",
         "action": "Action C",
         "type": "charge",
@@ -208,22 +228,25 @@
     "level": 2,
     "actionArray": [
       {
+        "id": "T2A",
         "name": "Mountain Breaker",
         "action": "Action A",
         "type": "attack",
         "attackAll": 2
       },
       {
+        "id": "T2B",
         "name": "Stone Wall",
         "action": "Action B",
         "type": "defence",
         "defence": 3
       },
       {
+        "id": "T2C",
         "name": "Spirit Charge",
         "action": "Action C",
         "type": "charge",
-        "charge": 2
+        "charge": 1
       }
     ],
     "actionPatterns": ["C,B,C,A", "B,C,B,A"]
@@ -238,18 +261,21 @@
     "level": 1,
     "actionArray": [
       {
+        "id": "G1A",
         "name": "Illusory Strike",
         "action": "Action A",
         "type": "attack",
         "attack": 2
       },
       {
+        "id": "G1B",
         "name": "Phantom Barrier",
         "action": "Action B",
         "type": "defence",
-        "defence": 5
+        "defence": 3
       },
       {
+        "id": "G1C",
         "name": "Shadow Mirage",
         "action": "Action C",
         "type": "illusion",
@@ -268,29 +294,27 @@
     "level": 2,
     "actionArray": [
       {
+        "id": "G2A",
         "name": "Spirit Slash",
         "action": "Action A",
         "type": "attack",
-        "attack": 4
+        "attack": 2
       },
       {
+        "id": "G2B",
         "name": "Ghostly Shield",
         "action": "Action B",
         "type": "defence",
-        "defence": 3
+        "defence": 4
       },
       {
-        "name": "Phantasmal Wave",
+        "id": "G2C",
+        "name": "Ethereal Guard",
         "action": "Action C",
-        "type": "attack",
-        "attackAll": 2
-      },
-      {
-        "action": "Action D",
-        "name": "Taunt",
-        "type": "missed"
+        "type": "illusion",
+        "illusion": 2
       }
     ],
-    "actionPatterns": ["A,B,C,A,D", "A,D,C,B", "B,C,A,D"]
+    "actionPatterns": ["C,A,B", "B,C,A", "A,B,C"]
   }
 ]
