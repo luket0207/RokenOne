@@ -402,54 +402,64 @@ const Battle = () => {
     return action;
   };
 
-  const checkCycleBoost = (teammate, action) => {
-    const { cycleBoost, cycleBoostEffect } = action;
-
+  const checkCycleBoost = (teammate, cycleBoost, cycleBoostEffect, action) => {
     if (cycleBoost && cycleBoostEffect && Array.isArray(cycleBoostEffect)) {
       const cycle = teammate.cycle || 0; // Default cycle to 0 if not present
 
       // Check if the cycleBoost effect should be applied
       if (
-        (cycleBoost === 1 && cycle === 0) || // Apply if cycleBoost is 0 and cycle is 0
+        (cycleBoost === 1 && cycle === 0) || // Apply if cycleBoost is 1 and cycle is 0
         (cycleBoost > 1 && cycle % cycleBoost === cycleBoost - 1) // Apply every Nth cycle (cycleBoost-1 mod logic)
       ) {
-        // Apply the cycle boost effect to the action
+        // Apply the cycle boost effect to the action attributes
         cycleBoostEffect.forEach(([attribute, operation, boostValue]) => {
-          if (!action.boostedValues) {
-            action.boostedValues = {}; // Initialize temporary storage for boosted values
+          if (action.originalValues === undefined) {
+            action.originalValues = {}; // Initialize if not present
           }
 
+          // Determine the original value of the attribute, default to 0 if it doesn't exist
           const originalValue =
             action[attribute] !== undefined ? action[attribute] : 0;
 
-          // Handle different operations (similar to manaBoostEffect)
+          // Handle different operations (same as manaBoostEffect)
           switch (operation) {
             case "plus":
-              action.boostedValues[attribute] = originalValue + boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue + boostValue;
               break;
+
             case "minus":
-              action.boostedValues[attribute] = originalValue - boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue - boostValue;
               break;
+
             case "times":
-              action.boostedValues[attribute] = originalValue * boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue * boostValue;
               break;
+
             case "divide":
-              action.boostedValues[attribute] = originalValue / boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue / boostValue;
               break;
+
             case "equals":
+              // If boostValue is a string, fetch the value from the corresponding attribute
               const targetValue =
                 typeof boostValue === "string"
                   ? action[boostValue] || 0
                   : boostValue;
-              action.boostedValues[attribute] = targetValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = targetValue;
               break;
+
             default:
               console.error(`Unknown operation: ${operation}`);
           }
 
           // Log the operation result
           console.log(
-            `Cycle Boost applied: ${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action.boostedValues[attribute]}`
+            `Cycle Boost applied: ${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action[attribute]}`
           );
         });
       }
@@ -581,7 +591,12 @@ const Battle = () => {
 
         // Apply cycle boost
         if (action.cycleBoost) {
-          action = checkCycleBoost(teammate, action);
+          action = checkCycleBoost(
+            teammate,
+            action.cycleBoost,
+            action.cycleBoostEffect,
+            action
+          );
         }
 
         // Handle chargeCost: Reduce team charge if the action has a chargeCost
