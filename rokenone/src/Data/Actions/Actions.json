@@ -3,22 +3,15 @@
     "id": "TEST001",
     "class": "All",
     "name": "Test Card",
-    "type": "buff",
+    "type": "attack",
     "chargeCost": 0,
-    "charge": 1,
-    "buffAttack": 2,
+    "charge": 2,
+    "attack": 2,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
-    "cycleBoost": 2,
-    "cycleBoostEffect": [
-      ["buffAttack", "plus", 2],
-      ["chargeCost", "plus", 1],
-      ["charge", "minus", 1]
-    ],
     "upgrade": [
-      ["buffAttack", 1],
-      ["cycleBoostEffect", 1]
+      ["attack", 1]
     ]
   },
   {

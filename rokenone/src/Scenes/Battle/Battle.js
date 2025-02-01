@@ -1288,6 +1288,7 @@ const Battle = () => {
       <Enemy
         enemies={enemies}
         enemyActions={enemies.map((enemy, enemyIndex) => enemy.actionPlayed)}
+        turn={turn}
         opponentTarget={opponentTarget}
         setOpponentTarget={setOpponentTarget}
         setWeaponAttacker={setWeaponAttacker}
