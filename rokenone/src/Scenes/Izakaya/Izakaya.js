@@ -5,37 +5,42 @@ import { useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 
 const Izakaya = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const { playerTeam, setPlayerTeam, moveToNextDay } = useContext(GameDataContext);
 
-  // Initialize isHealed state using useState correctly
   const [isHealed, setIsHealed] = useState(false);
 
-  // Function to heal the entire team to their maxHealth
+  // Function to heal the entire team by 25% of their maxHealth
   const healTeam = () => {
-    const healedTeam = playerTeam.map((character) => ({
-      ...character,
-      health: character.maxHealth, // Heal to maxHealth
-    }));
-    setPlayerTeam(healedTeam); // Update the playerTeam in the context
-    setIsHealed(true); // Set the isHealed state to true
+    const healedTeam = playerTeam.map((character) => {
+      // Calculate 25% of maxHealth
+      const healthToHeal = character.maxHealth * 0.25;
+
+      // Add the healing but don't exceed maxHealth
+      const newHealth = Math.min(character.health + healthToHeal, character.maxHealth);
+
+      return {
+        ...character,
+        health: newHealth, // Update health to healed value
+      };
+    });
+    setPlayerTeam(healedTeam);
+    setIsHealed(true); // Set healed status to true
   };
 
   const handleContinue = () => {
     moveToNextDay();
-    setIsHealed(false); // Reset isHealed when continuing
-    navigate("/expeditionhome"); // Navigate to /expeditionhome when the button is clicked
+    setIsHealed(false); // Reset healing status
+    navigate("/expeditionhome"); // Navigate back
   };
 
   return (
     <div className="izakaya">
       <h1>Izakaya</h1>
-      <p>Heal everyone</p>
+      <p>Heal 25% of max health</p>
 
-      {/* Render each character in the playerTeam with a health bar */}
       <div className="character-list">
         {playerTeam.map((character, index) => {
-          // Calculate health bar width as a percentage of maxHealth
           const healthPercentage =
             (character.health / character.maxHealth) * 100;
 
@@ -48,7 +53,7 @@ const Izakaya = () => {
                     healthPercentage < 30 ? "low-health" : ""
                   }`}
                   style={{
-                    width: `${healthPercentage}%`, // Still keep the width as inline style
+                    width: `${healthPercentage}%`,
                   }}
                 ></div>
               </div>
@@ -61,7 +66,7 @@ const Izakaya = () => {
       </div>
 
       <Button
-        text={"Heal All"}
+        text={"Heal"}
         onClick={healTeam}
         type={"secondary"}
         disabled={isHealed}

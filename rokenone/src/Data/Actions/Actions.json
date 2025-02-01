@@ -4,16 +4,22 @@
     "class": "All",
     "name": "Test Card",
     "type": "buff",
-    "buffAttack": 4,
-    "buffDefence": 4,
-    "buffHeal": 4,
     "chargeCost": 0,
-    "rarity": 4,
+    "charge": 1,
+    "buffAttack": 2,
+    "rarity": 0,
     "quantity": 0,
     "level": 0,
-    "manaBoost": "grey",
-    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
-    "upgrade": [["all", 2]]
+    "cycleBoost": 2,
+    "cycleBoostEffect": [
+      ["buffAttack", "plus", 2],
+      ["chargeCost", "plus", 1],
+      ["charge", "minus", 1]
+    ],
+    "upgrade": [
+      ["buffAttack", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "A001",
@@ -1463,8 +1469,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "black",
-    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
-    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 1],
+      ["buffDefence", "plus", 1]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 1],
+      ["manaBoostEffect2", 1]
+    ]
   },
   {
     "id": "R020",
@@ -1476,8 +1488,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
-    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 1],
+      ["buffDefence", "plus", 1]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 1],
+      ["manaBoostEffect2", 1]
+    ]
   },
   {
     "id": "R021",
@@ -1489,8 +1507,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
-    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 1],
+      ["buffDefence", "plus", 1]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 1],
+      ["manaBoostEffect2", 1]
+    ]
   },
   {
     "id": "R022",
@@ -1502,8 +1526,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "light",
-    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
-    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 1],
+      ["buffDefence", "plus", 1]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 1],
+      ["manaBoostEffect2", 1]
+    ]
   },
   {
     "id": "R023",
@@ -1742,7 +1772,11 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "black",
-    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
+    "manaBoostEffect": [
+      ["buffAttack", "times", 2],
+      ["buffDefence", "times", 2],
+      ["buffHeal", "times", 2]
+    ],
     "upgrade": [["all", 2]]
   },
   {
@@ -1758,7 +1792,11 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
+    "manaBoostEffect": [
+      ["buffAttack", "times", 2],
+      ["buffDefence", "times", 2],
+      ["buffHeal", "times", 2]
+    ],
     "upgrade": [["all", 2]]
   },
   {
@@ -1996,8 +2034,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "dark",
-    "manaBoostEffect": [["buffAttack", "plus", 4], ["buffDefence", "plus", 4]],
-    "upgrade": [["manaBoostEffect", 2],["manaBoostEffect2", 2]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 4],
+      ["buffDefence", "plus", 4]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 2],
+      ["manaBoostEffect2", 2]
+    ]
   },
   {
     "id": "R058",
@@ -2010,8 +2054,14 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "light",
-    "manaBoostEffect": [["buffAttack", "plus", 4], ["buffDefence", "plus", 4]],
-    "upgrade": [["manaBoostEffect", 2],["manaBoostEffect2", 2]]
+    "manaBoostEffect": [
+      ["buffAttack", "plus", 4],
+      ["buffDefence", "plus", 4]
+    ],
+    "upgrade": [
+      ["manaBoostEffect", 2],
+      ["manaBoostEffect2", 2]
+    ]
   },
   {
     "id": "R059",
@@ -2050,7 +2100,10 @@
     "rarity": 2,
     "quantity": 0,
     "level": 0,
-    "upgrade": [["buffAttack", 1],["buffDefence", 1]]
+    "upgrade": [
+      ["buffAttack", 1],
+      ["buffDefence", 1]
+    ]
   },
   {
     "id": "R062",
@@ -2116,8 +2169,15 @@
     "quantity": 0,
     "level": 0,
     "cycleBoost": 2,
-    "cycleBoostEffect": [["buffAttack", "plus", 2], ["chargeCost", "plus", 1], ["charge", "minus", 1]],
-    "upgrade": [["buffAttack", 1],["cycleBoostEffect", 1]]
+    "cycleBoostEffect": [
+      ["buffAttack", "plus", 2],
+      ["chargeCost", "plus", 1],
+      ["charge", "minus", 1]
+    ],
+    "upgrade": [
+      ["buffAttack", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "R067",
@@ -2131,8 +2191,15 @@
     "quantity": 0,
     "level": 0,
     "cycleBoost": 2,
-    "cycleBoostEffect": [["buffDefence", "plus", 2], ["chargeCost", "plus", 1], ["charge", "minus", 1]],
-    "upgrade": [["buffDefence", 1],["cycleBoostEffect", 1]]
+    "cycleBoostEffect": [
+      ["buffDefence", "plus", 2],
+      ["chargeCost", "plus", 1],
+      ["charge", "minus", 1]
+    ],
+    "upgrade": [
+      ["buffDefence", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "R068",
@@ -2145,7 +2212,10 @@
     "rarity": 0,
     "quantity": 0,
     "level": 0,
-    "upgrade": [["buffDefence", 1],["heal", 1]]
+    "upgrade": [
+      ["buffDefence", 1],
+      ["heal", 1]
+    ]
   },
   {
     "id": "R069",
@@ -2186,7 +2256,10 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "light",
-    "manaBoostEffect": [["buffDefence", "equals", "buffAttack"], ["buffAttack", "equals", 0]],
+    "manaBoostEffect": [
+      ["buffDefence", "equals", "buffAttack"],
+      ["buffAttack", "equals", 0]
+    ],
     "upgrade": [["buffAttack", 1]]
   },
   {
@@ -2214,7 +2287,7 @@
     "quantity": 0,
     "level": 0,
     "manaBoost": "grey",
-   "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
     "upgrade": [["defence", 1]]
   },
   {

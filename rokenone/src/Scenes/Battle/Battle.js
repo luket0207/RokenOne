@@ -415,8 +415,8 @@ const Battle = () => {
       ) {
         // Apply the cycle boost effect to the action
         cycleBoostEffect.forEach(([attribute, operation, boostValue]) => {
-          if (action.originalValues === undefined) {
-            action.originalValues = {}; // Initialize if not present
+          if (!action.boostedValues) {
+            action.boostedValues = {}; // Initialize temporary storage for boosted values
           }
 
           const originalValue =
@@ -425,41 +425,31 @@ const Battle = () => {
           // Handle different operations (similar to manaBoostEffect)
           switch (operation) {
             case "plus":
-              action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue + boostValue;
+              action.boostedValues[attribute] = originalValue + boostValue;
               break;
-
             case "minus":
-              action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue - boostValue;
+              action.boostedValues[attribute] = originalValue - boostValue;
               break;
-
             case "times":
-              action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue * boostValue;
+              action.boostedValues[attribute] = originalValue * boostValue;
               break;
-
             case "divide":
-              action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue / boostValue;
+              action.boostedValues[attribute] = originalValue / boostValue;
               break;
-
             case "equals":
               const targetValue =
                 typeof boostValue === "string"
                   ? action[boostValue] || 0
                   : boostValue;
-              action.originalValues[attribute] = originalValue;
-              action[attribute] = targetValue;
+              action.boostedValues[attribute] = targetValue;
               break;
-
             default:
               console.error(`Unknown operation: ${operation}`);
           }
 
           // Log the operation result
           console.log(
-            `Cycle Boost applied: ${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action[attribute]}`
+            `Cycle Boost applied: ${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action.boostedValues[attribute]}`
           );
         });
       }
@@ -568,6 +558,7 @@ const Battle = () => {
           return null;
         }
 
+        // Handle cycle tracking and increment
         if (actionIndex === 0 && turn > 1) {
           teammate.cycle = (teammate.cycle || 0) + 1;
           console.log(
@@ -617,7 +608,6 @@ const Battle = () => {
             );
 
             // If no charge, change the action to "missed"
-            
             action = {
               id: "M155",
               class: "All",
