@@ -8,10 +8,29 @@
   display: grid;
   grid-template-columns: 50px 150px;
   overflow: hidden;
+  position: relative;
 
   &.disabled {
-    opacity: 0.4;
+    opacity: 0.5;
     pointer-events: none;
+  }
+
+  &.disabled-by-weapon {
+    &::after {
+      content: "Used in Weapon";
+      text-align: center;
+      background-color: $burgendy;
+      color: $lightGrey;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: "Cinzel Decorative", serif;
+      font-weight: 700;
+    }
   }
 
   &.animate {
@@ -25,12 +44,43 @@
     grid-template-rows: 68px 46px 46px 46px 46px;
     justify-items: center;
     align-items: center;
-    background: $darkGrey;
-    background: linear-gradient(
-      0deg,
-      rgba($darkGrey, 1) 0%,
-      rgba($lightGrey, 1) 100%
-    );
+    
+
+    &.action-class-All {
+      background: $darkGrey;
+      background: linear-gradient(
+        0deg,
+        rgba($darkGrey, 1) 0%,
+        rgba($lightGrey, 1) 100%
+      );
+    }
+
+    &.action-class-Roken {
+      background: $roken;
+      background: linear-gradient(
+        0deg,
+        rgba($roken, 1) 0%,
+        rgba(lighten($roken, 20%), 1) 100%
+      );
+    }
+
+    &.action-class-Samurai {
+      background: $samurai;
+      background: linear-gradient(
+        0deg,
+        rgba($samurai, 1) 0%,
+        rgba(lighten($samurai, 20%), 1) 100%
+      );
+    }
+
+    &.action-class-Oyoroi {
+      background: $oyoroi;
+      background: linear-gradient(
+        0deg,
+        rgba($oyoroi, 1) 0%,
+        rgba(lighten($oyoroi, 20%), 1) 100%
+      );
+    }
 
     &-circle {
       display: flex;
@@ -146,10 +196,14 @@
       font-size: 12px;
       font-weight: 400;
       color: $lightGrey;
-      max-width: 130px;
+      max-width: 150px;
       text-align: center;
       padding-top: 10px;
       margin: 0;
+    }
+
+    .small-text {
+      overflow-y: auto;
     }
 
     &-quantity {
@@ -166,7 +220,7 @@
         padding: 0;
         font-size: 16px;
         position: relative;
-        top:-1px;
+        top: -1px;
       }
     }
   }

@@ -157,12 +157,28 @@ const Battle = () => {
     navigate("/home");
   };
 
-  // Start the battle and set up the turn ticking mechanism
   const handleStartBattle = () => {
     setIsBattleStarted(true);
+
+    // Reset cycle for all characters in playerTeam and enemies
+    setPlayerTeam((prevPlayerTeam) => {
+      return prevPlayerTeam.map((teammate) => ({
+        ...teammate,
+        cycle: 0, // Reset cycle to 0 for each teammate
+      }));
+    });
+
+    setEnemies((prevEnemies) => {
+      return prevEnemies.map((enemy) => ({
+        ...enemy,
+        cycle: 0, // Reset cycle to 0 for each enemy
+      }));
+    });
+
     console.log(
       "****************************//////////////////////////// NEW BATTLE STARTED ////////////////////////////****************************"
     );
+
     intervalRef.current = setInterval(() => {
       setTurn((prevTurn) => prevTurn + 1); // Only increment the turn here
     }, 1000);
@@ -386,6 +402,71 @@ const Battle = () => {
     return action;
   };
 
+  const checkCycleBoost = (teammate, action) => {
+    const { cycleBoost, cycleBoostEffect } = action;
+
+    if (cycleBoost && cycleBoostEffect && Array.isArray(cycleBoostEffect)) {
+      const cycle = teammate.cycle || 0; // Default cycle to 0 if not present
+
+      // Check if the cycleBoost effect should be applied
+      if (
+        (cycleBoost === 1 && cycle === 0) || // Apply if cycleBoost is 0 and cycle is 0
+        (cycleBoost > 1 && cycle % cycleBoost === cycleBoost - 1) // Apply every Nth cycle (cycleBoost-1 mod logic)
+      ) {
+        // Apply the cycle boost effect to the action
+        cycleBoostEffect.forEach(([attribute, operation, boostValue]) => {
+          if (action.originalValues === undefined) {
+            action.originalValues = {}; // Initialize if not present
+          }
+
+          const originalValue =
+            action[attribute] !== undefined ? action[attribute] : 0;
+
+          // Handle different operations (similar to manaBoostEffect)
+          switch (operation) {
+            case "plus":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue + boostValue;
+              break;
+
+            case "minus":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue - boostValue;
+              break;
+
+            case "times":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue * boostValue;
+              break;
+
+            case "divide":
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = originalValue / boostValue;
+              break;
+
+            case "equals":
+              const targetValue =
+                typeof boostValue === "string"
+                  ? action[boostValue] || 0
+                  : boostValue;
+              action.originalValues[attribute] = originalValue;
+              action[attribute] = targetValue;
+              break;
+
+            default:
+              console.error(`Unknown operation: ${operation}`);
+          }
+
+          // Log the operation result
+          console.log(
+            `Cycle Boost applied: ${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${action[attribute]}`
+          );
+        });
+      }
+    }
+    return action;
+  };
+
   // Function to perform illusion checks and replace actions with 'Missed' if applicable
   const performIllusionCheck = (team) => {
     return team.map((teammate) => {
@@ -472,18 +553,26 @@ const Battle = () => {
     applyIllusionEffects(enemies, playerTeam);
 
     // Step 3: Process each team's actions for the current turn
-    const processActionsForTurn = (team) => {
+    const processActionsForTurn = (team, isPlayerTeam) => {
       return team.map((teammate) => {
         if (teammate.health <= 0) {
           teammate.actionPlayed = null;
           return null;
         }
 
-        let action = teammate.timeline[(turn - 1) % teammate.timeline.length];
+        let actionIndex = (turn - 1) % teammate.timeline.length;
+        let action = teammate.timeline[actionIndex];
 
         if (!action) {
           teammate.actionPlayed = null;
           return null;
+        }
+
+        if (actionIndex === 0 && turn > 1) {
+          teammate.cycle = (teammate.cycle || 0) + 1;
+          console.log(
+            `${teammate.name} has completed a cycle. Cycle count: ${teammate.cycle}`
+          );
         }
 
         // Store the action to be played
@@ -498,12 +587,54 @@ const Battle = () => {
             action
           );
         }
+
+        // Apply cycle boost
+        if (action.cycleBoost) {
+          action = checkCycleBoost(teammate, action);
+        }
+
+        // Handle chargeCost: Reduce team charge if the action has a chargeCost
+        if (action.chargeCost) {
+          const currentCharge = isPlayerTeam ? teamCharge : enemyCharge;
+
+          // Ensure there is enough charge
+          if (currentCharge >= action.chargeCost) {
+            isPlayerTeam
+              ? setTeamCharge(currentCharge - action.chargeCost)
+              : setEnemyCharge(currentCharge - action.chargeCost);
+            console.log(
+              `${teammate.name} used ${action.chargeCost} charge for action ${
+                action.id
+              }. Remaining charge: ${
+                isPlayerTeam
+                  ? teamCharge - action.chargeCost
+                  : enemyCharge - action.chargeCost
+              }`
+            );
+          } else {
+            console.log(
+              `${teammate.name} does not have enough charge to use action ${action.id}.`
+            );
+
+            // If no charge, change the action to "missed"
+            
+            action = {
+              id: "M155",
+              class: "All",
+              name: "No Charge",
+              type: "missed",
+            };
+            teammate.actionPlayed = action; // Update teammate's action with the "missed" one
+            return action; // Return the modified action
+          }
+        }
+
         return action;
       });
     };
 
-    const playerActions = processActionsForTurn(playerTeam);
-    const enemyActions = processActionsForTurn(enemies);
+    const playerActions = processActionsForTurn(playerTeam, true);
+    const enemyActions = processActionsForTurn(enemies, false);
 
     // Step 4: Perform illusion check for both teams
     const updatedPlayerTeam = performIllusionCheck(playerTeam);
@@ -968,36 +1099,38 @@ const Battle = () => {
     if (teamWeapons.length === 0) {
       return;
     }
-  
+
     // Get the current teammate index from the teamWeapons array
     let currentTeammateIndex = teamWeapons[currentWeaponIndex];
-  
+
     // Find the teammate in playerTeam using the index
     let currentTeammate = playerTeam[currentTeammateIndex];
-  
+
     // Check if the current teammate is dead (health is 0)
     while (currentTeammate && currentTeammate.health === 0) {
       // Remove the dead teammate from the teamWeapons array
-      teamWeapons = teamWeapons.filter(index => index !== currentTeammateIndex);
-      
+      teamWeapons = teamWeapons.filter(
+        (index) => index !== currentTeammateIndex
+      );
+
       // If there are no more teammates with weapons, break the loop
       if (teamWeapons.length === 0) {
         return;
       }
-  
+
       // Move to the next teammate in the teamWeapons array
       currentWeaponIndex = (currentWeaponIndex + 1) % teamWeapons.length;
       currentTeammateIndex = teamWeapons[currentWeaponIndex];
       currentTeammate = playerTeam[currentTeammateIndex];
     }
-  
+
     if (
       currentTeammate &&
       currentTeammate.weapon &&
       currentTeammate.weapon.length > 0
     ) {
       const weapon = currentTeammate.weapon[0]; // Assuming one weapon per teammate
-  
+
       // Check if the teamCharge is enough to trigger the weapon
       if (teamCharge >= weapon.chargeCost) {
         // Get valid enemies (with health > 0)
@@ -1006,9 +1139,9 @@ const Battle = () => {
             enemy.health > 0 ? { index, health: enemy.health } : null
           )
           .filter((enemy) => enemy !== null);
-  
+
         let targetEnemyIndex = null;
-  
+
         // Determine the enemy to target based on autoWeaponStatus
         if (validEnemies.length > 0) {
           if (autoWeaponStatus === "random") {
@@ -1032,7 +1165,7 @@ const Battle = () => {
               validEnemies[Math.floor(Math.random() * validEnemies.length)]
                 .index;
           }
-  
+
           // Trigger the weapon
           triggerWeapon({
             weaponAttacker: currentTeammateIndex,
@@ -1044,19 +1177,18 @@ const Battle = () => {
             teamCharge: teamCharge,
             setTeamCharge: setTeamCharge,
           });
-  
+
           // Reduce the teamCharge by the weapon's charge cost
           teamCharge -= weapon.chargeCost;
-  
+
           // Move to the next weapon in the teamWeapons array
           setCurrentWeaponIndex((currentWeaponIndex + 1) % teamWeapons.length); // Loop back if we reach the end
-  
+
           return targetEnemyIndex;
         }
       }
     }
   };
-  
 
   const toggleAutoWeaponStatus = () => {
     const currentStatus = playerData[0].autoWeaponStatus;
@@ -1091,10 +1223,6 @@ const Battle = () => {
 
   return (
     <div className="battle-container">
-      <button className="close-battle" onClick={handleCloseBattle}>
-        <FontAwesomeIcon icon={faXmark} />
-      </button>
-
       {!isBattleStarted && (
         <div className="battle-modal-container">
           <div className="battle-modal">

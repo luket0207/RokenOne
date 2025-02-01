@@ -171,6 +171,20 @@ const Edit = () => {
 
     // Apply upgrades to the action
     const applyUpgrades = (action) => {
+      // Define the list of attributes to check
+      const checkAttributes = [
+        "attack",
+        "defence",
+        "attackAll",
+        "defenceAll",
+        "heal",
+        "healAll",
+        "buffAttack",
+        "buffDefence",
+        "buffHeal",
+        "attackWeaponBoost",
+      ];
+
       // Determine which upgrade to apply based on the current level
       const upgradeIndex = action.level % action.upgrade.length;
 
@@ -184,6 +198,55 @@ const Edit = () => {
           action.manaBoostEffect[0]
         ) {
           action.manaBoostEffect[0][2] += upgradeValue; // Increase the numerical value
+        }
+      } else if (attribute === "manaBoostEffect2") {
+        // Upgrade manaBoostEffect value (third element in array)
+        if (
+          Array.isArray(action.manaBoostEffect) &&
+          action.manaBoostEffect[1]
+        ) {
+          action.manaBoostEffect[1][2] += upgradeValue; // Increase the numerical value
+        }
+      } else if (attribute === "cycleBoostEffect") {
+        // Upgrade cycleBoostEffect value (third element in array)
+        if (
+          Array.isArray(action.cycleBoostEffect) &&
+          action.cycleBoostEffect[0]
+        ) {
+          action.cycleBoostEffect[0][2] += upgradeValue; // Increase the numerical value
+        }
+      } else if (attribute === "cycleBoostEffect2") {
+        // Upgrade cycleBoostEffect value (third element in array)
+        if (
+          Array.isArray(action.cycleBoostEffect) &&
+          action.cycleBoostEffect[1]
+        ) {
+          action.cycleBoostEffect[1][2] += upgradeValue; // Increase the numerical value
+        }
+      } else if (attribute === "all") {
+        // If the attribute is "all", increment all applicable attributes
+        checkAttributes.forEach((attr) => {
+          // Check if the attribute is not null or 0
+          if (action[attr] !== null && action[attr] !== 0) {
+            action[attr] += upgradeValue; // Increment the attribute by the upgrade value
+          }
+        });
+
+        // Also check if any of the boost effects match and should be upgraded
+        if (Array.isArray(action.manaBoostEffect)) {
+          action.manaBoostEffect.forEach((effect) => {
+            if (checkAttributes.includes(effect[0]) && effect[1] === "plus") {
+              effect[2] += upgradeValue; // Increment the effect value
+            }
+          });
+        }
+
+        if (Array.isArray(action.cycleBoostEffect)) {
+          action.cycleBoostEffect.forEach((effect) => {
+            if (checkAttributes.includes(effect[0]) && effect[1] === "plus") {
+              effect[2] += upgradeValue; // Increment the effect value
+            }
+          });
         }
       } else {
         // Upgrade the appropriate attribute
@@ -269,7 +332,7 @@ const Edit = () => {
       >
         {action ? (
           <div className="timeline-slot-action">
-            <h5 className="timeline-slot-text">{action.name}</h5>
+            <ActionCard action={action} noAnimation={true} />
             <div
               className="timeline-slot-remove"
               onClick={() => handleReturnToPool(action)}
@@ -494,44 +557,79 @@ const Edit = () => {
     <div className="edit-container">
       <h1>Edit {character.name}</h1>
       <p className="edit-text">
-        Drag actions from the left into your timeline. Timeline is played from
-        the top down.
+        Drag actions from the bottom list into the timeline at the top. Once you
+        are done, you can just navigate back.
       </p>
-      <div className="edit-weapon">
-        {character.weapon ? (
-          <div className="edit-weapon-info">
-            <p>Weapon: {character.weapon[0].name}</p>
-            <p>Charge Cost: {character.weapon[0].chargeCost}</p>
-            <p>
-              Attack:{" "}
-              {character.weapon[0].attack + character.weapon[0].attackBoost}
-            </p>
-            <Button
-              text={"Change Weapon"}
-              onClick={openWeaponSelectionModal}
-              disabled={
-                !character.weapon && // Check if weapon is null
-                !character.actionPool.some(
-                  (action) => action.type === "attack" && !action.locked
-                )
-              }
-            />
-          </div>
-        ) : (
-          <Button
-            text={"Select Weapon"}
-            onClick={openWeaponSelectionModal}
-            disabled={
-              !character.weapon && // Check if weapon is null
-              !character.actionPool.some(
-                (action) => action.type === "attack" && !action.locked
-              )
-            }
-          />
-        )}
+      <div className="home-button">
+        <Button text={"Back"} onClick={handleGoHome}></Button>
       </div>
-
       <div className="edit-timeline-grid">
+        <div className="timeline-container">
+          <div>
+            <div className="timeline-container-items">
+              <h3>Timeline</h3>
+              <h3>Weapon</h3>
+              <div className="timeline">
+                {Array.from({ length: character.timelineSlots }).map(
+                  (_, index) => (
+                    <div key={index}>
+                      <TimelineSlot
+                        action={character.timeline[index] || null}
+                        index={index}
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+              <div className="edit-weapon">
+                {character.weapon ? (
+                  <div className="edit-weapon-info">
+                    <div className="edit-weapon-info-text">
+                      <p>Weapon: {character.weapon[0].name}</p>
+                      <p>Charge Cost: {character.weapon[0].chargeCost}</p>
+                      <p>
+                        Attack:{" "}
+                        {character.weapon[0].attack +
+                          character.weapon[0].attackBoost}
+                      </p>
+                    </div>
+                    <Button
+                      text={"Change Weapon"}
+                      onClick={openWeaponSelectionModal}
+                      type="secondary"
+                      disabled={
+                        !character.weapon && // Check if weapon is null
+                        !character.actionPool.some(
+                          (action) => action.type === "attack" && !action.locked
+                        )
+                      }
+                    />
+                  </div>
+                ) : (
+                  <Button
+                    text={
+                      !character.weapon &&
+                      !character.actionPool.some(
+                        (action) => action.type === "attack" && !action.locked
+                      )
+                        ? "No Available Attack Moves"
+                        : "Select Weapon"
+                    }
+                    onClick={openWeaponSelectionModal}
+                    type="secondary"
+                    disabled={
+                      !character.weapon &&
+                      !character.actionPool.some(
+                        (action) => action.type === "attack" && !action.locked
+                      )
+                    }
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="action-pool">
           <div className="action-add" onClick={openActionSelectionModal}>
             <div className="action-add-icon">
@@ -544,19 +642,6 @@ const Edit = () => {
             .map((action) => (
               <Action key={action.id} action={action} />
             ))}
-        </div>
-        <div className="timeline">
-          <div>
-            <h3>Timeline</h3>
-          </div>
-          {Array.from({ length: character.timelineSlots }).map((_, index) => (
-            <div key={index}>
-              <TimelineSlot
-                action={character.timeline[index] || null}
-                index={index}
-              />
-            </div>
-          ))}
         </div>
       </div>
 

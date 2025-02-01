@@ -1,26 +1,40 @@
 [
   {
+    "id": "TEST001",
+    "class": "All",
+    "name": "Test Card",
+    "type": "buff",
+    "buffAttack": 4,
+    "buffDefence": 4,
+    "buffHeal": 4,
+    "chargeCost": 0,
+    "rarity": 4,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
+    "upgrade": [["all", 2]]
+  },
+  {
     "id": "A001",
     "class": "All",
     "name": "Punch",
     "type": "attack",
     "attack": 2,
     "defence": 0,
-    "attackWeaponBoost": 8,
     "rarity": 0,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["attack", 1 ]]
+    "upgrade": [["attack", 1]]
   },
   {
     "id": "A002",
     "class": "All",
     "name": "Block",
     "type": "defence",
-    "charge": 2,
     "defence": 3,
     "rarity": 0,
     "quantity": 0,
@@ -28,7 +42,7 @@
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["defence", 1 ]]
+    "upgrade": [["defence", 1]]
   },
   {
     "id": "A003",
@@ -44,7 +58,7 @@
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["heal", 1 ]]
+    "upgrade": [["heal", 1]]
   },
   {
     "id": "A004",
@@ -60,7 +74,7 @@
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["buffAttack", 1 ]]
+    "upgrade": [["buffAttack", 1]]
   },
   {
     "id": "A005",
@@ -76,7 +90,7 @@
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["buffDefence", 1 ]]
+    "upgrade": [["buffDefence", 1]]
   },
   {
     "id": "A006",
@@ -93,7 +107,10 @@
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["buffAttack", 1 ],["buffDefence", 1 ]]
+    "upgrade": [
+      ["buffAttack", 1],
+      ["buffDefence", 1]
+    ]
   },
   {
     "id": "A007",
@@ -108,7 +125,10 @@
     "chargeCost": 0,
     "manaBoost": "dark",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A008",
@@ -123,7 +143,10 @@
     "chargeCost": 0,
     "manaBoost": "light",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["defence", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A009",
@@ -132,13 +155,17 @@
     "type": "attack",
     "attack": 1,
     "defence": 0,
+    "attackWeaponBoost": 1,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "none",
     "manaBoostEffect": [],
-    "upgrade": [["attack", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["attackWeaponBoost", 1]
+    ]
   },
   {
     "id": "A010",
@@ -146,13 +173,13 @@
     "name": "Good Start",
     "type": "defence",
     "attack": 0,
-    "defence": 1,
+    "defence": 2,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
+    "cycleBoost": 1,
+    "cycleBoostEffect": [["defence", "times", 2]],
     "upgrade": [["defence", 1]]
   },
   {
@@ -166,8 +193,8 @@
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
+    "cycleBoost": 1,
+    "cycleBoostEffect": [["attack", "times", 2]],
     "upgrade": [["attack", 1]]
   },
   {
@@ -184,7 +211,10 @@
     "chargeCost": 0,
     "manaBoost": "light",
     "manaBoostEffect": [["heal", "plus", 1]],
-    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A013",
@@ -200,7 +230,10 @@
     "chargeCost": 0,
     "manaBoost": "dark",
     "manaBoostEffect": [["heal", "plus", 1]],
-    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A014",
@@ -216,7 +249,10 @@
     "chargeCost": 0,
     "manaBoost": "gold",
     "manaBoostEffect": [["buffAttack", "plus", 1]],
-    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A015",
@@ -232,7 +268,10 @@
     "chargeCost": 0,
     "manaBoost": "jade",
     "manaBoostEffect": [["buffAttack", "plus", 1]],
-    "upgrade": [["attack", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A016",
@@ -248,7 +287,10 @@
     "chargeCost": 0,
     "manaBoost": "orange",
     "manaBoostEffect": [["heal", "plus", 1]],
-    "upgrade": [["heal", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["heal", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A017",
@@ -262,9 +304,12 @@
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "teal", 
+    "manaBoost": "teal",
     "manaBoostEffect": [["heal", "plus", 1]],
-    "upgrade": [["heal", 1 ],["manaBoostEffect", 1 ]]
+    "upgrade": [
+      ["heal", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A018",
@@ -273,13 +318,16 @@
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "rarity": 2,
+    "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
-    "upgrade": [["attack", 1]]
+    "cycleBoost": 3,
+    "cycleBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [
+      ["attack", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "A019",
@@ -288,13 +336,16 @@
     "type": "defence",
     "attack": 0,
     "defence": 1,
-    "rarity": 2,
+    "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
-    "upgrade": [["defence", 1]]
+    "cycleBoost": 3,
+    "cycleBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [
+      ["defence", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "A020",
@@ -303,13 +354,16 @@
     "type": "attack",
     "attack": 1,
     "defence": 0,
-    "rarity": 3,
+    "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
-    "upgrade": [["attack", 1]]
+    "cycleBoost": 3,
+    "cycleBoostEffect": [["attack", "plus", 1]],
+    "upgrade": [
+      ["attack", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "A021",
@@ -319,13 +373,16 @@
     "attack": 0,
     "defence": 1,
     "heal": 1,
-    "rarity": 3,
+    "rarity": 1,
     "quantity": 0,
     "level": 0,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
-    "upgrade": [["defence", 1]]
+    "cycleBoost": 3,
+    "cycleBoostEffect": [["defence", "plus", 1]],
+    "upgrade": [
+      ["defence", 1],
+      ["cycleBoostEffect", 1]
+    ]
   },
   {
     "id": "A022",
@@ -399,7 +456,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -414,7 +474,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -429,7 +492,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -444,7 +510,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -459,7 +528,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -474,7 +546,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -489,7 +564,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -504,7 +582,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": [["defenceAll", "equals", "defence"], ["defence", "equals", 0]],
+    "manaBoostEffect": [
+      ["defenceAll", "equals", "defence"],
+      ["defence", "equals", 0]
+    ],
     "upgrade": [["defence", 1]]
   },
   {
@@ -519,7 +600,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "black",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -534,7 +618,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "grey",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -549,7 +636,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "orange",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -564,7 +654,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "teal",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -579,7 +672,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "gold",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -594,7 +690,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "jade",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -609,7 +708,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "crimson",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -624,7 +726,10 @@
     "level": 0,
     "chargeCost": 0,
     "manaBoost": "emerald",
-    "manaBoostEffect": [["attackAll", "equals", "attack"], ["attack", "equals", 0]],
+    "manaBoostEffect": [
+      ["attackAll", "equals", "attack"],
+      ["attack", "equals", 0]
+    ],
     "upgrade": [["attack", 1]]
   },
   {
@@ -660,7 +765,7 @@
   {
     "id": "A044",
     "class": "All",
-    "name": "Grey Sheild",
+    "name": "Sheild",
     "type": "defence",
     "attack": 0,
     "defenceAll": 0,
@@ -675,7 +780,7 @@
   {
     "id": "A045",
     "class": "All",
-    "name": "Black Sheild",
+    "name": "Sheild",
     "type": "defence",
     "attack": 0,
     "defenceAll": 0,
@@ -760,7 +865,10 @@
     "chargeCost": 0,
     "manaBoost": "black",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A051",
@@ -775,7 +883,10 @@
     "chargeCost": 0,
     "manaBoost": "grey",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A052",
@@ -790,7 +901,10 @@
     "chargeCost": 0,
     "manaBoost": "orange",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A053",
@@ -805,7 +919,10 @@
     "chargeCost": 0,
     "manaBoost": "teal",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A054",
@@ -820,7 +937,10 @@
     "chargeCost": 0,
     "manaBoost": "gold",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A055",
@@ -835,7 +955,10 @@
     "chargeCost": 0,
     "manaBoost": "jade",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A056",
@@ -850,7 +973,10 @@
     "chargeCost": 0,
     "manaBoost": "crimson",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A057",
@@ -865,7 +991,10 @@
     "chargeCost": 0,
     "manaBoost": "emerald",
     "manaBoostEffect": [["defence", "plus", 1]],
-    "upgrade": [["defence", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["defence", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A058",
@@ -880,7 +1009,10 @@
     "chargeCost": 0,
     "manaBoost": "black",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A059",
@@ -895,7 +1027,10 @@
     "chargeCost": 0,
     "manaBoost": "grey",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A060",
@@ -910,7 +1045,10 @@
     "chargeCost": 0,
     "manaBoost": "orange",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
 
   {
@@ -926,7 +1064,10 @@
     "chargeCost": 0,
     "manaBoost": "teal",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A062",
@@ -941,7 +1082,10 @@
     "chargeCost": 0,
     "manaBoost": "gold",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A063",
@@ -956,7 +1100,10 @@
     "chargeCost": 0,
     "manaBoost": "jade",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A064",
@@ -971,7 +1118,10 @@
     "chargeCost": 0,
     "manaBoost": "crimson",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A065",
@@ -986,7 +1136,10 @@
     "chargeCost": 0,
     "manaBoost": "emerald",
     "manaBoostEffect": [["attack", "plus", 1]],
-    "upgrade": [["attack", 1], ["manaBoostEffect", 1]]
+    "upgrade": [
+      ["attack", 1],
+      ["manaBoostEffect", 1]
+    ]
   },
   {
     "id": "A066",
@@ -1049,18 +1202,1103 @@
     "upgrade": [["attackAll", 3]]
   },
   {
-    "id": "A070",
-    "class": "All",
-    "name": "Mecha Weapon",
+    "id": "R001",
+    "class": "Roken",
+    "name": "Bamboo Jab",
     "type": "attack",
-    "attack": 10,
-    "defence": 0,
+    "attack": 4,
+    "chargeCost": 1,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "none",
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 2]]
+  },
+  {
+    "id": "R002",
+    "class": "Roken",
+    "name": "Bamboo Swipe",
+    "type": "attack",
+    "attack": 3,
+    "chargeCost": 2,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "none",
+    "manaBoostEffect": [],
+    "upgrade": [["attack", 3]]
+  },
+  {
+    "id": "R003",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R004",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R005",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R006",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R007",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R008",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R009",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R010",
+    "class": "Roken",
+    "name": "Charge Jab",
+    "type": "attack",
+    "attack": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R011",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R012",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R013",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R014",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R015",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R016",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R017",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R018",
+    "class": "Roken",
+    "name": "Charge Block",
+    "type": "defence",
+    "defence": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["charge", "plus", 1]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R019",
+    "class": "Roken",
+    "name": "Buff All",
+    "type": "buff",
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+  },
+  {
+    "id": "R020",
+    "class": "Roken",
+    "name": "Buff All",
+    "type": "buff",
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+  },
+  {
+    "id": "R021",
+    "class": "Roken",
+    "name": "Dark Buff All",
+    "type": "buff",
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "dark",
+    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+  },
+  {
+    "id": "R022",
+    "class": "Roken",
+    "name": "Light Buff All",
+    "type": "buff",
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "light",
+    "manaBoostEffect": [["buffAttack", "plus", 1],["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1],["manaBoostEffect2", 1]]
+  },
+  {
+    "id": "R023",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R024",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R025",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R026",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R027",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R028",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R029",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R030",
+    "class": "Roken",
+    "name": "Double Attack Buff",
+    "type": "buff",
+    "buffAttack": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["buffAttack", "times", 2]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R031",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R032",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R033",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R034",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R035",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R036",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R037",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R038",
+    "class": "Roken",
+    "name": "Double Defence Buff",
+    "type": "buff",
+    "buffDefence": 2,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["buffDefence", "times", 2]],
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R039",
+    "class": "Roken",
+    "name": "Mecha Buff",
+    "type": "buff",
+    "buffAttack": 4,
+    "buffDefence": 4,
+    "buffHeal": 4,
+    "chargeCost": 0,
     "rarity": 4,
     "quantity": 0,
     "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
+    "upgrade": [["all", 2]]
+  },
+  {
+    "id": "R040",
+    "class": "Roken",
+    "name": "Mecha Buff",
+    "type": "buff",
+    "buffAttack": 4,
+    "buffDefence": 4,
+    "buffHeal": 4,
     "chargeCost": 0,
-    "manaBoost": "none",
-    "manaBoostEffect": [],
-    "upgrade": [["attack", 5]]
+    "rarity": 4,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "times", 2], ["buffDefence", "times", 2], ["buffHeal", "times", 2]],
+    "upgrade": [["all", 2]]
+  },
+  {
+    "id": "R041",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R042",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R043",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R044",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R045",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R046",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R047",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R048",
+    "class": "Roken",
+    "name": "Charge N' Buff Attack",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["buffAttack", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R049",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R050",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R051",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R052",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R053",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R054",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R055",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R056",
+    "class": "Roken",
+    "name": "Charge N' Buff Defence",
+    "type": "charge",
+    "charge": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["buffDefence", "plus", 1]],
+    "upgrade": [["manaBoostEffect", 1]]
+  },
+  {
+    "id": "R057",
+    "class": "Roken",
+    "name": "Mecha Charge N' Buff",
+    "type": "charge",
+    "charge": 2,
+    "chargeCost": 0,
+    "rarity": 4,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "dark",
+    "manaBoostEffect": [["buffAttack", "plus", 4], ["buffDefence", "plus", 4]],
+    "upgrade": [["manaBoostEffect", 2],["manaBoostEffect2", 2]]
+  },
+  {
+    "id": "R058",
+    "class": "Roken",
+    "name": "Mecha Charge N' Buff",
+    "type": "charge",
+    "charge": 2,
+    "chargeCost": 0,
+    "rarity": 4,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "light",
+    "manaBoostEffect": [["buffAttack", "plus", 4], ["buffDefence", "plus", 4]],
+    "upgrade": [["manaBoostEffect", 2],["manaBoostEffect2", 2]]
+  },
+  {
+    "id": "R059",
+    "class": "Roken",
+    "name": "Charging Punch",
+    "type": "charge",
+    "charge": 2,
+    "attack": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R060",
+    "class": "Roken",
+    "name": "Charging Block",
+    "type": "charge",
+    "charge": 2,
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R061",
+    "class": "Roken",
+    "name": "Charged Buff",
+    "type": "buff",
+    "chargeCost": 2,
+    "buffAttack": 4,
+    "buffDefence": 4,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["buffAttack", 1],["buffDefence", 1]]
+  },
+  {
+    "id": "R062",
+    "class": "Roken",
+    "name": "Charged Attack Buff",
+    "type": "buff",
+    "chargeCost": 1,
+    "buffAttack": 4,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R063",
+    "class": "Roken",
+    "name": "Charged Defence Buff",
+    "type": "buff",
+    "chargeCost": 1,
+    "buffDefence": 4,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["buffDefence", 1]]
+  },
+  {
+    "id": "R064",
+    "class": "Roken",
+    "name": "Attack Charge Gamble",
+    "type": "attack",
+    "chargeCost": 1,
+    "attack": 1,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["attack", "times", 2]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R065",
+    "class": "Roken",
+    "name": "Attack Charge Gamble",
+    "type": "attack",
+    "chargeCost": 1,
+    "attack": 1,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["attack", "times", 2]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R066",
+    "class": "Roken",
+    "name": "Borrow Buff Attack",
+    "type": "buff",
+    "chargeCost": 0,
+    "charge": 1,
+    "buffAttack": 2,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "cycleBoost": 2,
+    "cycleBoostEffect": [["buffAttack", "plus", 2], ["chargeCost", "plus", 1], ["charge", "minus", 1]],
+    "upgrade": [["buffAttack", 1],["cycleBoostEffect", 1]]
+  },
+  {
+    "id": "R067",
+    "class": "Roken",
+    "name": "Borrow Buff Defence",
+    "type": "buff",
+    "chargeCost": 0,
+    "charge": 1,
+    "buffDefence": 2,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "cycleBoost": 2,
+    "cycleBoostEffect": [["buffDefence", "plus", 2], ["chargeCost", "plus", 1], ["charge", "minus", 1]],
+    "upgrade": [["buffDefence", 1],["cycleBoostEffect", 1]]
+  },
+  {
+    "id": "R068",
+    "class": "Roken",
+    "name": "Protection Buff",
+    "type": "heal",
+    "chargeCost": 0,
+    "heal": 1,
+    "buffDefence": 1,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "upgrade": [["buffDefence", 1],["heal", 1]]
+  },
+  {
+    "id": "R069",
+    "class": "Roken",
+    "name": "Called your Buff",
+    "type": "attack",
+    "chargeCost": 0,
+    "attack": 1,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffAttack", "equals", "attack"]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R070",
+    "class": "Roken",
+    "name": "Called your Buff",
+    "type": "attack",
+    "chargeCost": 0,
+    "attack": 1,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+    "manaBoostEffect": [["buffAttack", "equals", "attack"]],
+    "upgrade": [["attack", 1]]
+  },
+  {
+    "id": "R071",
+    "class": "Roken",
+    "name": "Coin Flip Buff",
+    "type": "attack",
+    "chargeCost": 0,
+    "buffAttack": 2,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "light",
+    "manaBoostEffect": [["buffDefence", "equals", "buffAttack"], ["buffAttack", "equals", 0]],
+    "upgrade": [["buffAttack", 1]]
+  },
+  {
+    "id": "R072",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "black",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R073",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 3,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "grey",
+   "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R074",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "orange",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R075",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 2,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "teal",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R076",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "gold",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R077",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 1,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "jade",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R078",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "crimson",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
+  },
+  {
+    "id": "R079",
+    "class": "Roken",
+    "name": "Block N Buff",
+    "type": "defence",
+    "defence": 1,
+    "chargeCost": 0,
+    "rarity": 0,
+    "quantity": 0,
+    "level": 0,
+    "manaBoost": "emerald",
+    "manaBoostEffect": [["buffDefence", "equals", "defence"]],
+    "upgrade": [["defence", 1]]
   }
 ]

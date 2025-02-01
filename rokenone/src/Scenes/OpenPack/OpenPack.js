@@ -107,6 +107,44 @@ const OpenPack = () => {
     }, 15000); // 15 seconds (adjust to match your animation duration)
   };
 
+  // Add the test card to the player's cardBank
+  const handleAddTestCard = () => {
+    const testCard = actionsData.find((action) => action.id === "TEST001");
+
+    setAnimationComplete(true);
+
+    if (!testCard) {
+      console.error("Test card not found in actionsData.");
+      return;
+    }
+
+    setPlayerData((prevData) => {
+      if (!prevData) {
+        return prevData;
+      }
+
+      // Ensure cardBank is initialized
+      const updatedCardBank = prevData.cardBank || [];
+
+      const existingActionIndex = updatedCardBank.findIndex(
+        (card) => card.id === testCard.id
+      );
+
+      if (existingActionIndex !== -1) {
+        // If the action already exists, increment its quantity
+        updatedCardBank[existingActionIndex].quantity += 1;
+      } else {
+        // Add the test card if it doesn't exist
+        updatedCardBank.push({ ...testCard, quantity: 1 });
+      }
+
+      return {
+        ...prevData,
+        cardBank: updatedCardBank,
+      };
+    });
+  };
+
   const handleContinue = () => {
     navigate("/home");
   };
@@ -120,15 +158,17 @@ const OpenPack = () => {
           <Button
             text={"Low Tier Pack"}
             onClick={() => handleOpenPack("low")}
-          ></Button>
+          />
           <Button
             text={"Medium Tier Pack"}
             onClick={() => handleOpenPack("medium")}
-          ></Button>
+          />
           <Button
             text={"High Tier Pack"}
             onClick={() => handleOpenPack("high")}
-          ></Button>
+          />
+          {/* Add a button to add the test card */}
+          <Button text={"Add Test Card"} onClick={handleAddTestCard} />
         </div>
       )}
 
@@ -151,6 +191,8 @@ const OpenPack = () => {
           </div>
         </div>
       )}
+
+      
 
       {/* Only show the "Home" button after animation is complete */}
       <Button

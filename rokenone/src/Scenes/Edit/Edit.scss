@@ -14,13 +14,8 @@
   }
 }
 
-.edit-text {
-  margin-bottom: 30px;
-}
-
 .edit-timeline-grid {
   display: grid;
-  grid-template-columns: 720px 280px;
   z-index: 1;
 }
 
@@ -62,84 +57,140 @@
     }
   }
 }
-
-.timeline {
-  display: grid;
-  grid-auto-rows: 80px;
-  height: 520px;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  margin-bottom: 20px;
+.timeline-container {
   background-color: $darkerGrey;
+  position: relative;
+  text-align: center;
+  color: $lightGrey;
+  padding: 30px 0px;
 
-  h3 {
-    color: $lightGrey;
-    text-align: center;
-    margin: 0;
-  }
-
-  .timeline-slot {
-    width: 200px;
-    height: 56px;
-    border: 2px dashed $darkGrey;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease;
+  &-items {
     position: relative;
+    display: grid;
+    grid-template-columns: 600px 240px;
+    width: 860px;
+    padding: 0 20px;
+    justify-content: space-between;
 
-    &-text {
-      margin: 10px 0px;
-      text-align: center;
-    }
-
-    h5 {
-      margin: 0px;
-    }
-
-    &-remove {
-      position: absolute;
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 110px));
+      width: 600px;
+      height: 170px;
+      justify-content: center; /* Space around each item horizontally */
+      justify-items: center;
       align-items: center;
-      background-color: $burgendy;
-      top: -10px;
-      right: -10px;
-      color: $lightGrey;
-      cursor: pointer;
-      @include boxShadowHover(-3px);
-    }
-
-    &-empty {
-      background-color: $lightGrey;
-      color: $burgendy !important;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      font-weight: 800;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &.hover {
-      background-color: $lightGrey;
-    }
-
-    &.filled {
       @include cardFrame;
-      border: solid 2px transparent;
+
+      h3 {
+        color: $lightGrey;
+        text-align: center;
+        margin: 0;
+      }
+
+      .timeline-slot {
+        width: 96px;
+        height: 124px;
+        border: 2px dashed $darkGrey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s ease;
+        position: relative;
+
+        &-text {
+          margin: 10px 0px;
+          text-align: center;
+        }
+
+        h5 {
+          margin: 0px;
+        }
+
+        &-remove {
+          position: absolute;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: $burgendy;
+          top: -10px;
+          right: -10px;
+          color: $lightGrey;
+          cursor: pointer;
+          @include boxShadowHover(-3px);
+        }
+
+        &-empty {
+          background-color: $lightGrey;
+          color: $burgendy !important;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          font-weight: 800;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &.hover {
+          background-color: $lightGrey;
+        }
+
+        &.filled {
+          border: solid 2px transparent;
+        }
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+
+      .timeline-slot-action {
+        padding: 10px 20px;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        flex: 0 0 auto; // Prevent flex from resizing the item
+
+        .action-item {
+          transform: scale(0.5);
+        }
+      
+        p {
+          margin: 0;
+          text-align: center;
+        }
+      }
     }
 
-    &:hover {
-      background-color: #f0f0f0;
+    .edit-weapon {
+      width: 240px;
+      @include cardFrame;
+      justify-self: center;
+      align-content: center;
+      height: 170px;
+
+      &-info {
+        display: grid;
+        grid-template-rows: 90px 40px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      .btn {
+        max-width: 60%;
+        margin: auto;
+      }
     }
   }
 }
@@ -154,7 +205,7 @@
   border: solid 5px $black;
   border-radius: 10px;
   @include boxShadowHover;
-  cursor: pointer;  
+  cursor: pointer;
 
   &-icon {
     font-size: 40px;
@@ -176,34 +227,20 @@
   height: 460px;
   overflow-y: scroll;
   padding: 30px 20px;
-  max-width: 700px;
   justify-items: center;
+  background-color: #00000055;
+  margin-top: 20px;
 
   .action-item {
     cursor: grab;
   }
 }
 
-.timeline-slot-action {
-  padding: 10px 20px;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  flex: 0 0 auto; // Prevent flex from resizing the item
-
-  p {
-    margin: 0;
-    text-align: center;
-  }
-}
-
 .home-button {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
-//Action Modal 
+//Action Modal
 
 .add-action {
   h3 {
@@ -235,7 +272,7 @@
       pointer-events: none;
       color: $green;
       opacity: 0;
-      transition: all .8s ease;
+      transition: all 0.8s ease;
     }
 
     &:hover {
@@ -246,7 +283,7 @@
   }
 }
 
-//Weapon Modal 
+//Weapon Modal
 
 .weapon-selection {
   min-width: 600px;

@@ -99,6 +99,7 @@
   @include boxShadow;
   position: relative;
   background: $white;
+  color: $darkerGrey;
 
   div {
     z-index: 10;

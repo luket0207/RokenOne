@@ -199,7 +199,8 @@
         "name": "Charge Strike",
         "action": "Action A",
         "type": "attack",
-        "attack": 1
+        "attack": 1,
+        "chargeCost": 1
       },
       {
         "id": "T1B",
@@ -216,7 +217,7 @@
         "charge": 1
       }
     ],
-    "actionPatterns": ["B,C,B,A", "A,B,A,C"]
+    "actionPatterns": ["C,B,C,A", "C,A,B,A"]
   },
   {
     "id": "T2",
