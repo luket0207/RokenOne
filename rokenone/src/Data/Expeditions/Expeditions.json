@@ -24,7 +24,7 @@
   {
     "id": "S2",
     "name": "Samurai Medium",
-    "difficulty": 2,
+    "difficulty": 4,
     "class": "Samurai",
     "enemies": ["S1", "S2"],
     "boss": ["BS1"],

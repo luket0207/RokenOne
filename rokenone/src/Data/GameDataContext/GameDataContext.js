@@ -19,11 +19,17 @@ export const GameDataProvider = ({ children }) => {
 
   const [playerData, setPlayerData] = useState([
     {
-      xp: 0,
-      currency: 0,
+      level: 0,
       maxTeammates: 2,
       cardBank: [],
       autoWeaponStatus: "off",
+      coins: 0,
+      dustRoken: 0,
+      dustSamurai: 0,
+      dustOyoroi: 0,
+      dustKobo: 0,
+      dustTaiko: 0,
+      dustGenso: 0,
       unlockedTeammates: [
         {
           id: 2,

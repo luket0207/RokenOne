@@ -42,6 +42,7 @@ const Battle = () => {
   const intervalRef = useRef(null); // Use ref for interval
   const [intervalTime, setIntervalTime] = useState(1000);
   const [paused, setPaused] = useState(false);
+  const [difficulty, setDifficulty] = useState(state?.difficulty || 0);
   const availableMana = [
     "black",
     "grey",
@@ -80,44 +81,111 @@ const Battle = () => {
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
-
+  
     if (!hasTimeline) {
       const updatedEnemies = enemies.map((enemy) => {
-        const { actionArray, actionPatterns } = enemy;
-
+        const { actionArray, actionPatterns, health, maxHealth } = enemy;
+  
         // Step 1: Randomly select an action pattern
         const randomPatternIndex = Math.floor(
           Math.random() * actionPatterns.length
         );
         const selectedPattern = actionPatterns[randomPatternIndex].split(",");
-
+  
+        // Step 3: Apply difficulty scaling to actionArray attributes
+        const scaledActionArray = actionArray.map((action, index) => {
+          console.log(`Original action at index ${index}:`, action);
+  
+          // List of all the attributes that need scaling
+          const attributesToScale = [
+            "attack",
+            "defence",
+            "heal",
+            "attackAll",
+            "defenceAll",
+            "healAll",
+            "buffAttack",
+            "buffDefence",
+            "buffHeal",
+            "attackWeaponBoost",
+          ];
+  
+          // Scale the main attributes only if they are present and greater than 0
+          const scaledAction = attributesToScale.reduce(
+            (acc, attr) => {
+              if (action[attr] !== undefined && action[attr] > 0) {
+                // Only scale if the attribute is present and its value is greater than 0
+                acc[attr] = action[attr] + difficulty * 10;
+              } else {
+                acc[attr] = action[attr]; // Keep the original value if scaling isn't applied
+              }
+              return acc;
+            },
+            { ...action }
+          );
+  
+          console.log(`Scaled action at index ${index}:`, scaledAction);
+  
+          // Function to scale cycleBoostEffect and manaBoostEffect
+          const scaleBoostEffect = (effectArray) => {
+            return effectArray.map(([attr, operation, value]) => {
+              if (attributesToScale.includes(attr) && operation === "plus") {
+                return [attr, operation, value + difficulty * 10];
+              }
+              return [attr, operation, value];
+            });
+          };
+  
+          // Scale cycleBoostEffect and manaBoostEffect
+          if (action.cycleBoostEffect) {
+            scaledAction.cycleBoostEffect = scaleBoostEffect(
+              action.cycleBoostEffect
+            );
+          }
+          if (action.manaBoostEffect) {
+            scaledAction.manaBoostEffect = scaleBoostEffect(
+              action.manaBoostEffect
+            );
+          }
+  
+          return scaledAction;
+        });
+  
+        console.log("Scaled actionArray:", scaledActionArray);
+  
         // Step 2: Construct the timeline based on the selected pattern
         const timeline = selectedPattern.map((actionName) => {
           // Find the corresponding action in the actionArray
-          const action = actionArray.find(
+          const action = scaledActionArray.find(
             (action) => action.action === `Action ${actionName}`
           );
-
-          // If the action is null (empty slot), we can either:
-          // - return null,
-          // - or create a placeholder action (like an empty object or a custom message).
+  
           if (action && action.type === "null") {
             return null; // Handle empty slots as null or skip them
           }
-
+  
           return action; // Return the action as is
         });
-
-        // Return the updated enemy with the timeline
+  
+        // Step 4: Apply difficulty scaling to health and maxHealth
+        const scaledHealth = health > 0 ? health + difficulty * 10 : health;
+        const scaledMaxHealth = maxHealth > 0 ? maxHealth + difficulty * 10 : maxHealth;
+  
+        // Return the updated enemy with the timeline, scaled actionArray, and health values
         return {
           ...enemy,
+          actionArray: scaledActionArray, // Apply the scaled actionArray
           timeline, // Add the timeline to the enemy
+          health: scaledHealth, // Apply the scaled health
+          maxHealth: scaledMaxHealth, // Apply the scaled maxHealth
         };
       });
-
-      setEnemies(updatedEnemies); // Update enemies with timelines
+  
+      console.log("Updated enemies:", updatedEnemies); // Debug final updated enemies array
+      setEnemies(updatedEnemies); // Update enemies with timelines, difficulty scaling, and health updates
     }
-  }, [enemies, setEnemies]);
+  }, [enemies, setEnemies, difficulty]);
+  
 
   // Cleanup the interval when the component unmounts
   useEffect(() => {
@@ -1263,7 +1331,7 @@ const Battle = () => {
         {!battleEnded && (
           <div className="turn-info">
             <p>Turn: {turn}</p>
-            <p>Target: {opponentTarget}</p>
+            <p>Difficulty: {difficulty}</p>
             <div>
               <button onClick={handlePause}>
                 {paused ? "Resume" : "Pause"}

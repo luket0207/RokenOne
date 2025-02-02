@@ -175,13 +175,18 @@ const ExpeditionChoice = () => {
     const choiceTypes = new Set(); // To keep track of the types already added for the day
 
     if (shouldHaveBattle) {
-      const battle = generateBattle(
+      const { battle, battleDifficulty } = generateBattle(
         dayIndex,
         totalDays,
         difficulty,
         availableEnemies
       );
-      choices.push({ name: "Battle", type: "battle", enemies: battle });
+      choices.push({
+        name: "Battle",
+        type: "battle",
+        enemies: battle,
+        difficulty: battleDifficulty,
+      });
       choiceTypes.add("battle"); // Add battle type
     }
 
@@ -212,25 +217,34 @@ const ExpeditionChoice = () => {
     availableEnemies
   ) => {
     let numberOfEnemies;
+    let battleDifficulty;
 
-    if (difficulty === 1) {
-      if (dayIndex < totalDays * 0.5) {
+    if (difficulty) {
+      if (dayIndex < totalDays * 0.4) {
         numberOfEnemies = 1;
-      } else if (dayIndex < totalDays * 0.9) {
-        numberOfEnemies = 2;
+        battleDifficulty = difficulty - 1; // 100% chance of battleDifficulty being (difficulty - 1)
+      } else if (dayIndex < totalDays * 0.8) {
+        battleDifficulty =
+          getRandomNumber(0, 1) === 0 ? difficulty - 1 : difficulty; // 50% chance
+
+        if (battleDifficulty === difficulty) {
+          numberOfEnemies = 1;
+        } else {
+          numberOfEnemies = 2;
+        }
       } else {
-        numberOfEnemies = 3;
-      }
-    } else if (difficulty === 2) {
-      if (dayIndex < totalDays * 0.3) {
-        numberOfEnemies = 1;
-      } else if (dayIndex < totalDays * 0.7) {
-        numberOfEnemies = 2;
-      } else {
-        numberOfEnemies = 3;
+        battleDifficulty =
+          getRandomNumber(0, 1) === 0 ? difficulty - 1 : difficulty; // 50% chance
+
+        if (battleDifficulty === difficulty) {
+          numberOfEnemies = 2;
+        } else {
+          numberOfEnemies = 3;
+        }
       }
     }
 
+    // Select random enemies based on numberOfEnemies
     const selectedEnemies = [];
     for (let i = 0; i < numberOfEnemies; i++) {
       const randomEnemyId =
@@ -241,7 +255,8 @@ const ExpeditionChoice = () => {
       }
     }
 
-    return selectedEnemies;
+    // Return both selectedEnemies and battleDifficulty as an object
+    return { battle: selectedEnemies, battleDifficulty };
   };
 
   const generateWeightedChoice = (
@@ -252,18 +267,21 @@ const ExpeditionChoice = () => {
   ) => {
     const random = Math.random();
     let choice = {};
-    const choiceEnemies = generateBattle(
+    
+    // Destructure with the correct variable names returned by generateBattle
+    const { battle: choiceEnemies, battleDifficulty: choiceBattleDifficulty } = generateBattle(
       dayIndex,
       totalDays,
       difficulty,
       availableEnemies
     );
-
+  
     if (random <= 0.25) {
       choice = {
         name: "?",
         type: "battle",
         enemies: choiceEnemies,
+        difficulty: choiceBattleDifficulty,
       }; // unknown (battle)
     } else if (random <= 0.45) {
       choice = { name: "?", type: "izakaya" }; // unknown (izakaya)
@@ -282,9 +300,10 @@ const ExpeditionChoice = () => {
     } else {
       choice = { name: "cave", type: "cave" }; // known cave
     }
-
+  
     return choice;
   };
+  
 
   const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;

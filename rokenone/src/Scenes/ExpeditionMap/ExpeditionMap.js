@@ -62,7 +62,9 @@ const ExpeditionMap = () => {
   };
 
   // Function to handle advancing to the next day or completing the expedition
-  const handleChoice = (type, enemies) => {
+  const handleChoice = (type, enemies, difficulty) => {
+
+    
     // Check if the type is 'battle' and if enemies are provided for the choice
     if (type === "battle" && enemies && enemies.length > 0) {
       // Create a new array to store the full enemy objects
@@ -88,7 +90,7 @@ const ExpeditionMap = () => {
       // If there are any enemies to battle, start the battle
       if (fullEnemyObjects.length > 0) {
         // Navigate to the battle screen with the fullEnemyObjects array passed via state
-        navigate("/battle", { state: { enemies: fullEnemyObjects } });
+        navigate("/battle", { state: { enemies: fullEnemyObjects, difficulty: difficulty } });
       }
     }
 
@@ -154,7 +156,7 @@ const ExpeditionMap = () => {
               <div
                 key={index}
                 className="choice"
-                onClick={() => handleChoice(choice.type, choice.enemies)}
+                onClick={() => handleChoice(choice.type, choice.enemies, choice.difficulty)}
               >
                 <p>{choice.type ? `${choice.name}` : "Unknown Choice"}</p>{" "}
                 {/* Display the choice type and enemies (if available) */}
