@@ -1,15 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import { useDrag, useDrop } from "react-dnd";
 import "./Edit.scss"; // Make sure the styles are applied
 import Button from "../../Components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faPlusCircle,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ActionCard from "../../Components/ActionCard/ActionCard";
 import Modal from "../../Components/Modal/Modal";
 import weaponsData from "../../Data/Weapons/Weapons.json";
@@ -23,8 +19,6 @@ const Edit = () => {
   const { playerTeam, setPlayerTeam, playerData, setPlayerData } =
     useContext(GameDataContext);
   const navigate = useNavigate();
-  const [selectedWeapon, setSelectedWeapon] = useState(null);
-  const [selectedActions, setSelectedActions] = useState([]);
 
   const character = playerTeam.find((char) => char.id === Number(characterId));
   const cardBank = playerData.cardBank || [];
@@ -38,52 +32,16 @@ const Edit = () => {
   const [isWeaponSelectionModalOpen, setIsWeaponSelectionModalOpen] =
     useState(false);
 
+  useEffect(() => {
+    console.log("Updated playerTeam:", playerTeam);
+  }, [playerTeam]);
+
   const closeWeaponSelectionModal = () => {
-    // Unlock any actions that were locked by the weapon
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((teammate) => {
-        if (teammate.id === character.id) {
-          // Iterate through the actionPool and unlock actions locked by the weapon
-          const updatedActionPool = teammate.actionPool.map((a) =>
-            a.lockedByWeapon
-              ? { ...a, locked: false, lockedByWeapon: false }
-              : a
-          );
-
-          // Return the updated teammate
-          return { ...teammate, actionPool: updatedActionPool, weapon: null };
-        }
-        return teammate;
-      })
-    );
-
     // Reset the selectedWeapon and selectedActions (optional, based on your use case)
-    setSelectedWeapon(null);
-    setSelectedActions([]);
     setIsWeaponSelectionModalOpen(false);
   };
   const openWeaponSelectionModal = () => {
-    // Unlock any actions that were locked by the weapon
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((teammate) => {
-        if (teammate.id === character.id) {
-          // Iterate through the actionPool and unlock actions locked by the weapon
-          const updatedActionPool = teammate.actionPool.map((a) =>
-            a.lockedByWeapon
-              ? { ...a, locked: false, lockedByWeapon: false }
-              : a
-          );
-
-          // Return the updated teammate
-          return { ...teammate, actionPool: updatedActionPool, weapon: null };
-        }
-        return teammate;
-      })
-    );
-
     // Reset the selectedWeapon and selectedActions (optional, based on your use case)
-    setSelectedWeapon(null);
-    setSelectedActions([]);
     setIsWeaponSelectionModalOpen(true);
   };
 
@@ -377,38 +335,109 @@ const Edit = () => {
       return;
     }
 
-    // Create a copy of the action with quantity set to 0
-    const newAction = { ...actionToAdd, quantity: 0 };
+    // Check if the action is a weapon
+    if (actionToAdd.type === "weapon") {
+      // Create a copy of the weapon with quantity set to 0
+      const newWeapon = { ...actionToAdd, quantity: 0 };
 
-    // Add the new action to the character's actionPool
-    const updatedActionPool = [...character.actionPool, newAction];
+      // Check if the character already has a weapon
+      if (
+        character.weapon !== null &&
+        Array.isArray(character.weapon) &&
+        character.weapon.length > 0
+      ) {
+        const confirmWeaponChange = window.confirm(
+          "Are you sure? Setting a new weapon will discard your current one. All cards will be lost permanently."
+        );
 
-    // Update the cardBank by reducing the quantity of the action
-    const updatedCardBank = cardBank
-      .map((action) =>
-        action.id === id ? { ...action, quantity: action.quantity - 1 } : action
-      )
-      .filter((action) => action.quantity > 0); // Remove actions with 0 quantity
+        if (!confirmWeaponChange) {
+          // If the user does not confirm, exit the function
+          return;
+        }
+      }
 
-    // Update the character and player data
-    const updatedCharacter = {
-      ...character,
-      actionPool: updatedActionPool,
-    };
+      // If user confirmed or there is no current weapon, proceed to set the new weapon
+      const updatedWeaponArray = [newWeapon]; // Replace with the new weapon
 
-    const updatedPlayerData = {
-      ...playerData,
-      cardBank: updatedCardBank,
-    };
+      // Update the character's weapon with the new weapon
+      const updatedCharacter = {
+        ...character,
+        weapon: updatedWeaponArray, // Set weapon to the updated array
+      };
 
-    // Update the state
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((char) =>
-        char.id === character.id ? updatedCharacter : char
-      )
-    );
-    setPlayerData(updatedPlayerData);
-    closeActionSelectionModal();
+      console.log("Updated Character with Weapon:", updatedCharacter); // Debugging
+
+      // Update the cardBank by reducing the quantity of the weapon
+      const updatedCardBank = cardBank
+        .map((action) =>
+          action.id === id
+            ? { ...action, quantity: action.quantity - 1 }
+            : action
+        )
+        .filter((action) => action.quantity > 0); // Remove actions with 0 quantity
+
+      // Update the state with the new character and updated cardBank
+      const updatedPlayerData = {
+        ...playerData,
+        cardBank: updatedCardBank,
+      };
+
+      // Update the team with the modified character
+      setPlayerTeam((prevTeam) => {
+        const updatedTeam = prevTeam.map((char) => {
+          if (char.id === updatedCharacter.id) {
+            // Replace the character with the updated one
+            return { ...char, ...updatedCharacter };
+          }
+          return char;
+        });
+        return updatedTeam;
+      });
+
+      setPlayerData(updatedPlayerData);
+      closeWeaponSelectionModal();
+    } else {
+      // For actions that are not weapons, add them to the action pool
+      const newAction = { ...actionToAdd, quantity: 0 };
+
+      // Add the new action to the character's actionPool
+      const updatedActionPool = [...character.actionPool, newAction];
+
+      // Update the cardBank by reducing the quantity of the action
+      const updatedCardBank = cardBank
+        .map((action) =>
+          action.id === id
+            ? { ...action, quantity: action.quantity - 1 }
+            : action
+        )
+        .filter((action) => action.quantity > 0); // Remove actions with 0 quantity
+
+      // Update the character and player data
+      const updatedCharacter = {
+        ...character,
+        actionPool: updatedActionPool,
+      };
+
+      const updatedPlayerData = {
+        ...playerData,
+        cardBank: updatedCardBank,
+      };
+
+      // Update the state with the modified character and updated cardBank
+      setPlayerTeam((prevTeam) => {
+        const updatedTeam = prevTeam.map((char) => {
+          if (char.id === updatedCharacter.id) {
+            // Replace the character with the updated one
+            return { ...char, ...updatedCharacter };
+          }
+          return char;
+        });
+        return updatedTeam;
+      });
+
+      setPlayerData(updatedPlayerData);
+      closeActionSelectionModal();
+    }
   };
 
   // Filter available actions based on character's class or 'All' class
@@ -418,140 +447,7 @@ const Edit = () => {
 
   //WEAPONS STUFF///////////////////////
 
-  // Handle weapon selection
-  const handleWeaponSelect = (weapon) => {
-    setSelectedWeapon(weapon);
-
-    // Remove all selected actions when a new weapon is selected
-    setSelectedActions([]);
-
-    // Unlock all actions in the character's actionPool that were locked by the weapon
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((teammate) => {
-        if (teammate.id === character.id) {
-          // Iterate through the actionPool and unlock actions locked by the weapon
-          const updatedActionPool = teammate.actionPool.map((a) => ({
-            ...a,
-            locked: a.lockedByWeapon ? false : a.locked, // Only unlock if locked by weapon
-            lockedByWeapon: false, // Reset lockedByWeapon flag
-          }));
-
-          // Return the updated teammate with the actionPool and weapon reset
-          return { ...teammate, actionPool: updatedActionPool, weapon: null };
-        }
-        return teammate;
-      })
-    );
-  };
-
-  const handleActionSelect = (action) => {
-    // Check if there's room in selected actions based on the weapon slots
-    if (selectedActions.length < selectedWeapon.slots) {
-      // Add the selected action to selectedActions
-      setSelectedActions((prevActions) => [...prevActions, action]);
-
-      // Lock the action in the character's actionPool and mark it as locked by the weapon
-      setPlayerTeam((prevTeam) =>
-        prevTeam.map((teammate) => {
-          if (teammate.id === character.id) {
-            // Update the action in the actionPool to mark it as locked by the weapon
-            const updatedActionPool = teammate.actionPool.map((a) =>
-              a.id === action.id
-                ? { ...a, locked: true, lockedByWeapon: true }
-                : a
-            );
-
-            // Return the updated teammate with the actionPool modified
-            return { ...teammate, actionPool: updatedActionPool };
-          }
-          return teammate;
-        })
-      );
-    }
-  };
-
-  // Handle removing action from selected actions
-  const handleActionRemove = (action) => {
-    // Remove the action from selectedActions
-    setSelectedActions((prevActions) =>
-      prevActions.filter((selectedAction) => selectedAction.id !== action.id)
-    );
-
-    // Unlock the action in the character's actionPool, but only if it was locked by the weapon
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((teammate) => {
-        if (teammate.id === character.id) {
-          // Update the action within the teammate's actionPool
-          const updatedActionPool = teammate.actionPool.map((a) =>
-            a.id === action.id && a.lockedByWeapon
-              ? { ...a, locked: false, lockedByWeapon: false }
-              : a
-          );
-
-          // Return the updated teammate with the actionPool modified
-          return {
-            ...teammate,
-            actionPool: updatedActionPool,
-            weapon: null,
-          };
-        }
-        return teammate;
-      })
-    );
-  };
-
-  const handleApplySelection = () => {
-    if (!selectedWeapon || selectedActions.length !== selectedWeapon.slots) {
-      alert("Please select enough actions to fill all slots.");
-      return;
-    }
-
-    // Calculate total attack from the selected actions
-    const totalAttack = selectedActions.reduce((total, action) => {
-      return total + (action.attack || 0) + (action.attackAll || 0); // Sum attack and attackAll values
-    }, 0);
-
-    // Get the attackWeaponBoost, defaulting to 0 if not present
-    const attackWeaponBoost = selectedActions.reduce((boost, action) => {
-      return boost + (action.attackWeaponBoost || 0); // Sum attackWeaponBoost values
-    }, 0);
-
-    setPlayerTeam((prevTeam) =>
-      prevTeam.map((teammate) => {
-        // Ensure we're updating the correct character by checking their ID
-        if (teammate.id === character.id) {
-          // If the character already has a weapon, replace it with the new one
-          const updatedWeapon = teammate.weapon
-            ? [
-                {
-                  ...teammate.weapon[0],
-                  name: selectedWeapon.name,
-                  chargeCost: selectedWeapon.chargeCost,
-                  attack: totalAttack, // Apply total attack
-                  attackBoost: attackWeaponBoost, // Apply attackWeaponBoost
-                },
-              ]
-            : [
-                {
-                  ...selectedWeapon,
-                  name: selectedWeapon.name,
-                  chargeCost: selectedWeapon.chargeCost,
-                  attack: totalAttack, // Apply total attack
-                  attackBoost: attackWeaponBoost, // Apply attackWeaponBoost
-                },
-              ];
-
-          return {
-            ...teammate,
-            weapon: updatedWeapon, // Add or replace the weapon for the teammate
-          };
-        }
-        return teammate;
-      })
-    );
-
-    setIsWeaponSelectionModalOpen(false); // Close the modal
-  };
+  const upgradeWeapon = () => {};
 
   return (
     <div className="edit-container">
@@ -584,26 +480,38 @@ const Edit = () => {
               <div className="edit-weapon">
                 {character.weapon ? (
                   <div className="edit-weapon-info">
-                    <div className="edit-weapon-info-text">
-                      <p>Weapon: {character.weapon[0].name}</p>
-                      <p>Charge Cost: {character.weapon[0].chargeCost}</p>
-                      <p>
-                        Attack:{" "}
-                        {character.weapon[0].attack +
-                          character.weapon[0].attackBoost}
-                      </p>
+                    <div className="edit-weapon-info-card">
+                      <ActionCard
+                        action={character.weapon[0]}
+                        noAnimation={true}
+                      />
                     </div>
-                    <Button
-                      text={"Change Weapon"}
-                      onClick={openWeaponSelectionModal}
-                      type="secondary"
-                      disabled={
-                        !character.weapon && // Check if weapon is null
-                        !character.actionPool.some(
-                          (action) => action.type === "attack" && !action.locked
-                        )
-                      }
-                    />
+                    <div className="edit-weapon-info-buttons">
+                      <Button
+                        text={"Upgrade Weapon"}
+                        onClick={upgradeWeapon}
+                        type="secondary"
+                        disabled={
+                          !character.weapon && // Check if weapon is null
+                          !character.actionPool.some(
+                            (action) =>
+                              action.type === "weapon" && !action.locked
+                          )
+                        }
+                      />
+                      <Button
+                        text={"Change Weapon"}
+                        onClick={openWeaponSelectionModal}
+                        type="secondary"
+                        disabled={
+                          !character.weapon && // Check if weapon is null
+                          !character.actionPool.some(
+                            (action) =>
+                              action.type === "weapon" && !action.locked
+                          )
+                        }
+                      />
+                    </div>
                   </div>
                 ) : (
                   <Button
@@ -658,6 +566,7 @@ const Edit = () => {
           <div className="available-actions">
             {availableActions.filter(
               (action) =>
+                action.type !== "weapon" &&
                 !character.actionPool.some(
                   (poolAction) => poolAction.id === action.id
                 )
@@ -665,6 +574,7 @@ const Edit = () => {
               availableActions
                 .filter(
                   (action) =>
+                    action.type !== "weapon" &&
                     !character.actionPool.some(
                       (poolAction) => poolAction.id === action.id
                     )
@@ -687,92 +597,47 @@ const Edit = () => {
           </div>
         </div>
       </Modal>
+
       <Modal
         isOpen={isWeaponSelectionModalOpen}
         onClose={closeWeaponSelectionModal}
       >
         <div className="weapon-selection">
           <h3>Select a Weapon</h3>
-          <div className="weapon-selection-weapons">
-            {weaponsData.map((weapon) => (
-              <div
-                key={weapon.id}
-                className={`weapon-item ${
-                  selectedWeapon && selectedWeapon.id === weapon.id
-                    ? "selected"
-                    : ""
-                }`}
-                onClick={() => handleWeaponSelect(weapon)}
-              >
-                <h4>{weapon.name}</h4>
-                <p>{weapon.description}</p>
-              </div>
-            ))}
-
-            <p>
-              Selected Weapon: {selectedWeapon && <>{selectedWeapon.name}</>}
-            </p>
-          </div>
-
-          {selectedWeapon && (
-            <div className="weapon-selection-actions">
-              <h3>
-                Select {selectedWeapon.slots} Attacks to put into the weapon.
-              </h3>
-              <p>
-                The weapon will trigger these attack every time the weapon hits.
-                Weapons never attack all.
-              </p>
-              <div className="available-actions">
-                {character.actionPool
-                  .filter(
-                    (action) => action.type === "attack" && !action.locked
-                  )
-                  .map((action) => (
-                    <div
-                      key={action.id}
-                      className="available-actions-action"
-                      onClick={() => handleActionSelect(action)}
-                    >
-                      <ActionCard action={action} />
-                      {selectedActions.some(
-                        (selectedAction) => selectedAction.id === action.id
-                      ) && (
-                        <span
-                          className="available-actions-action-icon"
-                          onClick={() => handleActionRemove(action)}
-                        >
-                          <FontAwesomeIcon icon={faPlusCircle} />
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
-
-          <div className="selected-actions">
-            <h4>Selected Actions</h4>
-            <ul>
-              {selectedActions.map((action) => (
-                <li key={action.id}>
-                  <h5>{action.name}</h5>
-                  <p>{action.description}</p>
-                  <span onClick={() => handleActionRemove(action)}>Remove</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="weapon-selection-footer">
-            <Button
-              text="Apply Selection"
-              onClick={handleApplySelection}
-              disabled={
-                !selectedWeapon ||
-                selectedActions.length !== selectedWeapon.slots
-              }
-            />
+          <div className="available-weapons">
+            {availableActions.filter(
+              (action) =>
+                action.type === "weapon" &&
+                (!character.weapon || character.weapon[0]?.id !== action.id) && // Exclude current weapon
+                !character.actionPool.some(
+                  (poolAction) => poolAction.id === action.id
+                )
+            ).length > 0 ? (
+              availableActions
+                .filter(
+                  (action) =>
+                    action.type === "weapon" &&
+                    (!character.weapon ||
+                      character.weapon[0]?.id !== action.id) && 
+                    !character.actionPool.some(
+                      (poolAction) => poolAction.id === action.id
+                    )
+                )
+                .map((action) => (
+                  <div
+                    key={action.id}
+                    className="available-weapons-action"
+                    onClick={() => addToCharacter(action.id)}
+                  >
+                    <ActionCard action={action} />
+                    <span className="available-actions-action-icon">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </span>
+                  </div>
+                ))
+            ) : (
+              <p>No available weapons to add.</p>
+            )}
           </div>
         </div>
       </Modal>

@@ -15,24 +15,6 @@
     pointer-events: none;
   }
 
-  &.disabled-by-weapon {
-    &::after {
-      content: "Used in Weapon";
-      text-align: center;
-      background-color: $burgendy;
-      color: $lightGrey;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 150px;
-      padding: 20px;
-      border-radius: 10px;
-      font-family: "Cinzel Decorative", serif;
-      font-weight: 700;
-    }
-  }
-
   &.animate {
     @include boxShadowHover;
   }
@@ -44,7 +26,6 @@
     grid-template-rows: 68px 46px 46px 46px 46px;
     justify-items: center;
     align-items: center;
-    
 
     &.action-class-All {
       background: $darkGrey;
@@ -60,7 +41,7 @@
       background: linear-gradient(
         0deg,
         rgba($roken, 1) 0%,
-        rgba(lighten($roken, 20%), 1) 100%
+        rgba(lighten($roken, 30%), 1) 100%
       );
     }
 
@@ -69,7 +50,7 @@
       background: linear-gradient(
         0deg,
         rgba($samurai, 1) 0%,
-        rgba(lighten($samurai, 20%), 1) 100%
+        rgba(lighten($samurai, 30%), 1) 100%
       );
     }
 
@@ -78,7 +59,34 @@
       background: linear-gradient(
         0deg,
         rgba($oyoroi, 1) 0%,
-        rgba(lighten($oyoroi, 20%), 1) 100%
+        rgba(lighten($oyoroi, 30%), 1) 100%
+      );
+    }
+
+    &.action-class-Kobo {
+      background: $kobo;
+      background: linear-gradient(
+        0deg,
+        rgba($kobo, 1) 0%,
+        rgba(lighten($kobo, 30%), 1) 100%
+      );
+    }
+
+    &.action-class-Taiko {
+      background: $taiko;
+      background: linear-gradient(
+        0deg,
+        rgba($taiko, 1) 0%,
+        rgba(lighten($taiko, 30%), 1) 100%
+      );
+    }
+
+    &.action-class-Genso {
+      background: $genso;
+      background: linear-gradient(
+        0deg,
+        rgba($genso, 1) 0%,
+        rgba(lighten($genso, 30%), 1) 100%
       );
     }
 
@@ -96,6 +104,14 @@
       p {
         margin: 0;
       }
+    }
+
+    .action-item-bar-classBoost {
+      grid-row: 4;
+    }
+
+    .action-item-bar-circle-weapon {
+      grid-row: 5;
     }
 
     &-rarity {
@@ -176,6 +192,23 @@
     justify-items: center;
     color: $lightGrey;
     padding-top: 15px;
+
+    &.action-item-weapon {
+      background: $lightGrey;
+      background: linear-gradient(
+        0deg,
+        rgba($lightGrey, 1) 0%,
+        rgba($white, 1) 100%
+      );
+
+      h4, p {
+        color: $darkerGrey;
+      }
+
+      .action-item-main-title {
+        border-bottom: solid 2px $darkerGrey;
+      }
+    }
 
     &-title {
       border-bottom: solid 2px $lightGrey;

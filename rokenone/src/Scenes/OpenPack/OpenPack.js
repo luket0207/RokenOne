@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./OpenPack.scss";
 import Button from "../../Components/Button/Button";
 import actionsData from "../../Data/Actions/Actions.json";
+import weaponsData from "../../Data/Weapons/Weapons.json";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import ActionCard from "../../Components/ActionCard/ActionCard";
 
@@ -14,7 +15,7 @@ const OpenPack = () => {
   const [animationComplete, setAnimationComplete] = useState(false); // Track if animation is complete
 
   // Function to calculate selection probabilities based on rarity and pack tier
-  const getActionWithRarity = (tier) => {
+  const getActionWithRarity = (tier, actionType, actionClass) => {
     // Adjust rarity chances based on the selected pack tier
     const rarityChances = {
       low: {
@@ -40,11 +41,28 @@ const OpenPack = () => {
       },
     };
 
+    // Combine actionsData and weaponsData into a single array
+    const combinedData = [
+      ...actionsData.map((action) => ({ ...action, type: "action" })),
+      ...weaponsData.map((weapon) => ({ ...weapon, type: "weapon" })),
+    ];
+
+    // Filter the combined actions based on actionType and actionClass
+    const filteredActions = combinedData.filter((action) => {
+      // Check if actionType matches (if provided)
+      const typeMatches = actionType ? action.type === actionType : true;
+      // Check if actionClass matches (if provided)
+      const classMatches = actionClass ? action.class === actionClass : true;
+
+      // Include action only if both filters match (or if no filter is applied)
+      return typeMatches && classMatches;
+    });
+
     // Get the rarity chances for the selected pack tier
     const selectedRarityChances = rarityChances[tier];
 
     // Generate a weighted list of actions based on the rarity chances for the selected tier
-    const weightedActions = actionsData.flatMap((action) => {
+    const weightedActions = filteredActions.flatMap((action) => {
       const weight = Math.max(
         0,
         Math.floor(selectedRarityChances[action.rarity] || 0)
@@ -62,8 +80,9 @@ const OpenPack = () => {
     return selectedActions;
   };
 
-  const handleOpenPack = (tier) => {
-    const selectedActions = getActionWithRarity(tier);
+  const handleOpenPack = (tier, actionType, actionClass) => {
+    console.log(tier, actionType, actionClass);
+    const selectedActions = getActionWithRarity(tier, actionType, actionClass);
     setPackOpened(selectedActions);
 
     // Trigger the opening animation after a slight delay to apply transition
@@ -167,8 +186,12 @@ const OpenPack = () => {
             text={"High Tier Pack"}
             onClick={() => handleOpenPack("high")}
           />
+          <Button
+            text={"Weapon Pack"}
+            onClick={() => handleOpenPack("medium", "weapon")}
+          />
           {/* Add a button to add the test card */}
-          <Button text={"Add Test Card"} onClick={handleAddTestCard} />
+          <Button text={"Add Test Weapon Card"} onClick={handleAddTestCard} />
         </div>
       )}
 
@@ -191,8 +214,6 @@ const OpenPack = () => {
           </div>
         </div>
       )}
-
-      
 
       {/* Only show the "Home" button after animation is complete */}
       <Button

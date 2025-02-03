@@ -27,7 +27,7 @@ export const triggerWeapon = ({
 
   if (attacker && attacker.weapon && attacker.weapon.length > 0) {
     const weapon = attacker.weapon[0]; // Assuming only one weapon per character for simplicity
-    const weaponAttack = weapon.attack + attacker.weapon[0].attackBoost; // Weapon attack value + any buffs
+    const weaponAttack = weapon.attack; // Weapon attack value + any buffs
 
     if (weaponAttacker !== null && weaponEnemy !== null) {
       // Get the enemy who will receive the damage

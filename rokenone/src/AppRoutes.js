@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { GameDataContext } from "./Data/GameDataContext/GameDataContext"; // Import the context
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,6 +32,7 @@ const AppRoutes = () => {
     useContext(GameDataContext);
   const [gameData, setGameData] = useState(playerData[0]);
   const [showDust, setShowDust] = useState(false);
+  const location = useLocation();
 
   const handleSaveGame = () => {
     try {
@@ -73,69 +74,74 @@ const AppRoutes = () => {
     setShowDust(!showDust);
   };
 
+  // Routes where the game-menu should not be displayed
+  const hideMenuRoutes = ["/", "/battle", "/help"];
+
   return (
     <div className="game-container">
-      {/* Save Game Button */}
-      <div className="game-menu">
-        <p className="save-text">Save</p>
-        <div className="save-game" onClick={handleSaveGame}>
-          <FontAwesomeIcon icon={faFloppyDisk} />
-        </div>
-        <div className="level">
-          <p>Level</p>
-          <p>{gameData.level}</p>
-        </div>
-        <div className="coins">
-          <p>Coins</p>
+      {/* Conditionally render the game-menu */}
+      {!hideMenuRoutes.includes(location.pathname) && (
+        <div className="game-menu">
+          <p className="save-text">Save</p>
+          <div className="save-game" onClick={handleSaveGame}>
+            <FontAwesomeIcon icon={faFloppyDisk} />
+          </div>
+          <div className="level">
+            <p>Level</p>
+            <p>{gameData.level}</p>
+          </div>
+          <div className="coins">
+            <p>Coins</p>
 
-          <p>
-            <FontAwesomeIcon icon={faCoins} /> {gameData.coins}
-          </p>
+            <p>
+              <FontAwesomeIcon icon={faCoins} /> {gameData.coins}
+            </p>
+          </div>
+          <div className="dust-toggle" onClick={handleToggleShowDust}>
+            <p>Dust</p>
+            <FontAwesomeIcon icon={faCubesStacked} />
+            <FontAwesomeIcon icon={faChevronDown} />
+          </div>
+          <div className={`dust ${showDust ? "show-dust" : ""}`}>
+            <div className="dust-roken">
+              <p>Roken</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustRoken}
+              </p>
+            </div>
+            <div className="dust-samurai">
+              <p>Samurai</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustSamurai}
+              </p>
+            </div>
+            <div className="dust-oyoroi">
+              <p>O-Yoroi</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustOyoroi}
+              </p>
+            </div>
+            <div className="dust-kobo">
+              <p>Kobo</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustKobo}
+              </p>
+            </div>
+            <div className="dust-taiko">
+              <p>Taiko</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustTaiko}
+              </p>
+            </div>
+            <div className="dust-genso">
+              <p>Genso</p>
+              <p>
+                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustGenso}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="dust-toggle" onClick={handleToggleShowDust}>
-          <p>Dust</p>
-          <FontAwesomeIcon icon={faCubesStacked} />
-          <FontAwesomeIcon icon={faChevronDown} />
-        </div>
-        <div className={`dust ${showDust ? "show-dust" : ""}`}>
-          <div className="dust-roken">
-            <p>Roken</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustRoken}
-            </p>
-          </div>
-          <div className="dust-samurai">
-            <p>Samurai</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustSamurai}
-            </p>
-          </div>
-          <div className="dust-oyoroi">
-            <p>O-Yoroi</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustOyoroi}
-            </p>
-          </div>
-          <div className="dust-kobo">
-            <p>Kobo</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustKobo}
-            </p>
-          </div>
-          <div className="dust-taiko">
-            <p>Taiko</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustTaiko}
-            </p>
-          </div>
-          <div className="dust-genso">
-            <p>Genso</p>
-            <p>
-              <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustGenso}
-            </p>
-          </div>
-        </div>
-      </div>
+      )}
 
       <Routes>
         <Route path="/" element={<Start />} />

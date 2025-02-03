@@ -26,7 +26,7 @@ const Start = () => {
     return team.map((character) => {
       if (character.class === "Roken") {
         const availableActions = actions.filter(
-          (action) => action.id === "A001" || action.id === "A002" || action.id === "TEST001"
+          (action) => action.id === "A001" || action.id === "A002"
         );
         return { ...character, actionPool: availableActions };
       }

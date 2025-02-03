@@ -3,7 +3,7 @@ import RokenBattle from "../../../../Assets/Images/Roken_Battle_Back.png";
 import "./Team.scss";
 import CharacterCard from "../../../../Components/CharacterCard/CharacterCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWandMagic } from "@fortawesome/free-solid-svg-icons";
+import { faScrewdriver, faWandMagic } from "@fortawesome/free-solid-svg-icons";
 
 const Team = ({ playerTeam, teamCharge, turn, autoWeaponStatus }) => {
   const positionClasses = [
@@ -55,7 +55,7 @@ const Team = ({ playerTeam, teamCharge, turn, autoWeaponStatus }) => {
                   }}
                   className="drag-weapon"
                 >
-                  <FontAwesomeIcon icon={faWandMagic} />
+                  <FontAwesomeIcon icon={faScrewdriver} />
                 </div>
               )}
 

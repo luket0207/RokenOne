@@ -8,6 +8,7 @@ import {
   faBolt,
   faArrowUpRightDots,
   faHandSparkles,
+  faScrewdriver,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ActionCard = ({ action, noAnimation }) => {
@@ -67,6 +68,15 @@ const ActionCard = ({ action, noAnimation }) => {
       });
     }
 
+    // Handle the classBoostEffect and classBoost properties
+    if (action.classBoost && action.classBoostEffect.length > 0) {
+      action.classBoostEffect.forEach((classEffect) => {
+        description.push(`
+          ${classEffect[0]} ${classEffect[1]} ${classEffect[2]} if used by ${action.classBoost}.
+        `);
+      });
+    }
+
     // Handle the cycleBoostEffect and cycleBoost properties
     if (action.cycleBoost && action.cycleBoostEffect.length > 0) {
       action.cycleBoostEffect.forEach((cycleEffect) => {
@@ -96,7 +106,7 @@ const ActionCard = ({ action, noAnimation }) => {
         action.locked ? "disabled" : ""
       } ${action.lockedByWeapon ? "disabled-by-weapon" : ""}`}
     >
-      <div className={`action-item-bar action-class-${action.class}`}>
+      <div className={`action-item-bar action-class-${action.classBoost ? action.classBoost : action.class}`}>
         <div className="action-item-bar-rarity">
           {[...Array(action.rarity + 1)].map((_, index) => (
             <div key={index} className="action-item-bar-rarity-dash"></div>
@@ -109,7 +119,12 @@ const ActionCard = ({ action, noAnimation }) => {
             </div>
           )}
         </div>
-        <div className="action-item-bar-circle action-item-bar-type">
+        {action.type === "weapon" && action.classBoost && 
+            <div className="action-item-bar-circle action-item-bar-classBoost">
+              <p>{action.classBoost ? action.classBoost.charAt(0).toUpperCase() : ""}</p>
+            </div>
+        }
+        <div className={`action-item-bar-circle action-item-bar-type ${action.type === "weapon" && "action-item-bar-circle-weapon"}`}>
           {action.type === "attack" && <FontAwesomeIcon icon={faHandFist} />}
           {action.type === "defence" && (
             <FontAwesomeIcon icon={faShieldHalved} />
@@ -122,24 +137,33 @@ const ActionCard = ({ action, noAnimation }) => {
           {action.type === "illusion" && (
             <FontAwesomeIcon icon={faHandSparkles} />
           )}
+          {action.type === "weapon" && <FontAwesomeIcon icon={faScrewdriver} />}
         </div>
+        {action.type !== "weapon" && (
+          <>
+            <div className="action-item-bar-circle action-item-bar-class">
+              <p>{action.class ? action.class.charAt(0).toUpperCase() : ""}</p>
+            </div>
 
-        <div className="action-item-bar-circle action-item-bar-class">
-          <p>{action.class ? action.class.charAt(0).toUpperCase() : ""}</p>
-        </div>
-
-        <div
-          className={`action-item-bar-circle ${
-            action.manaBoost === "none" && "no-mana"
-          }`}
-        >
-          <div className={`mana-circle mana-${action.manaBoost}`}>
-            {action.manaBoost === "dark" && <p>D</p>}
-            {action.manaBoost === "light" && <p>L</p>}
-          </div>
-        </div>
+            <div
+              className={`action-item-bar-circle ${
+                action.manaBoost === "none" ||
+                (action.type === "weapon" && "no-mana")
+              }`}
+            >
+              <div className={`mana-circle mana-${action.manaBoost}`}>
+                {action.manaBoost === "dark" && <p>D</p>}
+                {action.manaBoost === "light" && <p>L</p>}
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      <div className="action-item-main">
+      <div
+        className={`action-item-main ${
+          action.type === "weapon" && "action-item-weapon"
+        }`}
+      >
         <div className="action-item-main-title">
           <h4>{action.name}</h4>
         </div>
