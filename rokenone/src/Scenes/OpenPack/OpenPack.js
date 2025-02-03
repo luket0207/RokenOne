@@ -43,8 +43,8 @@ const OpenPack = () => {
 
     // Combine actionsData and weaponsData into a single array
     const combinedData = [
-      ...actionsData.map((action) => ({ ...action, type: "action" })),
-      ...weaponsData.map((weapon) => ({ ...weapon, type: "weapon" })),
+      ...actionsData.map((action) => ({ ...action })),
+      ...weaponsData.map((weapon) => ({ ...weapon })),
     ];
 
     // Filter the combined actions based on actionType and actionClass
