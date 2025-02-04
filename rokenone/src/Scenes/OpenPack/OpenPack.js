@@ -26,6 +26,7 @@ const OpenPack = () => {
 
     const getClassLikelihood = (classTier) => {
       const tierProbabilities = {
+        0: [0, 0, 0, 0], // Tier 0
         1: [1, 0.5, 0, 0], // Tier 1
         2: [1, 0.75, 0, 0], // Tier 2
         3: [1, 1, 0.5, 0], // Tier 3
@@ -169,47 +170,34 @@ const OpenPack = () => {
       {/* Existing Pack Buttons with type="small" */}
       <Button
         text={"Common Pack"}
-        onClick={() => handleOpenPack("common", "", "", 1)}
+        onClick={() => handleOpenPack("common", "", "", 0)}
         type="small"
       />
       <Button
         text={"Uncommon Pack"}
-        onClick={() => handleOpenPack("uncommon", "", "", 1)}
+        onClick={() => handleOpenPack("uncommon", "", "", 0)}
         type="small"
       />
       <Button
         text={"Rare Pack"}
-        onClick={() => handleOpenPack("rare", "", "Roken", 1)}
+        onClick={() => handleOpenPack("rare", "", "", 0)}
         type="small"
       />
       <Button
         text={"Epic Pack"}
-        onClick={() => handleOpenPack("epic", "", "", 1)}
+        onClick={() => handleOpenPack("epic", "", "", 0)}
         type="small"
       />
       <Button
         text={"Legendary Pack"}
-        onClick={() => handleOpenPack("legendary", "", "", 1)}
-        type="small"
-      />
-      <Button
-        text={"Weapon Pack"}
-        onClick={() => handleOpenPack("uncommon", "weapon", "", 1)}
+        onClick={() => handleOpenPack("legendary", "", "", 0)}
         type="small"
       />
 
       {["common", "uncommon", "rare", "epic", "legendary"].map((rarity) => (
         <React.Fragment key={rarity}>
-          {[1, 2, 3].map((classTier) => (
+          {[0, 1, 2, 3].map((classTier) => (
             <React.Fragment key={classTier}>
-              {/* For Class "Unset" with classTier */}
-              <Button
-                text={`${
-                  rarity.charAt(0).toUpperCase() + rarity.slice(1)
-                } Unset Tier ${classTier}`}
-                onClick={() => handleOpenPack(rarity, "", "Unset", classTier)}
-                type="small"
-              />
               {/* For Class "Roken" with classTier */}
               <Button
                 text={`${
