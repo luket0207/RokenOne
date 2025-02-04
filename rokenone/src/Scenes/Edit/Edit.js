@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ActionCard from "../../Components/ActionCard/ActionCard";
 import Modal from "../../Components/Modal/Modal";
-import weaponsData from "../../Data/Weapons/Weapons.json";
 
 const ItemType = {
   ACTION: "action",
@@ -31,10 +30,6 @@ const Edit = () => {
 
   const [isWeaponSelectionModalOpen, setIsWeaponSelectionModalOpen] =
     useState(false);
-
-  useEffect(() => {
-    console.log("Updated playerTeam:", playerTeam);
-  }, [playerTeam]);
 
   const closeWeaponSelectionModal = () => {
     // Reset the selectedWeapon and selectedActions (optional, based on your use case)
@@ -326,6 +321,79 @@ const Edit = () => {
     }
   };
 
+  const checkClassBoost = (
+    characterClass,
+    classBoost,
+    classBoostEffect,
+    weapon
+  ) => {
+    // Check if the character's class matches the classBoost
+    if (characterClass === classBoost || classBoost === "All") {
+      // Apply the class boost effect to the weapon attributes
+      if (Array.isArray(classBoostEffect)) {
+        classBoostEffect.forEach(([attribute, operation, boostValue]) => {
+          if (weapon.originalValues === undefined) {
+            weapon.originalValues = {}; // Initialize if not present
+          }
+
+          // Determine the original value of the attribute, default to 0 if it doesn't exist
+          const originalValue =
+            weapon[attribute] !== undefined ? weapon[attribute] : 0;
+
+          // Handle different operations (plus, minus, times, divide, equals)
+          switch (operation) {
+            case "plus":
+              weapon.originalValues[attribute] = originalValue;
+              weapon[attribute] = originalValue + boostValue;
+              break;
+
+            case "minus":
+              weapon.originalValues[attribute] = originalValue;
+              weapon[attribute] = originalValue - boostValue;
+              break;
+
+            case "times":
+              weapon.originalValues[attribute] = originalValue;
+              weapon[attribute] = originalValue * boostValue;
+              break;
+
+            case "divide":
+              weapon.originalValues[attribute] = originalValue;
+              weapon[attribute] = originalValue / boostValue;
+              break;
+
+            case "equals":
+              // If boostValue is a string, fetch the value from the corresponding attribute
+              const targetValue =
+                typeof boostValue === "string"
+                  ? weapon[boostValue] || 0
+                  : boostValue;
+              weapon.originalValues[attribute] = originalValue;
+              weapon[attribute] = targetValue;
+              break;
+
+            default:
+              console.error(`Unknown operation: ${operation}`);
+          }
+
+          // Log the operation result
+          console.log(
+            `${attribute} was updated using operation ${operation} with boostValue ${boostValue}, new value: ${weapon[attribute]}`
+          );
+        });
+
+        // Remove classBoost and classBoostEffect after applying the effects
+        delete weapon.classBoostEffect;
+      } else {
+        console.error(
+          "classBoostEffect is not an iterable array:",
+          classBoostEffect
+        );
+      }
+    }
+    return weapon;
+  };
+
   const addToCharacter = (id) => {
     // Find the action from the cardBank
     const actionToAdd = cardBank.find((action) => action.id === id);
@@ -356,16 +424,22 @@ const Edit = () => {
         }
       }
 
+      // Check for class boost before updating the weapon
+      const processedWeapon = checkClassBoost(
+        character.class,
+        newWeapon.classBoost,
+        newWeapon.classBoostEffect,
+        newWeapon
+      );
+
       // If user confirmed or there is no current weapon, proceed to set the new weapon
-      const updatedWeaponArray = [newWeapon]; // Replace with the new weapon
+      const updatedWeaponArray = [processedWeapon]; // Replace with the processed weapon
 
       // Update the character's weapon with the new weapon
       const updatedCharacter = {
         ...character,
         weapon: updatedWeaponArray, // Set weapon to the updated array
       };
-
-      console.log("Updated Character with Weapon:", updatedCharacter); // Debugging
 
       // Update the cardBank by reducing the quantity of the weapon
       const updatedCardBank = cardBank
@@ -447,7 +521,93 @@ const Edit = () => {
 
   //WEAPONS STUFF///////////////////////
 
-  const upgradeWeapon = () => {};
+  const upgradeWeapon = (weapon) => {
+    const cardBankWeapon = cardBank.find((c) => c.id === weapon.id);
+
+    // Check if the weapon has reached the maximum upgrade level
+    if (weapon.level >= 5) {
+      alert("Weapon has reached the maximum level and cannot be upgraded!");
+      return;
+    }
+
+    // Check if the cardBank has enough quantity for the upgrade
+    if (!cardBankWeapon || cardBankWeapon.quantity < weapon.level + 1) {
+      alert("Not enough cards in the cardBank to upgrade!");
+      return;
+    }
+
+    // Reduce the quantity of the weapon in the cardBank
+    const updatedCardBank = cardBank
+      .map((c) =>
+        c.id === weapon.id
+          ? { ...c, quantity: c.quantity - (weapon.level + 1) }
+          : c
+      )
+      .filter((c) => c.quantity > 0); // Remove weapons with 0 quantity
+
+    // Apply upgrades to the weapon
+    const applyWeaponUpgrades = (weapon) => {
+      // Determine which upgrade to apply based on the current level
+      const upgradeIndex = weapon.level % weapon.upgrade.length;
+
+      // Apply the upgrade at the calculated index
+      const [attribute, upgradeValue] = weapon.upgrade[upgradeIndex];
+
+      // Handle different attribute upgrades (similar to handleUpgrade logic)
+      if (attribute === "cycleBoostEffect") {
+        // Upgrade classBoostEffect value (third element in array)
+        if (
+          Array.isArray(weapon.cycleBoostEffect) &&
+          weapon.cycleBoostEffect[0]
+        ) {
+          weapon.cycleBoostEffect[0][2] += upgradeValue; // Increase the numerical value
+        }
+      } else {
+        // Upgrade the appropriate attribute
+        weapon[attribute] += upgradeValue;
+      }
+    };
+
+    // Upgrade the weapon level and apply upgrades
+    const upgradedWeapon = { ...weapon, level: weapon.level + 1 };
+    applyWeaponUpgrades(upgradedWeapon);
+
+    // Update the character's weapon with the upgraded weapon
+    const updatedCharacter = {
+      ...character,
+      weapon: [upgradedWeapon], // Replace the old weapon with the upgraded one
+    };
+
+    // Update player data with the reduced cardBank and updated weapon
+    const updatedPlayerData = {
+      ...playerData,
+      cardBank: updatedCardBank,
+    };
+
+    // Set the updated player data and character
+    setPlayerTeam((prevTeam) =>
+      prevTeam.map((char) =>
+        char.id === character.id ? updatedCharacter : char
+      )
+    );
+
+    setPlayerData(updatedPlayerData);
+  };
+
+  // Calculate the button text outside of the JSX
+  const weaponInCardBank = cardBank.find(
+    (c) => c.id === character.weapon?.[0].id
+  );
+  const weaponsNeeded = character.weapon?.[0]?.level + 1; // Number of weapons needed for upgrade
+  const additionalWeaponsNeeded = weaponInCardBank
+    ? weaponsNeeded - weaponInCardBank.quantity
+    : weaponsNeeded;
+
+  // Set the text based on the number of weapons needed
+  const buttonText =
+    additionalWeaponsNeeded > 0
+      ? `Need ${additionalWeaponsNeeded} more to upgrade`
+      : "Upgrade Weapon";
 
   return (
     <div className="edit-container">
@@ -488,17 +648,27 @@ const Edit = () => {
                     </div>
                     <div className="edit-weapon-info-buttons">
                       <Button
-                        text={"Upgrade Weapon"}
-                        onClick={upgradeWeapon}
+                        text={buttonText} // Use the pre-calculated string
+                        onClick={() => upgradeWeapon(character.weapon[0])}
                         type="secondary"
                         disabled={
-                          !character.weapon && // Check if weapon is null
-                          !character.actionPool.some(
-                            (action) =>
-                              action.type === "weapon" && !action.locked
-                          )
+                          // Check if the character has a weapon equipped
+                          !character.weapon?.[0] ||
+                          // Find the weapon in the cardBank
+                          (() => {
+                            const weaponInCardBank = cardBank.find(
+                              (c) => c.id === character.weapon?.[0].id
+                            );
+                            const weaponsNeeded =
+                              character.weapon?.[0].level + 1; // Number of weapons needed for upgrade
+                            return !(
+                              weaponInCardBank &&
+                              weaponInCardBank.quantity >= weaponsNeeded
+                            );
+                          })()
                         }
                       />
+
                       <Button
                         text={"Change Weapon"}
                         onClick={openWeaponSelectionModal}
@@ -517,18 +687,18 @@ const Edit = () => {
                   <Button
                     text={
                       !character.weapon &&
-                      !character.actionPool.some(
-                        (action) => action.type === "attack" && !action.locked
+                      !cardBank.some(
+                        (action) => action.type === "weapon"
                       )
-                        ? "No Available Attack Moves"
+                        ? "No Available Weapons"
                         : "Select Weapon"
                     }
                     onClick={openWeaponSelectionModal}
                     type="secondary"
                     disabled={
                       !character.weapon &&
-                      !character.actionPool.some(
-                        (action) => action.type === "attack" && !action.locked
+                      !cardBank.some(
+                        (action) => action.type === "weapon"
                       )
                     }
                   />
@@ -618,7 +788,7 @@ const Edit = () => {
                   (action) =>
                     action.type === "weapon" &&
                     (!character.weapon ||
-                      character.weapon[0]?.id !== action.id) && 
+                      character.weapon[0]?.id !== action.id) &&
                     !character.actionPool.some(
                       (poolAction) => poolAction.id === action.id
                     )

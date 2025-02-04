@@ -1,12 +1,12 @@
-@import './colours.scss';
+@import "./colours.scss";
 
 @mixin sceneContainer {
-    width: 1175px;
-    min-height: 745px;
-    padding: 60px;
-    background-color: $lightGrey;
-    margin: 40px auto;
-    position: relative;
+  width: 1115px;
+  min-height: 745px;
+  padding: 60px 90px;
+  background-color: $lightGrey;
+  margin: 40px auto;
+  position: relative;
 }
 
 @mixin boxShadow {
@@ -26,13 +26,13 @@
 @mixin bambooBackground {
   z-index: 0;
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: url('../../Assets/Images/bamboo-bg.jpg');
+    background-image: url("../../Assets/Images/bamboo-bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -44,13 +44,13 @@
 @mixin homeBackground {
   z-index: 0;
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: url('../../Assets/Images/home-bg.jpg');
+    background-image: url("../../Assets/Images/home-bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -62,13 +62,13 @@
 @mixin jungleBackground {
   z-index: 0;
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: url('../../Assets/Images/jungle-bg.jpg');
+    background-image: url("../../Assets/Images/jungle-bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -108,7 +108,12 @@
   // Conditionally apply dark mode styles
   @if $darkMode {
     background: $darkerGrey;
-    h1, h2, h3, h4, h5, p {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
       color: $lightGrey;
     }
   }
@@ -135,7 +140,6 @@
     right: -10px;
   }
 }
-
 
 @mixin bottomWhiteFade {
   position: relative;

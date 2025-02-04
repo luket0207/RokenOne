@@ -2,17 +2,18 @@
   {
     "id": "TEST001",
     "class": "All",
-    "name": "Shuriken",
+    "name": "Tessen",
     "type": "weapon",
-    "chargeCost": 3,
-    "attack": 4,
+    "cycle": 0,
+    "chargeCost": 1,
+    "attack": 10,
     "rarity": 1,
     "quantity": 0,
     "level": 0,
     "levelLock": 0,
-    "classBoost": "Roken",
-    "classBoostEffect": [["attack", "plus", 6]],
-    "upgrade": [["classBoostEffect", 2]]
+    "cycleBoost": 3,
+    "cycleBoostEffect": [["attack", "minus", 9]],
+    "upgrade": [["attack", 2]]
   },
   {
     "id": "A001",

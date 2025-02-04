@@ -81,21 +81,19 @@ const Battle = () => {
 
   useEffect(() => {
     const hasTimeline = enemies.every((enemy) => enemy.timeline);
-  
+
     if (!hasTimeline) {
       const updatedEnemies = enemies.map((enemy) => {
         const { actionArray, actionPatterns, health, maxHealth } = enemy;
-  
+
         // Step 1: Randomly select an action pattern
         const randomPatternIndex = Math.floor(
           Math.random() * actionPatterns.length
         );
         const selectedPattern = actionPatterns[randomPatternIndex].split(",");
-  
+
         // Step 3: Apply difficulty scaling to actionArray attributes
         const scaledActionArray = actionArray.map((action, index) => {
-          console.log(`Original action at index ${index}:`, action);
-  
           // List of all the attributes that need scaling
           const attributesToScale = [
             "attack",
@@ -109,7 +107,7 @@ const Battle = () => {
             "buffHeal",
             "attackWeaponBoost",
           ];
-  
+
           // Scale the main attributes only if they are present and greater than 0
           const scaledAction = attributesToScale.reduce(
             (acc, attr) => {
@@ -123,9 +121,7 @@ const Battle = () => {
             },
             { ...action }
           );
-  
-          console.log(`Scaled action at index ${index}:`, scaledAction);
-  
+
           // Function to scale cycleBoostEffect and manaBoostEffect
           const scaleBoostEffect = (effectArray) => {
             return effectArray.map(([attr, operation, value]) => {
@@ -135,7 +131,7 @@ const Battle = () => {
               return [attr, operation, value];
             });
           };
-  
+
           // Scale cycleBoostEffect and manaBoostEffect
           if (action.cycleBoostEffect) {
             scaledAction.cycleBoostEffect = scaleBoostEffect(
@@ -147,30 +143,29 @@ const Battle = () => {
               action.manaBoostEffect
             );
           }
-  
+
           return scaledAction;
         });
-  
-        console.log("Scaled actionArray:", scaledActionArray);
-  
+
         // Step 2: Construct the timeline based on the selected pattern
         const timeline = selectedPattern.map((actionName) => {
           // Find the corresponding action in the actionArray
           const action = scaledActionArray.find(
             (action) => action.action === `Action ${actionName}`
           );
-  
+
           if (action && action.type === "null") {
             return null; // Handle empty slots as null or skip them
           }
-  
+
           return action; // Return the action as is
         });
-  
+
         // Step 4: Apply difficulty scaling to health and maxHealth
         const scaledHealth = health > 0 ? health + difficulty * 10 : health;
-        const scaledMaxHealth = maxHealth > 0 ? maxHealth + difficulty * 10 : maxHealth;
-  
+        const scaledMaxHealth =
+          maxHealth > 0 ? maxHealth + difficulty * 10 : maxHealth;
+
         // Return the updated enemy with the timeline, scaled actionArray, and health values
         return {
           ...enemy,
@@ -180,12 +175,10 @@ const Battle = () => {
           maxHealth: scaledMaxHealth, // Apply the scaled maxHealth
         };
       });
-  
-      console.log("Updated enemies:", updatedEnemies); // Debug final updated enemies array
+
       setEnemies(updatedEnemies); // Update enemies with timelines, difficulty scaling, and health updates
     }
   }, [enemies, setEnemies, difficulty]);
-  
 
   // Cleanup the interval when the component unmounts
   useEffect(() => {
@@ -233,6 +226,12 @@ const Battle = () => {
       return prevPlayerTeam.map((teammate) => ({
         ...teammate,
         cycle: 0, // Reset cycle to 0 for each teammate
+        weapon: teammate.weapon
+          ? teammate.weapon.map((weapon) => ({
+              ...weapon,
+              cycle: 0, // Reset the weapon cycle to 0 if weapon exists
+            }))
+          : [], // If no weapon exists, return an empty array
       }));
     });
 
@@ -240,6 +239,12 @@ const Battle = () => {
       return prevEnemies.map((enemy) => ({
         ...enemy,
         cycle: 0, // Reset cycle to 0 for each enemy
+        weapon: enemy.weapon
+          ? enemy.weapon.map((weapon) => ({
+              ...weapon,
+              cycle: 0, // Reset the weapon cycle to 0 if weapon exists
+            }))
+          : [], // If no weapon exists, return an empty array
       }));
     });
 
@@ -781,6 +786,7 @@ const Battle = () => {
         weaponAttacker: weaponAttacker,
         weaponEnemy: weaponEnemy,
         playerTeam: finalPlayerTeam,
+        setPlayerTeam: setPlayerTeam,
         enemyTeam: finalEnemyTeam,
         setWeaponPlayed: setWeaponPlayed,
         applyDamage: applyDamage,
@@ -1244,6 +1250,7 @@ const Battle = () => {
             weaponAttacker: currentTeammateIndex,
             weaponEnemy: targetEnemyIndex,
             playerTeam: playerTeam,
+            setPlayerTeam: setPlayerTeam,
             enemyTeam: enemyTeam,
             setWeaponPlayed: setWeaponPlayed,
             applyDamage: applyDamage,

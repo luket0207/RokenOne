@@ -69,32 +69,48 @@ const ActionCard = ({ action, noAnimation }) => {
     }
 
     // Handle the classBoostEffect and classBoost properties
-    if (action.classBoost && action.classBoostEffect.length > 0) {
+    if (
+      action.classBoost &&
+      Array.isArray(action.classBoostEffect) &&
+      action.classBoostEffect.length > 0
+    ) {
       action.classBoostEffect.forEach((classEffect) => {
         description.push(`
-          ${classEffect[0]} ${classEffect[1]} ${classEffect[2]} if used by ${action.classBoost}.
-        `);
+      ${classEffect[0]} ${classEffect[1]} ${classEffect[2]} if used by ${action.classBoost}.
+    `);
       });
     }
 
     // Handle the cycleBoostEffect and cycleBoost properties
-    if (action.cycleBoost && action.cycleBoostEffect.length > 0) {
-      action.cycleBoostEffect.forEach((cycleEffect) => {
-        let cycleBoostDescription;
+if (
+  action.cycleBoost &&
+  Array.isArray(action.cycleBoostEffect) &&
+  action.cycleBoostEffect.length > 0
+) {
+  action.cycleBoostEffect.forEach((cycleEffect) => {
+    let cycleBoostDescription;
 
-        // Determine the correct phrasing for the cycleBoost value
-        if (action.cycleBoost === 1) {
-          cycleBoostDescription = `the first time this action is played in battle.`;
-        } else {
-          cycleBoostDescription = `every ${action.cycleBoost} cycles.`;
-        }
-
-        // Push the formatted description into the array
-        description.push(`
-          ${cycleEffect[0]} ${cycleEffect[1]} ${cycleEffect[2]} ${cycleBoostDescription}
-        `);
-      });
+    // Determine the correct phrasing for the cycleBoost value
+    if (action.cycleBoost === 1) {
+      cycleBoostDescription = `the first time this action is played in battle.`;
+    } else {
+      cycleBoostDescription = `every ${action.cycleBoost} cycles.`;
     }
+
+    // Check if the cycleEffect is related to chargeCost and handle accordingly
+    if (cycleEffect[0] === "chargeCost") {
+      description.push(
+        `${cycleBoostDescription}, this weapon costs ${cycleEffect[2]} less charge when used.`
+      );
+    } else {
+      // Handle other cycleBoostEffect descriptions
+      description.push(
+        `${cycleEffect[0]} ${cycleEffect[1]} ${cycleEffect[2]} ${cycleBoostDescription}`
+      );
+    }
+  });
+}
+
 
     // Join the description array with <br /> for line breaks
     return description.join("<br /><br />");
@@ -106,7 +122,11 @@ const ActionCard = ({ action, noAnimation }) => {
         action.locked ? "disabled" : ""
       } ${action.lockedByWeapon ? "disabled-by-weapon" : ""}`}
     >
-      <div className={`action-item-bar action-class-${action.classBoost ? action.classBoost : action.class}`}>
+      <div
+        className={`action-item-bar action-class-${
+          action.classBoost ? action.classBoost : action.class
+        }`}
+      >
         <div className="action-item-bar-rarity">
           {[...Array(action.rarity + 1)].map((_, index) => (
             <div key={index} className="action-item-bar-rarity-dash"></div>
@@ -119,12 +139,20 @@ const ActionCard = ({ action, noAnimation }) => {
             </div>
           )}
         </div>
-        {action.type === "weapon" && action.classBoost && 
-            <div className="action-item-bar-circle action-item-bar-classBoost">
-              <p>{action.classBoost ? action.classBoost.charAt(0).toUpperCase() : ""}</p>
-            </div>
-        }
-        <div className={`action-item-bar-circle action-item-bar-type ${action.type === "weapon" && "action-item-bar-circle-weapon"}`}>
+        {action.type === "weapon" && action.classBoost && (
+          <div className="action-item-bar-circle action-item-bar-classBoost">
+            <p>
+              {action.classBoost
+                ? action.classBoost.charAt(0).toUpperCase()
+                : ""}
+            </p>
+          </div>
+        )}
+        <div
+          className={`action-item-bar-circle action-item-bar-type ${
+            action.type === "weapon" && "action-item-bar-circle-weapon"
+          }`}
+        >
           {action.type === "attack" && <FontAwesomeIcon icon={faHandFist} />}
           {action.type === "defence" && (
             <FontAwesomeIcon icon={faShieldHalved} />
