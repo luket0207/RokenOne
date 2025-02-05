@@ -28,9 +28,7 @@ import OpenPack from "./Scenes/OpenPack/OpenPack";
 import CardBank from "./Scenes/CardBank/CardBank";
 
 const AppRoutes = () => {
-  const { expeditionData, playerTeam, playerData } =
-    useContext(GameDataContext);
-  const [gameData, setGameData] = useState(playerData[0]);
+  const { expeditionData, playerTeam, playerData } = useContext(GameDataContext);
   const [showDust, setShowDust] = useState(false);
   const location = useLocation();
 
@@ -88,13 +86,13 @@ const AppRoutes = () => {
           </div>
           <div className="level">
             <p>Level</p>
-            <p>{gameData.level}</p>
+            <p>{playerData[0].level}</p>
           </div>
           <div className="coins">
             <p>Coins</p>
 
             <p>
-              <FontAwesomeIcon icon={faCoins} /> {gameData.coins}
+              <FontAwesomeIcon icon={faCoins} /> {playerData[0].coins}
             </p>
           </div>
           <div className="dust-toggle" onClick={handleToggleShowDust}>
@@ -106,37 +104,43 @@ const AppRoutes = () => {
             <div className="dust-roken">
               <p>Roken</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustRoken}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustRoken}
               </p>
             </div>
             <div className="dust-samurai">
               <p>Samurai</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustSamurai}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustSamurai}
               </p>
             </div>
             <div className="dust-oyoroi">
               <p>O-Yoroi</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustOyoroi}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustOyoroi}
               </p>
             </div>
             <div className="dust-kobo">
               <p>Kobo</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustKobo}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustKobo}
               </p>
             </div>
             <div className="dust-taiko">
               <p>Taiko</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustTaiko}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustTaiko}
               </p>
             </div>
             <div className="dust-genso">
               <p>Genso</p>
               <p>
-                <FontAwesomeIcon icon={faCubesStacked} /> {gameData.dustGenso}
+                <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                {playerData[0].dustGenso}
               </p>
             </div>
           </div>

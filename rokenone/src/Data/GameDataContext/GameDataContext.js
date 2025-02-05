@@ -23,8 +23,8 @@ export const GameDataProvider = ({ children }) => {
       maxTeammates: 2,
       cardBank: [],
       autoWeaponStatus: "off",
-      coins: 0,
-      dustRoken: 0,
+      coins: 60,
+      dustRoken: 9999,
       dustSamurai: 0,
       dustOyoroi: 0,
       dustKobo: 0,
@@ -86,7 +86,24 @@ export const GameDataProvider = ({ children }) => {
     ]);
   };
 
-  // Add functions to modify game state or player team if needed later
+  // Function to spend a specific currency
+  const spendCurrency = (currency, cost) => {
+    setPlayerData((prevData) => {
+      const currentCurrency = prevData[0][currency];
+      if (currentCurrency >= cost) {
+        console.log(`${cost} ${currency} spent.`);
+        return [
+          {
+            ...prevData[0],
+            [currency]: currentCurrency - cost,
+          },
+        ];
+      } else {
+        console.log(`Not enough ${currency} to spend.`);
+        return prevData; // No change if not enough currency
+      }
+    });
+  };
 
   return (
     <GameDataContext.Provider
@@ -100,6 +117,7 @@ export const GameDataProvider = ({ children }) => {
         setPlayerData,
         updateCurrentDay,
         moveToNextDay,
+        spendCurrency, // Expose the spendCurrency function
       }}
     >
       {children}

@@ -9,19 +9,36 @@ import ActionCard from "../../Components/ActionCard/ActionCard";
 
 const OpenPack = () => {
   const navigate = useNavigate();
-  const { playerData, setPlayerData } = useContext(GameDataContext);
+  const { playerData, setPlayerData, spendCurrency } =
+    useContext(GameDataContext);
   const [packOpened, setPackOpened] = useState(null);
   const [opened, setOpened] = useState(false); // Track whether the pack is opened
   const [animationComplete, setAnimationComplete] = useState(false); // Track if animation is complete
 
+  const spentCurrency = (actionClass) => {
+    // Map action classes to their respective dust types
+    const dustMapping = {
+      All: "coins",
+      Roken: "dustRoken",
+      Samurai: "dustSamurai",
+      Oyoroi: "dustOyoroi",
+      Kobo: "dustKobo",
+      Taiko: "dustTaiko",
+      Genso: "dustGenso",
+    };
+
+    // Return the corresponding dust type or default to "coins"
+    return dustMapping[actionClass] || "coins";
+  };
+
   // Function to calculate selection probabilities based on rarity and pack tier
   const getActionWithRarity = (tier, actionType, actionClass, classTier) => {
     const rarityChances = {
-      common: { 0: 100, 1: 40, 2: 10, 3: 5, 4: 1 },
-      uncommon: { 0: 30, 1: 40, 2: 30, 3: 15, 4: 5 },
-      rare: { 0: 10, 1: 30, 2: 40, 3: 30, 4: 15 },
-      epic: { 0: 5, 1: 15, 2: 40, 3: 40, 4: 30 },
-      legendary: { 0: 1, 1: 5, 2: 15, 3: 30, 4: 50 },
+      common: { 0: 100, 1: 40, 2: 5, 3: 1, 4: 0 },
+      uncommon: { 0: 30, 1: 40, 2: 10, 3: 5, 4: 1 },
+      rare: { 0: 10, 1: 20, 2: 40, 3: 8, 4: 2 },
+      epic: { 0: 5, 1: 15, 2: 40, 3: 40, 4: 5 },
+      legendary: { 0: 1, 1: 5, 2: 20, 3: 40, 4: 20 },
     };
 
     const getClassLikelihood = (classTier) => {
@@ -79,14 +96,32 @@ const OpenPack = () => {
     return selectedActions;
   };
 
-  const handleOpenPack = (tier, actionType, actionClass, classTier) => {
+  const handleOpenPack = (tier, actionType, actionClass, classTier, cost) => {
+    // Function to check if enough currency is available
+    const checkCurrency = (actionClass, cost) => {
+      const currency = spentCurrency(actionClass);
+      const currentCurrency = playerData[0][currency]; // Accessing playerData state directly here
+      return currentCurrency >= cost;
+    };
+
     const selectedActions = getActionWithRarity(
       tier,
       actionType,
       actionClass,
       classTier
     );
+
+    // First, check if there's enough currency
+    if (!checkCurrency(actionClass, cost)) {
+      alert(`You don't have enough ${actionClass === "all" || actionClass === "" ? "coins" : `${actionClass} dust`} to open this pack.`);
+      return; // Prevent opening the pack if there's not enough currency
+    }
+
+    // If enough currency, proceed with opening the pack
     setPackOpened(selectedActions);
+
+    // Spend currency after validation
+    spendCurrency(spentCurrency(actionClass), cost);
 
     setTimeout(() => {
       setOpened(true);
@@ -165,71 +200,74 @@ const OpenPack = () => {
       <h1>Open Pack</h1>
 
       {!packOpened && (
-  <>
-    <div className="pack-selection">
-      {/* Existing Pack Buttons with type="small" */}
-      <Button
-        text={"Common Pack"}
-        onClick={() => handleOpenPack("common", "", "", 0)}
-        type="small"
-      />
-      <Button
-        text={"Uncommon Pack"}
-        onClick={() => handleOpenPack("uncommon", "", "", 0)}
-        type="small"
-      />
-      <Button
-        text={"Rare Pack"}
-        onClick={() => handleOpenPack("rare", "", "", 0)}
-        type="small"
-      />
-      <Button
-        text={"Epic Pack"}
-        onClick={() => handleOpenPack("epic", "", "", 0)}
-        type="small"
-      />
-      <Button
-        text={"Legendary Pack"}
-        onClick={() => handleOpenPack("legendary", "", "", 0)}
-        type="small"
-      />
+        <>
+          <div className="pack-selection">
+            {/* Existing Pack Buttons with type="small" */}
+            <Button
+              text={"Common Pack"}
+              onClick={() => handleOpenPack("common", "", "Roken", 0, 10)}
+              type="small"
+            />
+            <Button
+              text={"Uncommon Pack"}
+              onClick={() => handleOpenPack("uncommon", "", "Samurai", 0, 25)}
+              type="small"
+            />
+            <Button
+              text={"Rare Pack"}
+              onClick={() => handleOpenPack("rare", "", "", 0, 50)}
+              type="small"
+            />
+            <Button
+              text={"Epic Pack"}
+              onClick={() => handleOpenPack("epic", "", "", 0, 100)}
+              type="small"
+            />
+            <Button
+              text={"Legendary Pack"}
+              onClick={() => handleOpenPack("legendary", "", "", 0, 250)}
+              type="small"
+            />
 
-      {["common", "uncommon", "rare", "epic", "legendary"].map((rarity) => (
-        <React.Fragment key={rarity}>
-          {[0, 1, 2, 3].map((classTier) => (
-            <React.Fragment key={classTier}>
-              {/* For Class "Roken" with classTier */}
-              <Button
-                text={`${
-                  rarity.charAt(0).toUpperCase() + rarity.slice(1)
-                } Roken Tier ${classTier}`}
-                onClick={() => handleOpenPack(rarity, "", "Roken", classTier)}
-                type="small"
-              />
-              {/* For Type "Weapon" with classTier */}
-              <Button
-                text={`${
-                  rarity.charAt(0).toUpperCase() + rarity.slice(1)
-                } Weapon Tier ${classTier}`}
-                onClick={() =>
-                  handleOpenPack(rarity, "weapon", "", classTier)
-                }
-                type="small"
-              />
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      ))}
-    </div>
-    
-    <Button
-      text={"Add Test Weapon Card"}
-      onClick={handleAddTestCard}
-      type="secondary"
-    />
-  </>
-)}
+            {["common", "uncommon", "rare", "epic", "legendary"].map(
+              (rarity) => (
+                <React.Fragment key={rarity}>
+                  {[0, 1, 2, 3].map((classTier) => (
+                    <React.Fragment key={classTier}>
+                      {/* For Class "Roken" with classTier */}
+                      <Button
+                        text={`${
+                          rarity.charAt(0).toUpperCase() + rarity.slice(1)
+                        } Roken Tier ${classTier}`}
+                        onClick={() =>
+                          handleOpenPack(rarity, "", "Roken", classTier)
+                        }
+                        type="small"
+                      />
+                      {/* For Type "Weapon" with classTier */}
+                      <Button
+                        text={`${
+                          rarity.charAt(0).toUpperCase() + rarity.slice(1)
+                        } Weapon Tier ${classTier}`}
+                        onClick={() =>
+                          handleOpenPack(rarity, "weapon", "", classTier)
+                        }
+                        type="small"
+                      />
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              )
+            )}
+          </div>
 
+          <Button
+            text={"Add Test Weapon Card"}
+            onClick={handleAddTestCard}
+            type="secondary"
+          />
+        </>
+      )}
 
       {packOpened && (
         <div>
