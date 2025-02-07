@@ -231,7 +231,7 @@ const Battle = () => {
               ...weapon,
               cycle: 0, // Reset the weapon cycle to 0 if weapon exists
             }))
-          : [], // If no weapon exists, return an empty array
+          : null, // If no weapon exists, return an empty array
       }));
     });
 
@@ -244,7 +244,7 @@ const Battle = () => {
               ...weapon,
               cycle: 0, // Reset the weapon cycle to 0 if weapon exists
             }))
-          : [], // If no weapon exists, return an empty array
+          : null, // If no weapon exists, return an empty array
       }));
     });
 
