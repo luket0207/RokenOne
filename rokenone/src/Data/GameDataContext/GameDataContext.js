@@ -17,14 +17,21 @@ export const GameDataProvider = ({ children }) => {
   // Initial dummy data for the player's team
   const [playerTeam, setPlayerTeam] = useState([]);
 
+  const [talismans, setTalismans]= useState([
+    {
+      talismansBank:[],
+      maxTalismansBank:[],
+    }
+  ]);
+
   const [playerData, setPlayerData] = useState([
     {
       level: 0,
       maxTeammates: 2,
       cardBank: [],
       autoWeaponStatus: "off",
-      coins: 60,
-      dustRoken: 9999,
+      coins: 0,
+      dustRoken: 1000,
       dustSamurai: 0,
       dustOyoroi: 0,
       dustKobo: 0,
@@ -48,7 +55,7 @@ export const GameDataProvider = ({ children }) => {
         {
           id: 3,
           name: "Kiyoshi",
-          class: "O-Yoroi",
+          class: "Oyoroi",
           health: 100,
           maxHealth: 100,
           timeline: [],
@@ -105,6 +112,19 @@ export const GameDataProvider = ({ children }) => {
     });
   };
 
+  // Function to add a specific currency
+  const addCurrency = (currency, amount) => {
+    setPlayerData((prevData) => {
+      const currentCurrency = prevData[0][currency];
+      return [
+        {
+          ...prevData[0],
+          [currency]: currentCurrency + amount,
+        },
+      ];
+    });
+  };
+
   return (
     <GameDataContext.Provider
       value={{
@@ -115,9 +135,12 @@ export const GameDataProvider = ({ children }) => {
         resetExpedition,
         setPlayerTeam,
         setPlayerData,
+        talismans,
+        setTalismans,
         updateCurrentDay,
         moveToNextDay,
-        spendCurrency, // Expose the spendCurrency function
+        spendCurrency, 
+        addCurrency,   
       }}
     >
       {children}

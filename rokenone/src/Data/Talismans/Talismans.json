@@ -1,0 +1,722 @@
+[
+  {
+    "id": "TM001",
+    "name": "Stamina",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM002",
+    "name": "Stamina",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM003",
+    "name": "Stamina",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM004",
+    "name": "Stamina",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM005",
+    "name": "Stamina",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM006",
+    "name": "Hacker",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM007",
+    "name": "Hacker",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM008",
+    "name": "Caver",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM009",
+    "name": "Caver",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM010",
+    "name": "Caver",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM011",
+    "name": "Illusionist",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM012",
+    "name": "Upgrade Wildcard",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM013",
+    "name": "Upgrade Wildcard",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM014",
+    "name": "Upgrade Wildcard",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM015",
+    "name": "More Talismans",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM016",
+    "name": "More Talismans",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM017",
+    "name": "More Talismans",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM018",
+    "name": "More Talismans",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM019",
+    "name": "More Talismans",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM020",
+    "name": "Potion",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM021",
+    "name": "Potion",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM022",
+    "name": "Potion",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM023",
+    "name": "Potion",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM024",
+    "name": "Potion",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM025",
+    "name": "Strength",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM026",
+    "name": "Strength",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM027",
+    "name": "Strength",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM028",
+    "name": "Orb",
+    "colour": "Black",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM029",
+    "name": "Orb",
+    "colour": "Grey",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM030",
+    "name": "Orb",
+    "colour": "Orange",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM031",
+    "name": "Orb",
+    "colour": "Teal",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM032",
+    "name": "Orb",
+    "colour": "Gold",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM033",
+    "name": "Orb",
+    "colour": "Jade",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM034",
+    "name": "Orb",
+    "colour": "Crimson",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM035",
+    "name": "Orb",
+    "colour": "Emerald",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM036",
+    "name": "Big Orb",
+    "colour": "Black",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM037",
+    "name": "Big Orb",
+    "colour": "Grey",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM038",
+    "name": "Big Orb",
+    "colour": "Orange",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM039",
+    "name": "Big Orb",
+    "colour": "Teal",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM040",
+    "name": "Big Orb",
+    "colour": "Gold",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM041",
+    "name": "Big Orb",
+    "colour": "Jade",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM042",
+    "name": "Big Orb",
+    "colour": "Crimson",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM043",
+    "name": "Big Orb",
+    "colour": "Emerald",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM044",
+    "name": "Giant Orb",
+    "colour": "Black",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM045",
+    "name": "Giant Orb",
+    "colour": "Grey",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM046",
+    "name": "Giant Orb",
+    "colour": "Orange",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM047",
+    "name": "Giant Orb",
+    "colour": "Teal",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM048",
+    "name": "Giant Orb",
+    "colour": "Gold",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM049",
+    "name": "Giant Orb",
+    "colour": "Jade",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM050",
+    "name": "Giant Orb",
+    "colour": "Crimson",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM051",
+    "name": "Giant Orb",
+    "colour": "Emerald",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM052",
+    "name": "Dust",
+    "colour": "Black",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM053",
+    "name": "Dust",
+    "colour": "Grey",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM054",
+    "name": "Dust",
+    "colour": "Orange",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM055",
+    "name": "Dust",
+    "colour": "Teal",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM056",
+    "name": "Dust",
+    "colour": "Gold",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM057",
+    "name": "Dust",
+    "colour": "Jade",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM058",
+    "name": "Dust",
+    "colour": "Crimson",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM059",
+    "name": "Dust",
+    "colour": "Emerald",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM060",
+    "name": "Team Spirit",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM061",
+    "name": "Team Spirit",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM062",
+    "name": "Team Spirit",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": true,
+    "expeditionPassive": false,
+    "consumable": false
+  },
+  {
+    "id": "TM063",
+    "name": "Starting Shield",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM064",
+    "name": "Starting Shield",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM065",
+    "name": "Starting Shield",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM066",
+    "name": "Starting Shield",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM067",
+    "name": "Starting Shield",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM068",
+    "name": "Starting Charge",
+    "colour": "None",
+    "rarity": 0,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM069",
+    "name": "Starting Charge",
+    "colour": "None",
+    "rarity": 1,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM070",
+    "name": "Starting Charge",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM071",
+    "name": "Starting Charge",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM072",
+    "name": "Starting Charge",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  },
+  {
+    "id": "TM073",
+    "name": "Coin Luck",
+    "colour": "None",
+    "rarity": 4,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM074",
+    "name": "Roken Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM075",
+    "name": "Samurai Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM076",
+    "name": "Oyoroi Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM077",
+    "name": "Kobo Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM078",
+    "name": "Taiko Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM079",
+    "name": "Genso Luck",
+    "colour": "None",
+    "rarity": 3,
+    "permanent": false,
+    "expeditionPassive": true,
+    "consumable": false
+  },
+  {
+    "id": "TM080",
+    "name": "Loot Luck",
+    "colour": "None",
+    "rarity": 2,
+    "permanent": false,
+    "expeditionPassive": false,
+    "consumable": true
+  }
+]

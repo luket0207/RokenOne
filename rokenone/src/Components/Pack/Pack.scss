@@ -1,0 +1,112 @@
+@import "../../Assets/Scss/import.scss";
+
+.pack-container {
+  width: 140px;
+  height: 160px;
+  padding: 10px;
+  background: $darkerGrey;
+  background: linear-gradient(
+    180deg,
+    rgba($darkGrey, 1) 0%,
+    rgba($black, 1) 100%
+  );
+  color: $lightGrey;
+  border-radius: 10px;
+  border: solid 10px $darkerGrey;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  &.animate {
+    @include boxShadowHover;
+    cursor: pointer;
+  }
+
+  &-cost {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background-color: $white;
+    color: $darkerGrey;
+    width: 55px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include boxShadow;
+
+    svg {
+      color: $gold;
+    }
+
+    &.class-Roken {
+      svg {
+        color: $roken;
+      }
+    }
+
+    &.class-Samurai {
+      svg {
+        color: $samurai;
+      }
+    }
+
+    &.class-Oyoroi {
+      svg {
+        color: $oyoroi;
+      }
+    }
+
+    &.classKobo {
+      svg {
+        color: $kobo;
+      }
+    }
+
+    &.class-Taiko {
+      svg {
+        color: $taiko;
+      }
+    }
+
+    &.class-Genso {
+      svg {
+        color: $genso;
+      }
+    }
+  }
+
+  &.type-Weapon {
+    border-color: $lightGrey;
+  }
+  &.class-Roken {
+    border-color: $roken;
+  }
+
+  &.class-Samurai {
+    border-color: $samurai;
+  }
+
+  &.class-Oyoroi {
+    border-color: $oyoroi;
+  }
+
+  &.class-Kobo {
+    border-color: $kobo;
+  }
+
+  &.class-Taiko {
+    border-color: $taiko;
+  }
+
+  &.class-Genso {
+    border-color: $genso;
+  }
+}

@@ -1,19 +1,28 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OpenPack.scss";
 import Button from "../../Components/Button/Button";
-import actionsData from "../../Data/Actions/Actions.json";
+import actionsAllData from "../../Data/Actions/All.json";
+import actionsRokenData from "../../Data/Actions/Roken.json";
+import actionsSamuraiData from "../../Data/Actions/Samurai.json";
+import actionsOyoroiData from "../../Data/Actions/Oyoroi.json";
 import weaponsData from "../../Data/Weapons/Weapons.json";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import ActionCard from "../../Components/ActionCard/ActionCard";
+import Pack from "../../Components/Pack/Pack";
 
 const OpenPack = () => {
   const navigate = useNavigate();
   const { playerData, setPlayerData, spendCurrency } =
     useContext(GameDataContext);
   const [packOpened, setPackOpened] = useState(null);
+  const [packOpenedName, setPackOpenedName] = useState(null);
+  const [packOpenedRarity, setPackOpenedRarity] = useState(null);
+  const [packOpenedClass, setPackOpenedClass] = useState(null);
+  const [packOpenedClassTier, setPackOpenedClassTier] = useState(null);
+  const [packOpenedType, setPackOpenedType] = useState(null);
   const [opened, setOpened] = useState(false); // Track whether the pack is opened
-  const [animationComplete, setAnimationComplete] = useState(false); // Track if animation is complete
+  const [animationComplete, setAnimationComplete] = useState(true); // Track if animation is complete
 
   const spentCurrency = (actionClass) => {
     // Map action classes to their respective dust types
@@ -32,28 +41,31 @@ const OpenPack = () => {
   };
 
   // Function to calculate selection probabilities based on rarity and pack tier
-  const getActionWithRarity = (tier, actionType, actionClass, classTier) => {
+  const getActionWithRarity = (rarity, actionType, actionClass, classTier) => {
     const rarityChances = {
-      common: { 0: 100, 1: 40, 2: 5, 3: 1, 4: 0 },
-      uncommon: { 0: 30, 1: 40, 2: 10, 3: 5, 4: 1 },
-      rare: { 0: 10, 1: 20, 2: 40, 3: 8, 4: 2 },
-      epic: { 0: 5, 1: 15, 2: 40, 3: 40, 4: 5 },
-      legendary: { 0: 1, 1: 5, 2: 20, 3: 40, 4: 20 },
+      common: { 0: 100, 1: 15, 2: 5, 3: 1, 4: 0 },
+      uncommon: { 0: 40, 1: 40, 2: 10, 3: 5, 4: 1 },
+      rare: { 0: 10, 1: 40, 2: 40, 3: 8, 4: 2 },
+      epic: { 0: 5, 1: 10, 2: 40, 3: 40, 4: 5 },
+      legendary: { 0: 0, 1: 5, 2: 30, 3: 40, 4: 20 },
     };
 
     const getClassLikelihood = (classTier) => {
       const tierProbabilities = {
         0: [0, 0, 0, 0], // Tier 0
-        1: [1, 0.5, 0, 0], // Tier 1
-        2: [1, 0.75, 0, 0], // Tier 2
-        3: [1, 1, 0.5, 0], // Tier 3
+        1: [0.75, 0.5, 0, 0], // Tier 1
+        2: [1, 0.5, 0, 0], // Tier 2
+        3: [1, 0.75, 0.5, 0], // Tier 3
       };
       return tierProbabilities[classTier] || [0, 0, 0, 0];
     };
 
     const classProbabilities = getClassLikelihood(classTier);
     const combinedData = [
-      ...actionsData.map((action) => ({ ...action })),
+      ...actionsAllData.map((action) => ({ ...action })),
+      ...actionsRokenData.map((action) => ({ ...action })),
+      ...actionsSamuraiData.map((action) => ({ ...action })),
+      ...actionsOyoroiData.map((action) => ({ ...action })),
       ...weaponsData.map((weapon) => ({ ...weapon })),
     ];
 
@@ -80,7 +92,7 @@ const OpenPack = () => {
         filteredActions.length > 0 ? filteredActions : combinedData;
 
       // Select based on rarity
-      const selectedRarityChances = rarityChances[tier];
+      const selectedRarityChances = rarityChances[rarity];
       const weightedActions = actionsToUse.flatMap((action) => {
         const weight = Math.max(
           0,
@@ -96,7 +108,23 @@ const OpenPack = () => {
     return selectedActions;
   };
 
-  const handleOpenPack = (tier, actionType, actionClass, classTier, cost) => {
+  const handleOpenPack = (rarity, actionType, actionClass, classTier) => {
+    // Rarity mapping to cost values
+    const rarityCostMapping = {
+      common: 10,
+      uncommon: 25,
+      rare: 50,
+      epic: 100,
+      legendary: 250,
+    };
+
+    // ClassTier mapping to additional cost
+    const classTierCostMapping = {
+      1: 25,
+      2: 50,
+      3: 100,
+    };
+
     // Function to check if enough currency is available
     const checkCurrency = (actionClass, cost) => {
       const currency = spentCurrency(actionClass);
@@ -104,29 +132,68 @@ const OpenPack = () => {
       return currentCurrency >= cost;
     };
 
+    // Get base cost based on rarity
+    const baseCost = rarityCostMapping[rarity];
+
+    // Get additional cost based on classTier
+    const additionalCost = classTierCostMapping[classTier] || 0;
+
+    // Calculate total cost
+    const totalCost = baseCost + additionalCost;
+
+    // Check if enough currency is available
+    if (!checkCurrency(actionClass, totalCost)) {
+      alert(
+        `You don't have enough ${
+          actionClass === "all" || actionClass === ""
+            ? "coins"
+            : `${actionClass} dust`
+        } to open this pack.`
+      );
+      return; // Prevent opening the pack if there's not enough currency
+    }
+
+    setAnimationComplete(false);
+
+    // Determine class/type
+    const classOrType = actionClass || actionType || ""; // Only one will be present
+    const tierLabel = classTier > 0 ? `Tier ${classTier}` : ""; // Only display tier if it's greater than 0
+
+    // Construct the pack name
+    let packName = `${rarity} Pack`;
+    if (classOrType) {
+      packName = `${rarity} ${classOrType} Pack`;
+    }
+    if (tierLabel) {
+      packName += ` - ${tierLabel}`;
+    }
+
+    // Update state with constructed pack details
+    setPackOpenedName(packName);
+    setPackOpenedRarity(rarity);
+    setPackOpenedClass(actionClass);
+    setPackOpenedType(actionType);
+    setPackOpenedClassTier(classTier);
+
+    // Get the selected actions
     const selectedActions = getActionWithRarity(
-      tier,
+      rarity,
       actionType,
       actionClass,
       classTier
     );
 
-    // First, check if there's enough currency
-    if (!checkCurrency(actionClass, cost)) {
-      alert(`You don't have enough ${actionClass === "all" || actionClass === "" ? "coins" : `${actionClass} dust`} to open this pack.`);
-      return; // Prevent opening the pack if there's not enough currency
-    }
-
     // If enough currency, proceed with opening the pack
     setPackOpened(selectedActions);
 
     // Spend currency after validation
-    spendCurrency(spentCurrency(actionClass), cost);
+    spendCurrency(spentCurrency(actionClass), totalCost);
 
     setTimeout(() => {
       setOpened(true);
     }, 100);
 
+    // Update player data with the new cards
     setPlayerData((prevData) => {
       if (!prevData) {
         return prevData;
@@ -158,7 +225,7 @@ const OpenPack = () => {
   };
 
   const handleAddTestCard = () => {
-    const testCard = actionsData.find((action) => action.id === "TEST001");
+    const testCard = actionsAllData.find((action) => action.id === "TEST001");
 
     setAnimationComplete(true);
 
@@ -193,71 +260,200 @@ const OpenPack = () => {
 
   const handleContinue = () => {
     navigate("/home");
+    setPackOpenedName("");
+    setPackOpenedRarity("");
+    setPackOpenedClass("");
+    setPackOpenedType("");
+    setPackOpenedClassTier("");
   };
 
   return (
     <div className="open-pack">
       <h1>Open Pack</h1>
-
+      <p>{packOpenedName}</p>
       {!packOpened && (
         <>
           <div className="pack-selection">
-            {/* Existing Pack Buttons with type="small" */}
-            <Button
-              text={"Common Pack"}
-              onClick={() => handleOpenPack("common", "", "Roken", 0, 10)}
-              type="small"
-            />
-            <Button
-              text={"Uncommon Pack"}
-              onClick={() => handleOpenPack("uncommon", "", "Samurai", 0, 25)}
-              type="small"
-            />
-            <Button
-              text={"Rare Pack"}
-              onClick={() => handleOpenPack("rare", "", "", 0, 50)}
-              type="small"
-            />
-            <Button
-              text={"Epic Pack"}
-              onClick={() => handleOpenPack("epic", "", "", 0, 100)}
-              type="small"
-            />
-            <Button
-              text={"Legendary Pack"}
-              onClick={() => handleOpenPack("legendary", "", "", 0, 250)}
-              type="small"
-            />
-
+            <h3>Standard Packs</h3>
+            <Pack rarity={"common"} cost={10} onClick={handleOpenPack} />
+            <Pack rarity={"uncommon"} cost={25} onClick={handleOpenPack} />
+            <Pack rarity={"rare"} cost={50} onClick={handleOpenPack} />
+            <Pack rarity={"epic"} cost={100} onClick={handleOpenPack} />
+            <Pack rarity={"legendary"} cost={250} onClick={handleOpenPack} />
+            <h3>Roken Packs</h3>
             {["common", "uncommon", "rare", "epic", "legendary"].map(
-              (rarity) => (
-                <React.Fragment key={rarity}>
-                  {[0, 1, 2, 3].map((classTier) => (
-                    <React.Fragment key={classTier}>
-                      {/* For Class "Roken" with classTier */}
-                      <Button
-                        text={`${
-                          rarity.charAt(0).toUpperCase() + rarity.slice(1)
-                        } Roken Tier ${classTier}`}
-                        onClick={() =>
-                          handleOpenPack(rarity, "", "Roken", classTier)
-                        }
-                        type="small"
-                      />
-                      {/* For Type "Weapon" with classTier */}
-                      <Button
-                        text={`${
-                          rarity.charAt(0).toUpperCase() + rarity.slice(1)
-                        } Weapon Tier ${classTier}`}
-                        onClick={() =>
-                          handleOpenPack(rarity, "weapon", "", classTier)
-                        }
-                        type="small"
-                      />
-                    </React.Fragment>
-                  ))}
-                </React.Fragment>
-              )
+              (rarity) => {
+                // Get the cost dynamically for each rarity and classTier combination
+                return (
+                  <React.Fragment key={rarity}>
+                    {[1, 2, 3].map((classTier) => {
+                      // Calculate cost based on rarity and classTier
+                      const baseCostMapping = {
+                        common: 10,
+                        uncommon: 25,
+                        rare: 50,
+                        epic: 100,
+                        legendary: 250,
+                      };
+                      const classTierCostMapping = {
+                        1: 25,
+                        2: 50,
+                        3: 100,
+                      };
+
+                      const baseCost = baseCostMapping[rarity];
+                      const classTierCost =
+                        classTierCostMapping[classTier] || 0;
+
+                      const totalCost = baseCost + classTierCost;
+
+                      return (
+                        <React.Fragment key={classTier}>
+                          <Pack
+                            rarity={rarity}
+                            actionClass="Roken"
+                            classTier={classTier}
+                            cost={totalCost} // Set dynamic cost here
+                            onClick={handleOpenPack}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              }
+            )}
+
+            <h3>Samurai Packs</h3>
+            {["common", "uncommon", "rare", "epic", "legendary"].map(
+              (rarity) => {
+                // Get the cost dynamically for each rarity and classTier combination
+                return (
+                  <React.Fragment key={rarity}>
+                    {[1, 2, 3].map((classTier) => {
+                      // Calculate cost based on rarity and classTier
+                      const baseCostMapping = {
+                        common: 10,
+                        uncommon: 25,
+                        rare: 50,
+                        epic: 100,
+                        legendary: 250,
+                      };
+                      const classTierCostMapping = {
+                        1: 25,
+                        2: 50,
+                        3: 100,
+                      };
+
+                      const baseCost = baseCostMapping[rarity];
+                      const classTierCost =
+                        classTierCostMapping[classTier] || 0;
+
+                      const totalCost = baseCost + classTierCost;
+
+                      return (
+                        <React.Fragment key={classTier}>
+                          <Pack
+                            rarity={rarity}
+                            actionClass="Samurai"
+                            classTier={classTier}
+                            cost={totalCost} // Set dynamic cost here
+                            onClick={handleOpenPack}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              }
+            )}
+
+            <h3>O-Yoroi Packs</h3>
+            {["common", "uncommon", "rare", "epic", "legendary"].map(
+              (rarity) => {
+                // Get the cost dynamically for each rarity and classTier combination
+                return (
+                  <React.Fragment key={rarity}>
+                    {[1, 2, 3].map((classTier) => {
+                      // Calculate cost based on rarity and classTier
+                      const baseCostMapping = {
+                        common: 10,
+                        uncommon: 25,
+                        rare: 50,
+                        epic: 100,
+                        legendary: 250,
+                      };
+                      const classTierCostMapping = {
+                        1: 25,
+                        2: 50,
+                        3: 100,
+                      };
+
+                      const baseCost = baseCostMapping[rarity];
+                      const classTierCost =
+                        classTierCostMapping[classTier] || 0;
+
+                      const totalCost = baseCost + classTierCost;
+
+                      return (
+                        <React.Fragment key={classTier}>
+                          <Pack
+                            rarity={rarity}
+                            actionClass="Oyoroi"
+                            classTier={classTier}
+                            cost={totalCost} // Set dynamic cost here
+                            onClick={handleOpenPack}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              }
+            )}
+
+            <h3>Weapon Packs</h3>
+            {["common", "uncommon", "rare", "epic", "legendary"].map(
+              (rarity) => {
+                // Get the cost dynamically for each rarity and classTier combination
+                return (
+                  <React.Fragment key={rarity}>
+                    {[1, 2, 3].map((classTier) => {
+                      // Calculate cost based on rarity and classTier
+                      const baseCostMapping = {
+                        common: 10,
+                        uncommon: 25,
+                        rare: 50,
+                        epic: 100,
+                        legendary: 250,
+                      };
+                      const classTierCostMapping = {
+                        1: 25,
+                        2: 50,
+                        3: 100,
+                      };
+
+                      const baseCost = baseCostMapping[rarity];
+                      const classTierCost =
+                        classTierCostMapping[classTier] || 0;
+
+                      const totalCost = baseCost + classTierCost;
+
+                      return (
+                        <React.Fragment key={classTier}>
+                          <Pack
+                            rarity={rarity}
+                            actionType="Weapon"
+                            classTier={classTier}
+                            cost={totalCost} // Set dynamic cost here
+                            onClick={handleOpenPack}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              }
             )}
           </div>
 
@@ -285,7 +481,13 @@ const OpenPack = () => {
                 </div>
               ))}
             <div className="pack-image">
-              <h3>Pack</h3>
+              <Pack
+                rarity={packOpenedRarity}
+                actionClass={packOpenedClass}
+                actionType={packOpenedType}
+                classTier={packOpenedClassTier}
+                noAnimate
+              />
             </div>
           </div>
         </div>

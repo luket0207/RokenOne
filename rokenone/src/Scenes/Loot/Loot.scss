@@ -6,4 +6,64 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
+  position: relative;
+
+  .loot-container {
+    position: relative;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loot-item {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: $gold;
+      color: $darkerGrey;
+      border-radius: 10px;
+      top: 0;
+      transition: all 1s ease;
+      cursor: not-allowed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      @include boxShadow;
+
+      &.choose {
+        @include boxShadowHover;
+        cursor: pointer;
+      }
+      
+      // Target the first div
+      &:nth-child(1) {
+        left: 0px;
+      }
+
+      // Target the second div
+      &:nth-child(2) {
+        left: 300px;
+      }
+
+      // Target the third div
+      &:nth-child(3) {
+        left: 600px;
+      }
+
+      &.mixed {
+        pointer-events: none;
+        left: 300px;
+      }
+    }
+  }
+
+  &-result {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }

@@ -11,7 +11,7 @@ import {
   faScrewdriver,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ActionCard = ({ action, noAnimation }) => {
+const ActionCard = ({ action = {}, noAnimation }) => {
   // Function to generate description based on action attributes
   const generateDescription = (action) => {
     let description = [];

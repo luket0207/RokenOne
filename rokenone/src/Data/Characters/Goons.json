@@ -59,7 +59,7 @@
   {
     "id": "O1",
     "name": "Wakashu",
-    "class": "O-Yoroi",
+    "class": "Oyoroi",
     "health": 30,
     "maxHealth": 30,
     "currentIllusion": 0,
@@ -91,7 +91,7 @@
   {
     "id": "O2",
     "name": "Umi",
-    "class": "O-Yoroi",
+    "class": "Oyoroi",
     "health": 50,
     "maxHealth": 50,
     "currentIllusion": 0,

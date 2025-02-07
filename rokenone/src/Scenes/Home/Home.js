@@ -7,7 +7,7 @@ import ManaIcon from "../../Components/ManaIcon/ManaIcon";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { expeditionData } = useContext(GameDataContext); // Access expedition data from context
+  const { expeditionData, addCurrency } = useContext(GameDataContext); // Access expedition data from context
 
   // Functions for handling button clicks
   const navigateToCardBank = () => {
@@ -35,6 +35,14 @@ const Home = () => {
     navigate("/help");
   };
 
+  const navigateToLoot = () => {
+    navigate("/loot");
+  };
+
+  const addCoins = () => {
+    addCurrency("coins", 10);
+  };
+
   return (
     <div className="home">
       <Button text={"Card Bank"} onClick={navigateToCardBank} />
@@ -42,6 +50,8 @@ const Home = () => {
       <Button text={"OpenPack"} onClick={navigateToOpenPack} />
       <Button text={"Edit Team"} onClick={navigateToEditTeam} />
       <Button text={"Help"} onClick={navigateToHelp} />
+      <Button text={"Loot"} onClick={navigateToLoot} type="secondary" />
+      <Button text={"Add 10 Coins"} onClick={addCoins} type="secondary" />
     </div>
   );
 };

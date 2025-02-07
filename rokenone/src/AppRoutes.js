@@ -28,7 +28,7 @@ import OpenPack from "./Scenes/OpenPack/OpenPack";
 import CardBank from "./Scenes/CardBank/CardBank";
 
 const AppRoutes = () => {
-  const { expeditionData, playerTeam, playerData } = useContext(GameDataContext);
+  const { expeditionData, playerTeam, playerData, talismans } = useContext(GameDataContext);
   const [showDust, setShowDust] = useState(false);
   const location = useLocation();
 
@@ -38,6 +38,7 @@ const AppRoutes = () => {
       const expeditionDataJSON = JSON.stringify(expeditionData);
       const playerTeamJSON = JSON.stringify(playerTeam);
       const playerDataJSON = JSON.stringify(playerData);
+      const talismansJSON = JSON.stringify(talismans);
 
       // Convert JSON strings to UTF-8 bytes and then base64 encode them
       const base64ExpeditionData = btoa(
@@ -49,10 +50,13 @@ const AppRoutes = () => {
       const base64PlayerData = btoa(
         unescape(encodeURIComponent(playerDataJSON))
       );
+      const base64Talismans = btoa(
+        unescape(encodeURIComponent(talismansJSON))
+      );
 
       // Create a Blob with the base64 encoded data
       const blob = new Blob(
-        [base64ExpeditionData, "\n", base64PlayerTeam, "\n", base64PlayerData],
+        [base64ExpeditionData, "\n", base64PlayerTeam, "\n", base64PlayerData, "\n", base64Talismans],
         {
           type: "text/plain;charset=utf-8",
         }

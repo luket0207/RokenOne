@@ -438,12 +438,12 @@ const Battle = () => {
 
             case "times":
               action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue * boostValue;
+              action[attribute] = Math.ceil(originalValue * boostValue);
               break;
 
             case "divide":
               action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue / boostValue;
+              action[attribute] = Math.ceil(originalValue / boostValue);
               break;
 
             case "equals":
@@ -508,12 +508,12 @@ const Battle = () => {
 
             case "times":
               action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue * boostValue;
+              action[attribute] = Math.ceil(originalValue * boostValue);
               break;
 
             case "divide":
               action.originalValues[attribute] = originalValue;
-              action[attribute] = originalValue / boostValue;
+              action[attribute] = Math.ceil(originalValue / boostValue);
               break;
 
             case "equals":

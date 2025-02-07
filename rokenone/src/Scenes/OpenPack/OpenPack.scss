@@ -15,10 +15,16 @@
   .pack-selection {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 50px 0;
+    justify-items: center;
+    margin-bottom: 50px;
 
-    .btn {
-      margin: 20px 10px;
+    h3 {
+      grid-column: 1/5;
+      margin-top: 50px;
+    }
+
+    .pack-container {
+      margin: 0px 30px 30px;
     }
   }
 
@@ -72,7 +78,7 @@
 
     .pack-image {
       position: absolute;
-      bottom: 0;
+      bottom: 0px;
       left: 50%;
       transform: translate(-50%, 100%) scale(0.8); // Initial position, out of view
       width: 180px;

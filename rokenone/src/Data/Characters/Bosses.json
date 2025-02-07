@@ -34,7 +34,7 @@
   {
     "id": "BO1",
     "name": "Mecha Wakashu",
-    "class": "O-Yoroi",
+    "class": "Oyoroi",
     "health": 60,
     "maxHealth": 60,
     "currentIllusion": 0,

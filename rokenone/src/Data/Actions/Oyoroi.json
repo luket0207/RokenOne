@@ -1,0 +1,1076 @@
+[
+    {
+      "id": "Y001",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Guard",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "upgrade": [
+        ["defence", 2]
+      ]
+    },
+    {
+      "id": "Y002",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "black",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y003",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "grey",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y004",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "orange",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y005",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "teal",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y006",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "gold",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y007",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "jade",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y008",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "crimson",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y009",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 3,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "emerald",
+      "manaBoostEffect": [
+        ["defence", "times", 2]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y012",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "black",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y013",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "grey",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y014",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "orange",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y015",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "teal",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y016",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "gold",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y017",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "jade",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y018",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "crimson",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y019",
+      "class": "Oyoroi",
+      "name": "Guard All",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "emerald",
+      "manaBoostEffect": [["defenceAll", "equals", 1]],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y020",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "black",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y021",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "grey",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y022",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "orange",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y023",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "teal",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y024",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "gold",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y025",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "jade",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y026",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "crimson",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y027",
+      "class": "Oyoroi",
+      "name": "O-Yoroi Crush",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "emerald",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y028",
+      "class": "Oyoroi",
+      "name": "Multi Dodge",
+      "type": "defence",
+      "attack": 0,
+      "defence": 1,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 3,
+      "cycleBoostEffect": [
+        ["defence", "times", 1.5]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y029",
+      "class": "Oyoroi",
+      "name": "Duck and Roll",
+      "type": "defence",
+      "attack": 0,
+      "defence": 4,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 2,
+      "cycleBoostEffect": [
+        ["defence", "times", 0.5]
+      ],
+      "upgrade": [
+        ["defence", 2]
+      ]
+    },
+    {
+      "id": "Y030",
+      "class": "Oyoroi",
+      "name": "Boosted Barrier",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 1,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 3,
+      "cycleBoostEffect": [
+        ["defenceAll", "times", 1.5]
+      ],
+      "upgrade": [
+        ["defenceAll", 1]
+      ]
+    },
+    {
+      "id": "Y031",
+      "class": "Oyoroi",
+      "name": "Mecha Barrier",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 6,
+      "rarity": 4,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 2,
+      "cycleBoostEffect": [
+        ["defenceAll", "times", 0.5]
+      ],
+      "upgrade": [
+        ["defenceAll", 2]
+      ]
+    },
+    {
+      "id": "Y032",
+      "class": "Oyoroi",
+      "name": "Shadow Faint",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["illusion", "equals", 1]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y033",
+      "class": "Oyoroi",
+      "name": "Ray Faint",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["illusion", "equals", 1]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y034",
+      "class": "Oyoroi",
+      "name": "Shadow Dodge",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["illusion", "equals", 2]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y035",
+      "class": "Oyoroi",
+      "name": "Ray Dodge",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["illusion", "equals", 2]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y036",
+      "class": "Oyoroi",
+      "name": "Shadow Block",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["illusion", "equals", 3]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y037",
+      "class": "Oyoroi",
+      "name": "Ray Block",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["illusion", "equals", 3]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y040",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "black",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y041",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 3,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "grey",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y042",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "orange",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y043",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "teal",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y044",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "gold",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y045",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 1,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "jade",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y046",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "crimson",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y047",
+      "class": "Oyoroi",
+      "name": "Stand Guard",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "emerald",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y048",
+      "class": "Oyoroi",
+      "name": "Woah There",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 0,
+      "cycleBoostEffect": [
+        ["defenceAll", "equals", "defence"],
+        ["defence", "equals", 0]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y049",
+      "class": "Oyoroi",
+      "name": "Chip Away",
+      "type": "attack",
+      "attack": 1,
+      "defence": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "cycleBoost": 2,
+      "cycleBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["attack", 1],
+        ["cycleBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y050",
+      "class": "Oyoroi",
+      "name": "Charged Barrier",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 1,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 1,
+      "upgrade": [
+        ["defenceAll", 1]
+      ]
+    },
+    {
+      "id": "Y051",
+      "class": "Oyoroi",
+      "name": "Mana Barrier",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 1,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 1,
+      "manaBoost": "orange",
+      "manaBoostEffect": [
+        ["defenceAll", "times", 2]
+      ],
+      "upgrade": [
+        ["defenceAll", 1]
+      ]
+    },
+    {
+      "id": "Y052",
+      "class": "Oyoroi",
+      "name": "Mana Barrier",
+      "type": "defence",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 1,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 1,
+      "manaBoost": "teal",
+      "manaBoostEffect": [
+        ["defenceAll", "times", 2]
+      ],
+      "upgrade": [
+        ["defenceAll", 1]
+      ]
+    },
+    {
+      "id": "Y053",
+      "class": "Oyoroi",
+      "name": "Mana Power Up Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "orange",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", "defence"],
+        ["defence", "equals", 0]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y054",
+      "class": "Oyoroi",
+      "name": "Mana Power Up Shield",
+      "type": "defence",
+      "attack": 0,
+      "defence": 2,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "teal",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", "defence"],
+        ["defence", "equals", 0]
+      ],
+      "upgrade": [
+        ["defence", 1]
+      ]
+    },
+    {
+      "id": "Y055",
+      "class": "Oyoroi",
+      "name": "Shield Charge",
+      "type": "charge",
+      "charge": 1,
+      "chargeCost": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y056",
+      "class": "Oyoroi",
+      "name": "Shield Charge",
+      "type": "charge",
+      "charge": 1,
+      "chargeCost": 0,
+      "rarity": 0,
+      "quantity": 0,
+      "level": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["defence", "equals", 1]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y057",
+      "class": "Oyoroi",
+      "name": "Burst Charge Shield",
+      "type": "charge",
+      "charge": 1,
+      "chargeCost": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y058",
+      "class": "Oyoroi",
+      "name": "Burst Charge Shield",
+      "type": "charge",
+      "charge": 1,
+      "chargeCost": 0,
+      "rarity": 2,
+      "quantity": 0,
+      "level": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["defenceAll", "equals", 1]
+      ],
+      "upgrade": [
+        ["manaBoostEffect", 1]
+      ]
+    },
+    {
+      "id": "Y059",
+      "class": "Oyoroi",
+      "name": "Caregiver",
+      "type": "charge",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 6,
+      "rarity": 4,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "dark",
+      "manaBoostEffect": [
+        ["healAll", "equals", 2]
+      ],
+      "upgrade": [
+        ["defenceAll", 2],
+        ["manaBoostEffect", 2]
+      ]
+    },
+    {
+      "id": "Y060",
+      "class": "Oyoroi",
+      "name": "Caregiver",
+      "type": "charge",
+      "attack": 0,
+      "defence": 0,
+      "defenceAll": 6,
+      "rarity": 4,
+      "quantity": 0,
+      "level": 0,
+      "chargeCost": 0,
+      "manaBoost": "light",
+      "manaBoostEffect": [
+        ["healAll", "equals", 2]
+      ],
+      "upgrade": [
+        ["defenceAll", 2],
+        ["manaBoostEffect", 2]
+      ]
+    }
+  ]
+  
