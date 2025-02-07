@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/RokenOne/static/css/main.69e7234b.css",
-    "main.js": "/RokenOne/static/js/main.da22c337.js",
+    "main.js": "/RokenOne/static/js/main.ab5fba76.js",
     "static/js/151.6af7596a.chunk.js": "/RokenOne/static/js/151.6af7596a.chunk.js",
     "static/media/home-bg.jpg": "/RokenOne/static/media/home-bg.3125725e1aac272e7460.jpg",
     "static/media/jungle-bg.jpg": "/RokenOne/static/media/jungle-bg.7aaa15f5fe74dd4b891d.jpg",
@@ -16,11 +16,11 @@
     "static/media/dash-straight-even.png": "/RokenOne/static/media/dash-straight-even.3931488edbe10538e520.png",
     "index.html": "/RokenOne/index.html",
     "main.69e7234b.css.map": "/RokenOne/static/css/main.69e7234b.css.map",
-    "main.da22c337.js.map": "/RokenOne/static/js/main.da22c337.js.map",
+    "main.ab5fba76.js.map": "/RokenOne/static/js/main.ab5fba76.js.map",
     "151.6af7596a.chunk.js.map": "/RokenOne/static/js/151.6af7596a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.69e7234b.css",
-    "static/js/main.da22c337.js"
+    "static/js/main.ab5fba76.js"
   ]
 }
