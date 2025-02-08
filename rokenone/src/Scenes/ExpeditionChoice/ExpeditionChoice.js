@@ -224,20 +224,14 @@ const ExpeditionChoice = () => {
         numberOfEnemies = 1;
         battleDifficulty = difficulty - 1; // 100% chance of battleDifficulty being (difficulty - 1)
       } else if (dayIndex < totalDays * 0.8) {
-        battleDifficulty =
-          getRandomNumber(0, 1) === 0 ? difficulty - 1 : difficulty; // 50% chance
-
-        if (battleDifficulty === difficulty) {
-          numberOfEnemies = 1;
-        } else {
-          numberOfEnemies = 2;
-        }
+        numberOfEnemies = 2;
+        battleDifficulty = difficulty - 1;
       } else {
         battleDifficulty =
           getRandomNumber(0, 1) === 0 ? difficulty - 1 : difficulty; // 50% chance
 
         if (battleDifficulty === difficulty) {
-          numberOfEnemies = 2;
+          numberOfEnemies = 1;
         } else {
           numberOfEnemies = 3;
         }
@@ -267,43 +261,42 @@ const ExpeditionChoice = () => {
   ) => {
     const random = Math.random();
     let choice = {};
-    
+
     // Destructure with the correct variable names returned by generateBattle
-    const { battle: choiceEnemies, battleDifficulty: choiceBattleDifficulty } = generateBattle(
-      dayIndex,
-      totalDays,
-      difficulty,
-      availableEnemies
-    );
-  
-    if (random <= 0.25) {
+    const { battle: choiceEnemies, battleDifficulty: choiceBattleDifficulty } =
+      generateBattle(dayIndex, totalDays, difficulty, availableEnemies);
+
+    if (random <= 0.22) {
       choice = {
         name: "?",
         type: "battle",
         enemies: choiceEnemies,
         difficulty: choiceBattleDifficulty,
       }; // unknown (battle)
-    } else if (random <= 0.45) {
+    } else if (random <= 0.4) {
       choice = { name: "?", type: "izakaya" }; // unknown (izakaya)
-    } else if (random <= 0.55) {
+    } else if (random <= 0.5) {
       choice = { name: "?", type: "cave" }; // unknown (cave)
-    } else if (random <= 0.65) {
+    } else if (random <= 0.6) {
+      choice = { name: "?", type: "steppingStones" }; // unknown (stepping stones)
+    } else if (random <= 0.7) {
       choice = { name: "?", type: "code" }; // unknown (code)
-    } else if (random <= 0.79) {
+    } else if (random <= 0.84) {
       choice = { name: "?", type: "loot" }; // unknown (loot)
-    } else if (random <= 0.8) {
+    } else if (random <= 0.85) {
       choice = { name: "?", type: "easteregg" }; // unknown (easteregg)
     } else if (random <= 0.9) {
       choice = { name: "izakaya", type: "izakaya" }; // known izakaya
     } else if (random <= 0.95) {
       choice = { name: "code", type: "code" }; // known code
-    } else {
+    } else if (random <= 0.975) {
       choice = { name: "cave", type: "cave" }; // known cave
+    } else {
+      choice = { name: "steppingStones", type: "steppingStones" }; // known stepping stones
     }
-  
+
     return choice;
   };
-  
 
   const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;

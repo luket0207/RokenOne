@@ -1,0 +1,82 @@
+@import "../../Assets/Scss/import.scss";
+
+.stepping-stones {
+  @include sceneContainer;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  .stones-row {
+    display: flex;
+
+    
+
+    &-stone {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $grey;
+      cursor: pointer;
+      @include boxShadowHover;
+      margin: 0px 20px;
+      border-radius: 30px;
+
+      h4 {
+        margin: 0;
+      }
+
+      &.animation-sank {
+        pointer-events: none;
+        animation: fadeOut 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
+      }
+  
+      &.animation-safe {
+          pointer-events: none;
+          animation: moveRow 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
+        }
+    }
+  }
+
+  .result-win {
+    color: $green;
+  }
+
+  .result-lose {
+    color: $red;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes moveRow {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    49% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    51% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+  }

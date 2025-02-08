@@ -37,6 +37,11 @@ export const GameDataProvider = ({ children }) => {
       dustKobo: 0,
       dustTaiko: 0,
       dustGenso: 0,
+      packTokensCommon: 0,
+      packTokensUncommon: 0,
+      packTokensRare: 0,
+      packTokensEpic: 0,
+      packTokensLegendary: 0,
       unlockedTeammates: [
         {
           id: 2,

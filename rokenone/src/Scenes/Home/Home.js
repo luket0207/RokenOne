@@ -35,10 +35,6 @@ const Home = () => {
     navigate("/help");
   };
 
-  const navigateToLoot = () => {
-    navigate("/loot");
-  };
-
   const addCoins = () => {
     addCurrency("coins", 10);
   };
@@ -50,7 +46,6 @@ const Home = () => {
       <Button text={"OpenPack"} onClick={navigateToOpenPack} />
       <Button text={"Edit Team"} onClick={navigateToEditTeam} />
       <Button text={"Help"} onClick={navigateToHelp} />
-      <Button text={"Loot"} onClick={navigateToLoot} type="secondary" />
       <Button text={"Add 10 Coins"} onClick={addCoins} type="secondary" />
     </div>
   );

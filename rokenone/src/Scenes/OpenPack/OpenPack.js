@@ -243,10 +243,12 @@ const OpenPack = () => {
         updatedCardBank.push({ ...testCard, quantity: 1 });
       }
 
-      return {
-        ...prevData,
-        cardBank: updatedCardBank,
-      };
+      return [
+        {
+          ...prevData[0],
+          cardBank: updatedCardBank,
+        },
+      ];
     });
   };
 

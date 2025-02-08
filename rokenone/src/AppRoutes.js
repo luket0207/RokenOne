@@ -26,6 +26,7 @@ import EasterEgg from "./Scenes/EasterEgg/EasterEgg";
 import EditTeam from "./Scenes/EditTeam/EditTeam";
 import OpenPack from "./Scenes/OpenPack/OpenPack";
 import CardBank from "./Scenes/CardBank/CardBank";
+import SteppingStones from "./Scenes/SteppingStones/SteppingStones";
 
 const AppRoutes = () => {
   const { expeditionData, playerTeam, playerData, talismans } = useContext(GameDataContext);
@@ -163,6 +164,7 @@ const AppRoutes = () => {
         <Route path="/editteam" element={<EditTeam />} />
         <Route path="/codebreaker" element={<CodeBreaker />} />
         <Route path="/cave" element={<Cave />} />
+        <Route path="/steppingstones" element={<SteppingStones />} />
         <Route path="/battle" element={<Battle />} />
         <Route path="/help" element={<Help />} />
         <Route path="/easteregg" element={<EasterEgg />} />
