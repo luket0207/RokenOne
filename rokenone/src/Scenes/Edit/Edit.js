@@ -20,7 +20,7 @@ const Edit = () => {
   const navigate = useNavigate();
 
   const character = playerTeam.find((char) => char.id === Number(characterId));
-  const cardBank = playerData.cardBank || [];
+  const cardBank = playerData[0].cardBank || [];
 
   const [isActionSelectionModalOpen, setIsActionSelectionModalOpen] =
     useState(false);

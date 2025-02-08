@@ -117,31 +117,27 @@ const OpenPack = () => {
       epic: 100,
       legendary: 250,
     };
-
+  
     // ClassTier mapping to additional cost
     const classTierCostMapping = {
       1: 25,
       2: 50,
       3: 100,
     };
-
+  
     // Function to check if enough currency is available
     const checkCurrency = (actionClass, cost) => {
       const currency = spentCurrency(actionClass);
-      const currentCurrency = playerData[0][currency]; // Accessing playerData state directly here
+      const currentCurrency = playerData[0][currency]; // Use playerData[0]
       return currentCurrency >= cost;
     };
-
-    // Get base cost based on rarity
+  
+    // Calculate cost
     const baseCost = rarityCostMapping[rarity];
-
-    // Get additional cost based on classTier
     const additionalCost = classTierCostMapping[classTier] || 0;
-
-    // Calculate total cost
     const totalCost = baseCost + additionalCost;
-
-    // Check if enough currency is available
+  
+    // Check currency availability
     if (!checkCurrency(actionClass, totalCost)) {
       alert(
         `You don't have enough ${
@@ -150,16 +146,14 @@ const OpenPack = () => {
             : `${actionClass} dust`
         } to open this pack.`
       );
-      return; // Prevent opening the pack if there's not enough currency
+      return; // Not enough currency
     }
-
+  
     setAnimationComplete(false);
-
-    // Determine class/type
-    const classOrType = actionClass || actionType || ""; // Only one will be present
-    const tierLabel = classTier > 0 ? `Tier ${classTier}` : ""; // Only display tier if it's greater than 0
-
-    // Construct the pack name
+  
+    // Determine and set pack details
+    const classOrType = actionClass || actionType || "";
+    const tierLabel = classTier > 0 ? `Tier ${classTier}` : "";
     let packName = `${rarity} Pack`;
     if (classOrType) {
       packName = `${rarity} ${classOrType} Pack`;
@@ -167,62 +161,60 @@ const OpenPack = () => {
     if (tierLabel) {
       packName += ` - ${tierLabel}`;
     }
-
-    // Update state with constructed pack details
     setPackOpenedName(packName);
     setPackOpenedRarity(rarity);
     setPackOpenedClass(actionClass);
     setPackOpenedType(actionType);
     setPackOpenedClassTier(classTier);
-
-    // Get the selected actions
-    const selectedActions = getActionWithRarity(
-      rarity,
-      actionType,
-      actionClass,
-      classTier
-    );
-
-    // If enough currency, proceed with opening the pack
+  
+    // Get the selected actions from your helper
+    const selectedActions = getActionWithRarity(rarity, actionType, actionClass, classTier);
     setPackOpened(selectedActions);
-
-    // Spend currency after validation
+  
+    // Spend currency (this function already uses the updater callback correctly)
     spendCurrency(spentCurrency(actionClass), totalCost);
-
+  
     setTimeout(() => {
       setOpened(true);
     }, 100);
-
-    // Update player data with the new cards
+  
+    // Use the updater callback to update the cardBank while preserving state shape
     setPlayerData((prevData) => {
-      if (!prevData) {
-        return prevData;
-      }
-
-      const updatedCardBank = prevData.cardBank || [];
-
+      // Ensure we have the proper structure
+      if (!prevData || !prevData[0]) return prevData;
+  
+      // Use playerData[0].cardBank, not playerData.cardBank
+      const currentCardBank = [...(prevData[0].cardBank || [])];
+  
       selectedActions.forEach((action) => {
-        const existingActionIndex = updatedCardBank.findIndex(
-          (card) => card.id === action.id
-        );
-
+        const existingActionIndex = currentCardBank.findIndex((card) => card.id === action.id);
+  
         if (existingActionIndex !== -1) {
-          updatedCardBank[existingActionIndex].quantity += 1;
+          // Increase quantity if the card already exists
+          currentCardBank[existingActionIndex] = {
+            ...currentCardBank[existingActionIndex],
+            quantity: currentCardBank[existingActionIndex].quantity + 1,
+          };
         } else {
-          updatedCardBank.push({ ...action, quantity: 1 });
+          // Otherwise, add the new card with a quantity of 1
+          currentCardBank.push({ ...action, quantity: 1 });
         }
       });
-
-      return {
-        ...prevData,
-        cardBank: updatedCardBank,
-      };
+  
+      // Return the updated state as an array with one object
+      return [
+        {
+          ...prevData[0],
+          cardBank: currentCardBank,
+        },
+      ];
     });
-
+  
     setTimeout(() => {
       setAnimationComplete(true);
     }, 15000);
   };
+  
 
   const handleAddTestCard = () => {
     const testCard = actionsAllData.find((action) => action.id === "TEST001");

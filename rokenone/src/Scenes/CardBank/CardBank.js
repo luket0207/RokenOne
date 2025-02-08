@@ -12,6 +12,8 @@ const CardBank = () => {
   const [sortAttribute, setSortAttribute] = useState("name"); // Default sort by name
   const [sortOrder, setSortOrder] = useState("asc"); // Default ascending order
 
+  console.log(playerData[0].cardBank);
+
   // Define the manaBoost sorting order
   const manaBoostOrder = [
     "black", "grey", "orange", "teal", "gold", "jade", "crimson", "emerald"
@@ -86,8 +88,8 @@ const CardBank = () => {
 
       <div className="card-bank-list">
         {/* Ensure playerData.cardBank is an array before attempting to map */}
-        {playerData?.cardBank?.length > 0 ? (
-          playerData.cardBank.sort(sortActions).map((action, index) => (
+        {playerData[0]?.cardBank?.length > 0 ? (
+          playerData[0].cardBank.sort(sortActions).map((action, index) => (
             <ActionCard key={index} action={action} noAnimation={true} />
           ))
         ) : (
