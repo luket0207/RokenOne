@@ -117,26 +117,26 @@ const OpenPack = () => {
       epic: 100,
       legendary: 250,
     };
-  
+
     // ClassTier mapping to additional cost
     const classTierCostMapping = {
       1: 25,
       2: 50,
       3: 100,
     };
-  
+
     // Function to check if enough currency is available
     const checkCurrency = (actionClass, cost) => {
       const currency = spentCurrency(actionClass);
       const currentCurrency = playerData[0][currency]; // Use playerData[0]
       return currentCurrency >= cost;
     };
-  
+
     // Calculate cost
     const baseCost = rarityCostMapping[rarity];
     const additionalCost = classTierCostMapping[classTier] || 0;
     const totalCost = baseCost + additionalCost;
-  
+
     // Check currency availability
     if (!checkCurrency(actionClass, totalCost)) {
       alert(
@@ -148,9 +148,9 @@ const OpenPack = () => {
       );
       return; // Not enough currency
     }
-  
+
     setAnimationComplete(false);
-  
+
     // Determine and set pack details
     const classOrType = actionClass || actionType || "";
     const tierLabel = classTier > 0 ? `Tier ${classTier}` : "";
@@ -166,29 +166,36 @@ const OpenPack = () => {
     setPackOpenedClass(actionClass);
     setPackOpenedType(actionType);
     setPackOpenedClassTier(classTier);
-  
+
     // Get the selected actions from your helper
-    const selectedActions = getActionWithRarity(rarity, actionType, actionClass, classTier);
+    const selectedActions = getActionWithRarity(
+      rarity,
+      actionType,
+      actionClass,
+      classTier
+    );
     setPackOpened(selectedActions);
-  
+
     // Spend currency (this function already uses the updater callback correctly)
     spendCurrency(spentCurrency(actionClass), totalCost);
-  
+
     setTimeout(() => {
       setOpened(true);
     }, 100);
-  
+
     // Use the updater callback to update the cardBank while preserving state shape
     setPlayerData((prevData) => {
       // Ensure we have the proper structure
       if (!prevData || !prevData[0]) return prevData;
-  
+
       // Use playerData[0].cardBank, not playerData.cardBank
       const currentCardBank = [...(prevData[0].cardBank || [])];
-  
+
       selectedActions.forEach((action) => {
-        const existingActionIndex = currentCardBank.findIndex((card) => card.id === action.id);
-  
+        const existingActionIndex = currentCardBank.findIndex(
+          (card) => card.id === action.id
+        );
+
         if (existingActionIndex !== -1) {
           // Increase quantity if the card already exists
           currentCardBank[existingActionIndex] = {
@@ -200,7 +207,7 @@ const OpenPack = () => {
           currentCardBank.push({ ...action, quantity: 1 });
         }
       });
-  
+
       // Return the updated state as an array with one object
       return [
         {
@@ -209,12 +216,11 @@ const OpenPack = () => {
         },
       ];
     });
-  
+
     setTimeout(() => {
       setAnimationComplete(true);
     }, 15000);
   };
-  
 
   const handleAddTestCard = () => {
     const testCard = actionsAllData.find((action) => action.id === "TEST001");
@@ -464,7 +470,7 @@ const OpenPack = () => {
           <div className={`pack ${opened ? "opened" : ""}`}>
             {packOpened
               .slice()
-              .reverse()
+              .sort((a, b) => a.rarity - b.rarity) // Sort actions by rarity, lowest first
               .map((action, index) => (
                 <div
                   key={index}
@@ -474,6 +480,7 @@ const OpenPack = () => {
                   <ActionCard action={action} noAnimation={true} />
                 </div>
               ))}
+
             <div className="pack-image">
               <Pack
                 rarity={packOpenedRarity}
