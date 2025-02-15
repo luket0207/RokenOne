@@ -1,0 +1,152 @@
+@import "../../Assets/Scss/import.scss";
+
+.reward-container {
+  text-align: center;
+
+  .reward-list {
+    &-item {
+      display: inline-block;
+      margin: 0px 20px;
+
+      svg {
+        font-size: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .coins {
+        color: $gold;
+      }
+
+      .normal {
+        color: $grey;
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .weapon {
+        color: $darkerGrey;
+
+        .discount {
+          color: $lightGrey;
+        }
+      }
+
+      .roken {
+        color: $roken;
+
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .samurai {
+        color: $samurai;
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .oyoroi {
+        color: $oyoroi;
+
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .kobo {
+        color: $kobo;
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .taiko {
+        color: $taiko;
+
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .genso {
+        color: $genso;
+        .discount {
+          color: $darkerGrey;
+        }
+      }
+
+      .dustRoken,
+      .Roken {
+        color: $roken;
+      }
+
+      .dustSamurai,
+      .Samurai {
+        color: $samurai;
+      }
+
+      .dustOyoroi,
+      .Oyoroi {
+        color: $oyoroi;
+      }
+
+      .dustKobo,
+      .Kobo {
+        color: $kobo;
+      }
+
+      .dustTaiko,
+      .Taiko {
+        color: $taiko;
+      }
+
+      .dustGenso,
+      .Genso {
+        color: $genso;
+      }
+    }
+
+    .token-item {
+      position: relative;
+
+      .discount {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 10px;
+      }
+
+      .quantity {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background-color: $darkerGrey;
+        color: $lightGrey;
+        z-index: 6;
+      }
+
+      svg {
+        font-size: 48px;
+      }
+    }
+  }
+
+  .reward-button {
+    display: inline-block;
+    margin-top: 20px;
+
+    .btn {
+      margin-bottom: 0;
+    }
+  }
+}

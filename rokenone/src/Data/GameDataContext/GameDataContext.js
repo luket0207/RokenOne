@@ -20,7 +20,7 @@ export const GameDataProvider = ({ children }) => {
   const [talismans, setTalismans]= useState([
     {
       talismansBank:[],
-      maxTalismansBank:[],
+      maxTalismansBank: 10,
     }
   ]);
 
@@ -30,18 +30,14 @@ export const GameDataProvider = ({ children }) => {
       maxTeammates: 2,
       cardBank: [],
       autoWeaponStatus: "off",
-      coins: 1000,
-      dustRoken: 1000,
+      coins: 100,
+      dustRoken: 0,
       dustSamurai: 0,
       dustOyoroi: 0,
       dustKobo: 0,
       dustTaiko: 0,
       dustGenso: 0,
-      packTokensCommon: 0,
-      packTokensUncommon: 0,
-      packTokensRare: 0,
-      packTokensEpic: 0,
-      packTokensLegendary: 0,
+      packTokens: [],
       unlockedTeammates: [
         {
           id: 2,

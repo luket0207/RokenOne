@@ -7,6 +7,7 @@ import {
   faCoins,
   faCubesStacked,
   faFloppyDisk,
+  faGem,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Import all your pages
@@ -29,7 +30,8 @@ import CardBank from "./Scenes/CardBank/CardBank";
 import SteppingStones from "./Scenes/SteppingStones/SteppingStones";
 
 const AppRoutes = () => {
-  const { expeditionData, playerTeam, playerData, talismans } = useContext(GameDataContext);
+  const { expeditionData, playerTeam, playerData, talismans } =
+    useContext(GameDataContext);
   const [showDust, setShowDust] = useState(false);
   const location = useLocation();
 
@@ -51,13 +53,19 @@ const AppRoutes = () => {
       const base64PlayerData = btoa(
         unescape(encodeURIComponent(playerDataJSON))
       );
-      const base64Talismans = btoa(
-        unescape(encodeURIComponent(talismansJSON))
-      );
+      const base64Talismans = btoa(unescape(encodeURIComponent(talismansJSON)));
 
       // Create a Blob with the base64 encoded data
       const blob = new Blob(
-        [base64ExpeditionData, "\n", base64PlayerTeam, "\n", base64PlayerData, "\n", base64Talismans],
+        [
+          base64ExpeditionData,
+          "\n",
+          base64PlayerTeam,
+          "\n",
+          base64PlayerData,
+          "\n",
+          base64Talismans,
+        ],
         {
           type: "text/plain;charset=utf-8",
         }
@@ -84,72 +92,107 @@ const AppRoutes = () => {
     <div className="game-container">
       {/* Conditionally render the game-menu */}
       {!hideMenuRoutes.includes(location.pathname) && (
-        <div className="game-menu">
-          <p className="save-text">Save</p>
-          <div className="save-game" onClick={handleSaveGame}>
-            <FontAwesomeIcon icon={faFloppyDisk} />
-          </div>
-          <div className="level">
-            <p>Level</p>
-            <p>{playerData[0].level}</p>
-          </div>
-          <div className="coins">
-            <p>Coins</p>
+        <>
+          <div className="talismans-and-tokens">
+            <div className="talismans">
+              <h4>Talismans</h4>
+              {talismans[0].talismansBank.length > 0 ? (
+                talismans[0].talismansBank.map((talisman, index) => (
+                  <div key={index} className="talisman-item">
+                    <p>{talisman.name}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No Talismans</p>
+              )}
+            </div>
 
-            <p>
-              <FontAwesomeIcon icon={faCoins} /> {playerData[0].coins}
-            </p>
-          </div>
-          <div className="dust-toggle" onClick={handleToggleShowDust}>
-            <p>Dust</p>
-            <FontAwesomeIcon icon={faCubesStacked} />
-            <FontAwesomeIcon icon={faChevronDown} />
-          </div>
-          <div className={`dust ${showDust ? "show-dust" : ""}`}>
-            <div className="dust-roken">
-              <p>Roken</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustRoken}
-              </p>
-            </div>
-            <div className="dust-samurai">
-              <p>Samurai</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustSamurai}
-              </p>
-            </div>
-            <div className="dust-oyoroi">
-              <p>O-Yoroi</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustOyoroi}
-              </p>
-            </div>
-            <div className="dust-kobo">
-              <p>Kobo</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustKobo}
-              </p>
-            </div>
-            <div className="dust-taiko">
-              <p>Taiko</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustTaiko}
-              </p>
-            </div>
-            <div className="dust-genso">
-              <p>Genso</p>
-              <p>
-                <FontAwesomeIcon icon={faCubesStacked} />{" "}
-                {playerData[0].dustGenso}
-              </p>
+            <div className="tokens">
+              <h4>Tokens</h4>
+              {playerData[0].packTokens.length > 0 ? (
+                playerData[0].packTokens.map((token, index) => (
+                  <div
+                    key={index}
+                    className={`token-item ${token.type.toLowerCase()}`}
+                  >
+                    {token.quantity > 1 && <p className="quantity">{token.quantity}</p>}
+                    <FontAwesomeIcon icon={faGem} />
+                    <p className="discount">-{token.discount}%</p>
+                    
+                  </div>
+                ))
+              ) : (
+                <p>No Tokens</p>
+              )}
             </div>
           </div>
-        </div>
+          <div className="game-menu">
+            <p className="save-text">Save</p>
+            <div className="save-game" onClick={handleSaveGame}>
+              <FontAwesomeIcon icon={faFloppyDisk} />
+            </div>
+            <div className="level">
+              <p>Level</p>
+              <p>{playerData[0].level}</p>
+            </div>
+            <div className="coins">
+              <p>Coins</p>
+
+              <p>
+                <FontAwesomeIcon icon={faCoins} /> {playerData[0].coins}
+              </p>
+            </div>
+            <div className="dust-toggle" onClick={handleToggleShowDust}>
+              <p>Dust</p>
+              <FontAwesomeIcon icon={faCubesStacked} />
+              <FontAwesomeIcon icon={faChevronDown} />
+            </div>
+            <div className={`dust ${showDust ? "show-dust" : ""}`}>
+              <div className="dust-roken">
+                <p>Roken</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustRoken}
+                </p>
+              </div>
+              <div className="dust-samurai">
+                <p>Samurai</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustSamurai}
+                </p>
+              </div>
+              <div className="dust-oyoroi">
+                <p>O-Yoroi</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustOyoroi}
+                </p>
+              </div>
+              <div className="dust-kobo">
+                <p>Kobo</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustKobo}
+                </p>
+              </div>
+              <div className="dust-taiko">
+                <p>Taiko</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustTaiko}
+                </p>
+              </div>
+              <div className="dust-genso">
+                <p>Genso</p>
+                <p>
+                  <FontAwesomeIcon icon={faCubesStacked} />{" "}
+                  {playerData[0].dustGenso}
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
       )}
 
       <Routes>

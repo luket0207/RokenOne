@@ -22,14 +22,10 @@ const Edit = () => {
   const character = playerTeam.find((char) => char.id === Number(characterId));
   const cardBank = playerData[0].cardBank || [];
 
-  const [isActionSelectionModalOpen, setIsActionSelectionModalOpen] =
-    useState(false);
-
+  const [isActionSelectionModalOpen, setIsActionSelectionModalOpen] = useState(false);
+  const [isWeaponSelectionModalOpen, setIsWeaponSelectionModalOpen] = useState(false);
   const openActionSelectionModal = () => setIsActionSelectionModalOpen(true);
   const closeActionSelectionModal = () => setIsActionSelectionModalOpen(false);
-
-  const [isWeaponSelectionModalOpen, setIsWeaponSelectionModalOpen] =
-    useState(false);
 
   const closeWeaponSelectionModal = () => {
     // Reset the selectedWeapon and selectedActions (optional, based on your use case)
