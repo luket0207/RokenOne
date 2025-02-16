@@ -1,23 +1,27 @@
 @import "../../Assets/Scss/import.scss";
 
 .pack-container {
-  width: 140px;
-  height: 160px;
+  width: 150px;
+  height: 170px;
   padding: 10px;
-  background: $darkerGrey;
-  background: linear-gradient(
-    180deg,
-    rgba($darkGrey, 1) 0%,
-    rgba($black, 1) 100%
-  );
+  background-image: url("../../Assets/Images/pack-bg.webp");
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
   color: $lightGrey;
-  border-radius: 10px;
-  border: solid 10px $darkerGrey;
+  border-radius: 5px;
+  border: solid 5px $grey;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  &.cantAfford {
+    opacity: .3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   p {
     margin: 0;
@@ -26,6 +30,22 @@
   &.animate {
     @include boxShadowHover;
     cursor: pointer;
+  }
+
+  &-tier {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $grey;
+    color: $darkerGrey;
+    width: 30px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include boxShadow;
   }
 
   &-cost {
@@ -41,6 +61,18 @@
     justify-content: center;
     align-items: center;
     @include boxShadow;
+
+    .discount {
+      position: absolute;
+      background-color: $burgendy;
+      bottom: -10px;
+      color: $lightGrey;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 10px;
+      display: flex;
+      white-space: nowrap; 
+    }
 
     svg {
       color: $gold;
@@ -84,29 +116,65 @@
   }
 
   &.type-Weapon {
-    border-color: $lightGrey;
+    border-color: $darkerGrey;
+
+    .pack-container-tier {
+      background-color: $darkerGrey;
+      color: $lightGrey;
+    }
   }
+
   &.class-Roken {
     border-color: $roken;
+
+    .pack-container-tier {
+      background-color: $roken;
+      color: $darkerGrey;
+    }
   }
 
   &.class-Samurai {
     border-color: $samurai;
+
+    .pack-container-tier {
+      background-color: $samurai;
+      color: $darkerGrey;
+    }
   }
 
   &.class-Oyoroi {
     border-color: $oyoroi;
+
+    .pack-container-tier {
+      background-color: $oyoroi;
+      color: $darkerGrey;
+    }
   }
 
   &.class-Kobo {
     border-color: $kobo;
+
+    .pack-container-tier {
+      background-color: $kobo;
+      color: $darkerGrey;
+    }
   }
 
   &.class-Taiko {
     border-color: $taiko;
+
+    .pack-container-tier {
+      background-color: $taiko;
+      color: $darkerGrey;
+    }
   }
 
   &.class-Genso {
     border-color: $genso;
+
+    .pack-container-tier {
+      background-color: $genso;
+      color: $darkerGrey;
+    }
   }
 }

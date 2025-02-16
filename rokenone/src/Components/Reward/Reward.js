@@ -19,7 +19,7 @@ const rewardWeights = {
   coins: 80,
   dust: 40,
   talisman: 40,
-  token: 500,
+  token: 10,
 };
 
 const dustTypes = {
@@ -40,9 +40,9 @@ const dustTypes = {
 };
 
 const tokenDiscounts = [
-  { discount: 10, weight: 50 },
-  { discount: 25, weight: 30 },
-  { discount: 50, weight: 8 },
+  { discount: 10, weight: 80 },
+  { discount: 25, weight: 40 },
+  { discount: 50, weight: 10 },
   { discount: 75, weight: 2 },
   { discount: 100, weight: 0.1 },
 ];
@@ -97,7 +97,7 @@ const getTokenType = (expeditionClass) => {
   const chance = Math.random();
   if (chance < 0.1) return "weapon";
   if (chance < 0.2) return "Roken";
-  if (expeditionClass !== "All" && chance < 0.5) return expeditionClass;
+  if (expeditionClass !== "All" && chance < 0.7) return expeditionClass;
   return "normal";
 };
 
@@ -245,7 +245,7 @@ const Reward = ({
           const updatedTokens = [...prevData[0].packTokens];
           const existingTokenIndex = updatedTokens.findIndex(
             (token) =>
-              token.type === reward.tokenType &&
+              token.type.toLowerCase() === reward.tokenType.toLowerCase() &&
               token.discount === reward.discount
           );
 
@@ -255,7 +255,7 @@ const Reward = ({
           } else {
             // If token does not exist, add it with quantity: 1
             updatedTokens.push({
-              type: reward.tokenType,
+              type: reward.tokenType.toLowerCase(),
               discount: reward.discount,
               quantity: 1,
             });

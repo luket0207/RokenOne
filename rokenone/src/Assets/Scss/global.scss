@@ -1,7 +1,23 @@
 @import "./import.scss";
 
 body {
-  background-color: $darkerGrey;
+  background-color: black;
+}
+
+.screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-align: center;
+  z-index: 9999;
 }
 
 .game-container {
@@ -11,11 +27,11 @@ body {
   color: $darkerGrey;
 
   .talismans-and-tokens {
-    position: absolute;
+    position: fixed;
     background-color: $white;
     top: 0px;
     left: 0px;
-    width: 80px;
+    width: 100px;
     z-index: 500;
     display: grid;
     justify-content: center;
@@ -23,12 +39,60 @@ body {
     text-align: center;
     border-right: solid 5px $darkerGrey;
     border-bottom: solid 5px $darkerGrey;
-    overflow: hidden;
 
-    .talismans {
+    .headers {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .talismans,
+    .tokens {
+      position: relative;
+      background-color: $white;
+      width: 100px;
+
+      &-list {
+        &-container {
+          margin-bottom: 10px;
+          overflow-x: visible;
+          display: grid;
+          justify-items: center;
+        }
+      }
+
+      .btn {
+        margin-top: 20px;
+        font-size: 8px;
+      }
+
+      // Overflow Section for Talismans & Tokens
+      .overflow-talismans,
+      .overflow-tokens {
+        position: absolute;
+        top: 10px;
+        left: 100%;
+        display: grid;
+        grid-template-rows: repeat(5, auto); // Fill 5 rows first
+        grid-auto-flow: column; // Fill rows before moving to next column
+        justify-content: center;
+        width: auto; // Allow expansion based on content
+        background-color: $white;
+        transition: all 0.5s ease;
+        z-index: -1;
+        border: solid 5px $darkerGrey;
+        padding: 5px;
+
+        &.hidden {
+          transform: translateX(-100%);
+        }
+      }
     }
 
     .tokens {
+      &-list {
+        margin-bottom: 10px;
+      }
 
       .token-item {
         position: relative;
@@ -61,6 +125,7 @@ body {
         }
       }
 
+      // Token Colors
       .normal {
         color: $grey;
         .discount {
@@ -70,7 +135,6 @@ body {
 
       .weapon {
         color: $darkerGrey;
-        
         .discount {
           color: $lightGrey;
         }
@@ -78,7 +142,6 @@ body {
 
       .roken {
         color: $roken;
-
         .discount {
           color: $darkerGrey;
         }
@@ -93,7 +156,6 @@ body {
 
       .oyoroi {
         color: $oyoroi;
-
         .discount {
           color: $darkerGrey;
         }
@@ -108,7 +170,6 @@ body {
 
       .taiko {
         color: $taiko;
-
         .discount {
           color: $darkerGrey;
         }
@@ -124,11 +185,11 @@ body {
   }
 
   .game-menu {
-    position: absolute;
+    position: fixed;
     background-color: $white;
     top: 0px;
     right: 0px;
-    width: 80px;
+    width: 100px;
     z-index: 500;
     display: grid;
     justify-content: center;
@@ -195,7 +256,7 @@ body {
     .dust {
       background-color: $darkerGrey;
       color: $lightGrey;
-      width: 80px;
+      width: 100px;
       height: 0px;
       transition: height 0.3s ease, transform 0.6s ease-out;
       overflow: hidden;

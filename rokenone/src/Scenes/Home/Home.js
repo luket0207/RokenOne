@@ -59,7 +59,7 @@ const Home = () => {
                 setModalOpen={setIsRewardOpen}
                 presetReward={null} 
                 items={2} 
-                type={['coins', 'dust', 'token']} 
+                type={['token', 'talisman']} 
             />
     </div>
   );

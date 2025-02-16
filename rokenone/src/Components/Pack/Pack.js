@@ -10,32 +10,44 @@ const Pack = ({
   cost,
   onClick,
   noAnimate = false,
+  discount,
+  canAfford,
 }) => {
   return (
     <div
       className={`pack-container ${
         !noAnimate && "animate"
-      } rarity-${rarity} class-${actionClass} type-${actionType}`}
+      } rarity-${rarity} class-${actionClass} type-${actionType} ${
+        canAfford ? "" : "cantAfford"
+      }`}
       onClick={() => onClick(rarity, actionType, actionClass, classTier, cost)}
     >
       <p>
-        {rarity} {actionClass && actionClass} {actionType && actionType}{" "}
-        {classTier > 0 && `tier ${classTier}`} pack
+        {rarity} {actionClass && actionClass} {actionType && actionType} pack
       </p>
 
       {!noAnimate && (
-        <div
-          className={`pack-container-cost ${
-            actionClass ? `class-${actionClass}` : ""
-          }`}
-        >
-          <p>
-            <FontAwesomeIcon
-              icon={actionClass === "" ? faCoins : faCubesStacked}
-              className={actionClass && `class-${actionClass}`}
-            /> {cost}
-          </p>
-        </div>
+        <>
+          {classTier > 0 && (
+            <div className="pack-container-tier">
+              <p>{classTier > 0 && `${classTier}`}</p>
+            </div>
+          )}
+          <div
+            className={`pack-container-cost ${
+              actionClass ? `class-${actionClass}` : ""
+            }`}
+          >
+            <p>
+              <FontAwesomeIcon
+                icon={actionClass === "" ? faCoins : faCubesStacked}
+                className={actionClass && `class-${actionClass}`}
+              />{" "}
+              {cost}
+            </p>
+            {discount && <p className="discount">{discount}% off</p>}
+          </div>
+        </>
       )}
     </div>
   );

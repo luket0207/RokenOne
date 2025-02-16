@@ -28,12 +28,16 @@ import EditTeam from "./Scenes/EditTeam/EditTeam";
 import OpenPack from "./Scenes/OpenPack/OpenPack";
 import CardBank from "./Scenes/CardBank/CardBank";
 import SteppingStones from "./Scenes/SteppingStones/SteppingStones";
+import Talisman from "./Components/Talisman/Talisman";
+import Button from "./Components/Button/Button";
 
 const AppRoutes = () => {
   const { expeditionData, playerTeam, playerData, talismans } =
     useContext(GameDataContext);
   const [showDust, setShowDust] = useState(false);
   const location = useLocation();
+  const [showAllTalismans, setShowAllTalismans] = useState(false);
+  const [showAllTokens, setShowAllTokens] = useState(false);
 
   const handleSaveGame = () => {
     try {
@@ -93,39 +97,166 @@ const AppRoutes = () => {
       {/* Conditionally render the game-menu */}
       {!hideMenuRoutes.includes(location.pathname) && (
         <>
-          <div className="talismans-and-tokens">
-            <div className="talismans">
-              <h4>Talismans</h4>
-              {talismans[0].talismansBank.length > 0 ? (
-                talismans[0].talismansBank.map((talisman, index) => (
-                  <div key={index} className="talisman-item">
-                    <p>{talisman.name}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No Talismans</p>
-              )}
-            </div>
+          {(talismans[0].talismansBank.length > 0 ||
+            playerData[0].packTokens.length > 0) && (
+            <div className="talismans-and-tokens">
+              {/* Talismans Section */}
+              {talismans[0].talismansBank.length > 0 && (
+                <div className="talismans">
+                  <p className="headers">Talismans</p>
+                  <div className="talismans-list">
+                    <div className="talismans-list-container">
+                      {/* Show first 4 Talismans */}
+                      {talismans[0].talismansBank
+                        .slice(0, 4)
+                        .map((talisman, index) => (
+                          <Talisman key={index} talisman={talisman} />
+                        ))}
 
-            <div className="tokens">
-              <h4>Tokens</h4>
-              {playerData[0].packTokens.length > 0 ? (
-                playerData[0].packTokens.map((token, index) => (
-                  <div
-                    key={index}
-                    className={`token-item ${token.type.toLowerCase()}`}
-                  >
-                    {token.quantity > 1 && <p className="quantity">{token.quantity}</p>}
-                    <FontAwesomeIcon icon={faGem} />
-                    <p className="discount">-{token.discount}%</p>
-                    
+                      {/* Always show the 5th talisman if exactly 5 exist */}
+                      {!showAllTalismans &&
+                        talismans[0].talismansBank.length === 5 && (
+                          <Talisman
+                            key={4}
+                            talisman={talismans[0].talismansBank[4]}
+                          />
+                        )}
+
+                      {/* Show More / Show Less Button */}
+                      {talismans[0].talismansBank.length > 5 && (
+                        <Button
+                          className="view-more-btn"
+                          onClick={() => setShowAllTalismans((prev) => !prev)}
+                          text={
+                            showAllTalismans
+                              ? "Show Less"
+                              : `+${talismans[0].talismansBank.length - 4} More`
+                          }
+                          type="small"
+                        />
+                      )}
+                    </div>
+
+                    {/* Overflowed Talismans */}
+                    <div
+                      className={`overflow-talismans ${
+                        showAllTalismans ? "" : "hidden"
+                      }`}
+                    >
+                      {talismans[0].talismansBank
+                        .slice(4)
+                        .map((talisman, index) => (
+                          <Talisman key={index + 4} talisman={talisman} />
+                        ))}
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p>No Tokens</p>
+                </div>
+              )}
+
+              {/* Tokens Section */}
+              {playerData[0].packTokens.length > 0 && (
+                <div className="tokens">
+                  <p className="headers">Tokens</p>
+                  <div className="tokens-list">
+                    <div className="tokens-list-container">
+                      {/* Sort Tokens: Highest Discount First, Then Type */}
+                      {playerData[0].packTokens
+                        .slice() // Avoid state mutation
+                        .sort((a, b) => {
+                          const typeOrder = [
+                            "normal",
+                            "roken",
+                            "samurai",
+                            "oyoroi",
+                            "kobo",
+                            "taiko",
+                            "genso",
+                            "weapon",
+                          ];
+                          // Sort by discount descending
+                          if (b.discount !== a.discount)
+                            return b.discount - a.discount;
+                          // If discount is the same, sort by type order
+                          return (
+                            typeOrder.indexOf(a.type.toLowerCase()) -
+                            typeOrder.indexOf(b.type.toLowerCase())
+                          );
+                        })
+                        .slice(0, 4) // Show first 4
+                        .map((token, index) => (
+                          <div
+                            key={index}
+                            className={`token-item ${token.type.toLowerCase()}`}
+                          >
+                            {token.quantity > 1 && (
+                              <p className="quantity">{token.quantity}</p>
+                            )}
+                            <FontAwesomeIcon icon={faGem} />
+                            <p className="discount">-{token.discount}%</p>
+                          </div>
+                        ))}
+
+                      {/* Always show the 5th token if exactly 5 exist */}
+                      {!showAllTokens &&
+                        playerData[0].packTokens.length === 5 && (
+                          <div
+                            key={4}
+                            className={`token-item ${playerData[0].packTokens[4].type.toLowerCase()}`}
+                          >
+                            {playerData[0].packTokens[4] && (
+                              <p className="quantity">
+                                {playerData[0].packTokens[4].quantity}
+                              </p>
+                            )}
+                            <FontAwesomeIcon icon={faGem} />
+                            <p className="discount">
+                              -{playerData[0].packTokens[4].discount}%
+                            </p>
+                          </div>
+                        )}
+
+                      {/* Show More / Show Less Button */}
+                      {playerData[0].packTokens.length > 5 && (
+                        <Button
+                          className="view-more-btn"
+                          onClick={() => setShowAllTokens((prev) => !prev)}
+                          text={
+                            showAllTokens
+                              ? "Show Less"
+                              : `+${playerData[0].packTokens.length - 4} More`
+                          }
+                          type="small"
+                        />
+                      )}
+                    </div>
+
+                    {/* Overflowed Tokens */}
+                    <div
+                      className={`overflow-tokens ${
+                        showAllTokens ? "" : "hidden"
+                      }`}
+                    >
+                      {playerData[0].packTokens
+                        .slice(4) // Show remaining tokens in overflow div
+                        .map((token, index) => (
+                          <div
+                            key={index + 4}
+                            className={`token-item ${token.type.toLowerCase()}`}
+                          >
+                            {token.quantity > 1 && (
+                              <p className="quantity">{token.quantity}</p>
+                            )}
+                            <FontAwesomeIcon icon={faGem} />
+                            <p className="discount">-{token.discount}%</p>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
-          </div>
+          )}
+
           <div className="game-menu">
             <p className="save-text">Save</p>
             <div className="save-game" onClick={handleSaveGame}>

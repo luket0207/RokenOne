@@ -1,0 +1,131 @@
+@import "../../Assets/Scss/import.scss";
+
+.talisman-icon {
+  background-image: url("../../Assets/Images/coin-texture.webp");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  margin: 5px;
+
+  .talisman-description {
+    position: absolute;
+    top: 50%;
+    left: 105%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 10px;
+    font-size: 14px;
+    white-space: nowrap;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+
+    p {
+        margin: 0;
+        font-size: 12px;
+    }
+  }
+
+  &:hover .talisman-description {
+    opacity: 1;
+  }
+
+  .talisman-inner {
+    clip-path: polygon(
+        50% 0%,
+        90% 20%,
+        100% 60%,
+        75% 100%,
+        25% 100%,
+        0% 60%,
+        10% 20%
+      );
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+
+    &-content {
+      background-color: $darkerGrey;
+      color: $lightGrey;
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 4px;
+
+      p {
+        font-size: 8px;
+        margin: 0;
+      }
+    }
+  }
+
+  &.None {
+    .talisman-inner {
+      background-color: #555;
+    }
+  }
+
+  &.Grey {
+    .talisman-inner {
+      background-color: $manaGrey;
+    }
+  }
+
+  &.Black {
+    .talisman-inner {
+      background-color: $manaBlack;
+    }
+  }
+
+  &.Orange {
+    .talisman-inner {
+      background-color: $manaOrange;
+    }
+  }
+
+  &.Teal {
+    .talisman-inner {
+      background-color: $manaTeal;
+    }
+  }
+
+  &.Gold {
+    .talisman-inner {
+      background-color: $manaGold;
+    }
+  }
+
+  &.Jade {
+    .talisman-inner {
+      background-color: $manaJade;
+    }
+  }
+
+  &.Crimson {
+    .talisman-inner {
+      background-color: $manaCrimson;
+    }
+  }
+
+  &.Emerald {
+    .talisman-inner {
+      background-color: $manaEmerald;
+    }
+  }
+}

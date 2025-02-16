@@ -6,7 +6,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All teammates get +10 Battle Fatigue"
   },
   {
     "id": "TM002",
@@ -15,7 +16,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All teammates get +25 Battle Fatigue"
   },
   {
     "id": "TM003",
@@ -24,7 +26,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All teammates get +50 Battle Fatigue"
   },
   {
     "id": "TM004",
@@ -33,7 +36,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All teammates get +100 Battle Fatigue"
   },
   {
     "id": "TM005",
@@ -42,7 +46,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All teammates get +150 Battle Fatigue"
   },
   {
     "id": "TM006",
@@ -51,7 +56,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "You now have 4 guesses in the Code Breaker game"
   },
   {
     "id": "TM007",
@@ -60,7 +66,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "You now have 5 guesses in the Code Breaker game"
   },
   {
     "id": "TM008",
@@ -69,7 +76,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Win zone is now 3 in cave game"
   },
   {
     "id": "TM009",
@@ -78,7 +86,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Win zone is now 4 in cave game"
   },
   {
     "id": "TM010",
@@ -87,7 +96,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Win zone is now 5 in cave game"
   },
   {
     "id": "TM011",
@@ -96,7 +106,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "All Illusion actions play increase the illusion level by 1"
   },
   {
     "id": "TM012",
@@ -105,7 +116,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Counts as 1 card towards your next action upgrade"
   },
   {
     "id": "TM013",
@@ -114,7 +126,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Counts as 2 cards towards your next action upgrade"
   },
   {
     "id": "TM014",
@@ -123,7 +136,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Counts as 3 cards towards your next action upgrade"
   },
   {
     "id": "TM015",
@@ -132,7 +146,8 @@
     "rarity": 0,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increase the max Talismans amount by 2"
   },
   {
     "id": "TM016",
@@ -141,7 +156,8 @@
     "rarity": 1,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increase the max Talismans amount by 4"
   },
   {
     "id": "TM017",
@@ -150,7 +166,8 @@
     "rarity": 2,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increase the max Talismans amount by 6"
   },
   {
     "id": "TM018",
@@ -159,7 +176,8 @@
     "rarity": 3,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increase the max Talismans amount by 8"
   },
   {
     "id": "TM019",
@@ -168,7 +186,8 @@
     "rarity": 4,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increase the max Talismans amount by 10"
   },
   {
     "id": "TM020",
@@ -177,7 +196,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Heals one teammate 10%"
   },
   {
     "id": "TM021",
@@ -186,7 +206,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Heals one teammate 25%"
   },
   {
     "id": "TM022",
@@ -195,7 +216,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Heals one teammate 50%"
   },
   {
     "id": "TM023",
@@ -204,7 +226,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Heals one teammate 75%"
   },
   {
     "id": "TM024",
@@ -213,7 +236,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Heals one teammate 100%"
   },
   {
     "id": "TM025",
@@ -222,7 +246,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increase battleFatigue by 10% for one battle"
   },
   {
     "id": "TM026",
@@ -231,7 +256,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increase battleFatigue by 25% for one battle"
   },
   {
     "id": "TM027",
@@ -240,7 +266,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increase battleFatigue by 50% for one battle"
   },
   {
     "id": "TM028",
@@ -249,7 +276,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Black Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM029",
@@ -258,7 +286,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Grey Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM030",
@@ -267,7 +296,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Orange Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM031",
@@ -276,7 +306,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Teal Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM032",
@@ -285,7 +316,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Gold Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM033",
@@ -294,7 +326,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Jade Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM034",
@@ -303,7 +336,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Crimson Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM035",
@@ -312,7 +346,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Slightly Increases the likelihood of Emerald Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM036",
@@ -321,7 +356,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Black Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM037",
@@ -330,7 +366,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Grey Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM038",
@@ -339,7 +376,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Orange Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM039",
@@ -348,7 +386,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Teal Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM040",
@@ -357,7 +396,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Gold Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM041",
@@ -366,7 +406,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Jade Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM042",
@@ -375,7 +416,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Crimson Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM043",
@@ -384,7 +426,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases the likelihood of Emerald Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM044",
@@ -393,7 +436,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Black Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM045",
@@ -402,7 +446,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Grey Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM046",
@@ -411,7 +456,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Orange Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM047",
@@ -420,7 +466,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Teal Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM048",
@@ -429,7 +476,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Gold Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM049",
@@ -438,7 +486,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Jade Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM050",
@@ -447,7 +496,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Crimson Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM051",
@@ -456,7 +506,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "Greatly increases the likelihood of Emerald Mana appearing for every battle in the expedition"
   },
   {
     "id": "TM052",
@@ -465,7 +516,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Black for the next battle."
   },
   {
     "id": "TM053",
@@ -474,7 +526,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Grey for the next battle."
   },
   {
     "id": "TM054",
@@ -483,7 +536,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Orange for the next battle."
   },
   {
     "id": "TM055",
@@ -492,7 +546,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Teal for the next battle."
   },
   {
     "id": "TM056",
@@ -501,7 +556,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Gold for the next battle."
   },
   {
     "id": "TM057",
@@ -510,7 +566,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Jade for the next battle."
   },
   {
     "id": "TM058",
@@ -519,7 +576,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Crimson for the next battle."
   },
   {
     "id": "TM059",
@@ -528,7 +586,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Increases the chance of mana being Emerald for the next battle."
   },
   {
     "id": "TM060",
@@ -537,7 +596,8 @@
     "rarity": 2,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases your team's max HP by 10%."
   },
   {
     "id": "TM061",
@@ -546,7 +606,8 @@
     "rarity": 3,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases your team's max HP by 15%."
   },
   {
     "id": "TM062",
@@ -555,7 +616,8 @@
     "rarity": 4,
     "permanent": true,
     "expeditionPassive": false,
-    "consumable": false
+    "consumable": false,
+    "description": "Increases your team's max HP by 20%."
   },
   {
     "id": "TM063",
@@ -564,7 +626,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 5 defence."
   },
   {
     "id": "TM064",
@@ -573,7 +636,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 8 defence."
   },
   {
     "id": "TM065",
@@ -582,7 +646,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 12 defence."
   },
   {
     "id": "TM066",
@@ -591,7 +656,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 20 defence."
   },
   {
     "id": "TM067",
@@ -600,7 +666,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 30 defence."
   },
   {
     "id": "TM068",
@@ -609,7 +676,8 @@
     "rarity": 0,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 1 charge."
   },
   {
     "id": "TM069",
@@ -618,7 +686,8 @@
     "rarity": 1,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 2 charge."
   },
   {
     "id": "TM070",
@@ -627,7 +696,8 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 3 charge."
   },
   {
     "id": "TM071",
@@ -636,7 +706,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 4 charge."
   },
   {
     "id": "TM072",
@@ -645,7 +716,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "Teammate starts the battle with 5 charge."
   },
   {
     "id": "TM073",
@@ -654,7 +726,8 @@
     "rarity": 4,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 coins for next expedition."
   },
   {
     "id": "TM074",
@@ -663,7 +736,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Roken dust from battles in the next expedition."
   },
   {
     "id": "TM075",
@@ -672,7 +746,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Samurai dust from battles in the next expedition."
   },
   {
     "id": "TM076",
@@ -681,7 +756,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Oyoroi dust from battles in the next expedition."
   },
   {
     "id": "TM077",
@@ -690,7 +766,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Kobo dust from battles in the next expedition."
   },
   {
     "id": "TM078",
@@ -699,7 +776,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Taiko dust from battles in the next expedition."
   },
   {
     "id": "TM079",
@@ -708,7 +786,8 @@
     "rarity": 3,
     "permanent": false,
     "expeditionPassive": true,
-    "consumable": false
+    "consumable": false,
+    "description": "x2 Genso dust from battles in the next expedition."
   },
   {
     "id": "TM080",
@@ -717,6 +796,7 @@
     "rarity": 2,
     "permanent": false,
     "expeditionPassive": false,
-    "consumable": true
+    "consumable": true,
+    "description": "The next loot will only be the best choice."
   }
 ]
