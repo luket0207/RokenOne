@@ -261,6 +261,24 @@ const Reward = ({
             });
           }
 
+          // Define the correct type order
+          const typeOrder = [
+            "normal",
+            "roken",
+            "samurai",
+            "oyoroi",
+            "kobo",
+            "taiko",
+            "genso",
+            "weapon",
+          ];
+
+          // Sort tokens first by discount (highest first), then by type order
+          updatedTokens.sort((a, b) => {
+            if (b.discount !== a.discount) return b.discount - a.discount;
+            return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
+          });
+
           return [
             {
               ...prevData[0],

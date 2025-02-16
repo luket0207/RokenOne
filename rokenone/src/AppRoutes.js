@@ -162,26 +162,6 @@ const AppRoutes = () => {
                       {/* Sort Tokens: Highest Discount First, Then Type */}
                       {playerData[0].packTokens
                         .slice() // Avoid state mutation
-                        .sort((a, b) => {
-                          const typeOrder = [
-                            "normal",
-                            "roken",
-                            "samurai",
-                            "oyoroi",
-                            "kobo",
-                            "taiko",
-                            "genso",
-                            "weapon",
-                          ];
-                          // Sort by discount descending
-                          if (b.discount !== a.discount)
-                            return b.discount - a.discount;
-                          // If discount is the same, sort by type order
-                          return (
-                            typeOrder.indexOf(a.type.toLowerCase()) -
-                            typeOrder.indexOf(b.type.toLowerCase())
-                          );
-                        })
                         .slice(0, 4) // Show first 4
                         .map((token, index) => (
                           <div
@@ -240,7 +220,7 @@ const AppRoutes = () => {
                         .slice(4) // Show remaining tokens in overflow div
                         .map((token, index) => (
                           <div
-                            key={index + 4}
+                            key={index + 3}
                             className={`token-item ${token.type.toLowerCase()}`}
                           >
                             {token.quantity > 1 && (
