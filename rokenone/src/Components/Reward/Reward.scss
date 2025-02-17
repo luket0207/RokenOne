@@ -3,10 +3,48 @@
 .reward-container {
   text-align: center;
 
-  .reward-list {
-    &-item {
+  .talisman-overflow {
+    margin-top: 30px;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+
+
+    &-alert {
+      background-color: $burgendy;
+      color: $lightGrey;
+      padding: 5px;
+      border-radius: 10px;
       display: inline-block;
+      margin: 0px auto 20px;
+
+      svg {
+        margin: 0 10px;
+      }
+    }
+    .replace-list {
+      display: flex;
+      max-width: 400px;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &-talisman {
+       .talisman-icon {
+          @include boxShadowHover;
+        }
+        
+      }
+    }
+  }
+
+  .reward-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-item {
       margin: 0px 20px;
+      display: inline-block;
 
       svg {
         font-size: 40px;

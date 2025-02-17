@@ -1,6 +1,6 @@
 import "./Talisman.scss";
 
-const Talisman = ({ talisman }) => {
+const Talisman = ({ talisman, noDescription = false }) => {
   return (
     <div className={`talisman-icon ${talisman.colour}`}>
       <div className="talisman-inner">
@@ -8,7 +8,7 @@ const Talisman = ({ talisman }) => {
           <p>{talisman.name}</p>
         </div>
       </div>
-      <div className="talisman-description"><p>{talisman.description}</p></div>
+      {!noDescription && <div className="talisman-description"><p>{talisman.description}</p></div>}
     </div>
   );
 };

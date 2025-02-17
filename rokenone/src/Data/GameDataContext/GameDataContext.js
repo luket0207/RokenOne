@@ -20,7 +20,7 @@ export const GameDataProvider = ({ children }) => {
   const [talismans, setTalismans]= useState([
     {
       talismansBank:[],
-      maxTalismansBank: 10,
+      maxTalismansBank: 6,
     }
   ]);
 
