@@ -6,11 +6,40 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
+  position: relative;
+
+  .river {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 350px;
+    background-image: url("../../Assets/Images/water-texture.webp");
+    background-repeat: repeat-x;
+    background-size: 100% auto;
+    z-index: 1;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        0deg,
+        rgba($lightGrey, 0) 0%,
+        rgba($lightGrey, 1) 95%
+      );
+    }
+  }
 
   .stones-row {
     display: flex;
-
-    
+    position: relative;
+    z-index: 2;
 
     &-stone {
       width: 130px;
@@ -18,25 +47,42 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: $grey;
+      background-image: url("../../Assets/Images/stone-texture.webp");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
       cursor: pointer;
       @include boxShadowHover;
       margin: 0px 20px;
       border-radius: 30px;
+      position: relative;
+      overflow: hidden;
 
-      h4 {
-        margin: 0;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;
+        opacity: .3;
       }
 
       &.animation-sank {
         pointer-events: none;
         animation: fadeOut 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
       }
-  
+
       &.animation-safe {
-          pointer-events: none;
-          animation: moveRow 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
-        }
+        pointer-events: none;
+        animation: moveRow 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
+      }
+
+      &.animation-end {
+        pointer-events: none;
+        animation: moveRowEnd 2s forwards; // Use 2s to match the 2 seconds in the JS timeout
+      }
     }
   }
 
@@ -60,23 +106,35 @@
 }
 
 @keyframes moveRow {
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    49% {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-
-    51% {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
   }
+
+  49% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  51% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes moveRow {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  49% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}

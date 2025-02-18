@@ -11,7 +11,7 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Button/Button";
-import talismans from "../../Data/Talismans/Talismans.json";
+import talismansData from "../../Data/Talismans/Talismans.json";
 import Talisman from "../Talisman/Talisman";
 
 const getRandomValue = (min, max) =>
@@ -85,7 +85,7 @@ const getWeightedRarity = () => {
 
 const getRandomTalisman = () => {
   const rarity = getWeightedRarity();
-  const filteredTalismans = talismans.filter(
+  const filteredTalismans = talismansData.filter(
     (talisman) => talisman.rarity === rarity
   );
   if (filteredTalismans.length === 0) return null;
@@ -116,15 +116,15 @@ const getTokenDiscount = () => {
   }
 };
 
-const generateReward = (type, level, expeditionClass) => {
+const generateReward = (type, level, isBattle, expeditionClass) => {
   switch (type) {
     case "coins": {
-      const lowerRange = 5 + level;
+      const lowerRange = 5 + level + (isBattle ? 2 : 0);
       const upperRange = lowerRange * 2;
       return { type: "coins", amount: getRandomValue(lowerRange, upperRange) };
     }
     case "dust": {
-      const lowerRange = 5 + level;
+      const lowerRange = 5 + level + (isBattle ? 2 : 0);
       const upperRange = lowerRange * 2;
       return {
         type: getDustType(expeditionClass),
@@ -153,8 +153,10 @@ const Reward = ({
   modalOpen,
   setModalOpen,
   presetReward,
+  isBattle = false,
   items = 1,
   type = ["coins", "dust", "talisman", "token"], // Allowed types
+  isLoss = false,
 }) => {
   const {
     playerData,
@@ -163,6 +165,7 @@ const Reward = ({
     setTalismans,
     addCurrency,
     setPlayerData,
+    moveToNextDay,
   } = useContext(GameDataContext);
   const level = playerData[0].level;
   const expeditionClass = expeditionData[0]?.expedition?.class || "All";
@@ -174,24 +177,38 @@ const Reward = ({
 
   useEffect(() => {
     if (modalOpen) {
-      if (presetReward && presetReward.length > 0) {
-        setRewards(
-          presetReward
+      if (isLoss) {
+        return
+      } else if (presetReward && presetReward.length > 0) {
+        console.log(presetReward);
+        setRewards((prevRewards) => {
+          if (prevRewards.length > 0) return prevRewards; // Prevent unnecessary updates
+
+          return presetReward
             .map(([type, amountOrId]) => {
               if (type === "coins") {
                 return { type: "coins", amount: amountOrId };
               } else if (type === "talisman") {
-                const foundTalisman = talismans.find(
-                  (t) => t.id === amountOrId
+                if (!talismans || talismans.length === 0) return null; // Prevent infinite loop if talismans is empty
+                console.log(talismansData);
+                const foundTalisman = talismansData.find(
+                  (t) => String(t.id) === String(amountOrId)
                 );
+                console.log(
+                  "Searching for:",
+                  amountOrId,
+                  "Found:",
+                  foundTalisman
+                );
+
                 return foundTalisman
                   ? { type: "talisman", talisman: foundTalisman }
                   : null;
               }
               return null;
             })
-            .filter(Boolean) // Remove null values in case of an invalid talisman ID
-        );
+            .filter(Boolean); // Remove null values
+        });
       } else {
         const filteredRewardWeights = Object.keys(rewardWeights)
           .filter((key) => type.includes(key))
@@ -219,9 +236,14 @@ const Reward = ({
 
         const shuffledTypes = Array.from(uniqueTypes);
         const generatedRewards = shuffledTypes.map((rewardType) => {
-          const reward = generateReward(rewardType, level, expeditionClass);
-          const talismanBank = talismans[0].talismansBank;
-          const maxTalismans = talismans[0].maxTalismansBank;
+          const reward = generateReward(
+            rewardType,
+            level,
+            isBattle,
+            expeditionClass
+          );
+          const talismanBank = talismans[0]?.talismansBank || [];
+          const maxTalismans = talismans[0]?.maxTalismansBank || 0;
           if (
             rewardType === "talisman" &&
             talismanBank.length >= maxTalismans
@@ -233,7 +255,7 @@ const Reward = ({
         setRewards(generatedRewards);
       }
     }
-  }, [modalOpen, presetReward, items, expeditionClass, level, type]);
+  }, [modalOpen, presetReward, items, expeditionClass, level, type, talismans]);
 
   const handleClose = () => {
     const talismanBank = talismans[0].talismansBank;
@@ -307,8 +329,8 @@ const Reward = ({
         });
       }
     });
-    //TODO MOVE TO NEXT DAY
-      navigate("/expeditionhome");
+    moveToNextDay();
+    navigate("/expeditionhome");
   };
 
   const handleTalismanDecision = (keepNew, talismanToReplaceIndex) => {
@@ -333,13 +355,19 @@ const Reward = ({
             {rewards.map((reward, index) => (
               <div key={index} className="reward-list-item">
                 {reward.type === "coins" && (
-                  <FontAwesomeIcon icon={faCoins} className="coins" />
+                  <>
+                    <FontAwesomeIcon icon={faCoins} className="coins" />
+                    <p>{reward.amount}</p>
+                  </>
                 )}
                 {reward.type.startsWith("dust") && (
-                  <FontAwesomeIcon
-                    icon={faCubesStacked}
-                    className={reward.type}
-                  />
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCubesStacked}
+                      className={reward.type}
+                    />
+                    <p>{reward.amount}</p>
+                  </>
                 )}
                 {reward.type === "talisman" && (
                   <>
@@ -362,7 +390,7 @@ const Reward = ({
             ))}
           </div>
         ) : (
-          <p>No rewards available.</p>
+          <p>You didn't get any rewards this time.</p>
         )}
 
         {pendingTalisman ? (
@@ -405,7 +433,7 @@ const Reward = ({
           </>
         ) : (
           <div className="reward-button">
-            <Button text={"Ok"} onClick={handleClose} type="secondary" />
+            <Button text={"Next Day"} onClick={handleClose} type="secondary" />
           </div>
         )}
       </div>

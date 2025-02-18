@@ -8,11 +8,12 @@
   align-items: center;
 
   .character-list {
-    margin-top: 20px;
+    display: flex;
   }
 
   .character {
     @include cardFrame;
+    margin: 20px;
     padding: 30px;
     width: 150px;
     text-align: center;

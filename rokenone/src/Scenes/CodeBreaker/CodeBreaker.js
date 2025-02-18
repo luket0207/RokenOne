@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAppleAlt,
@@ -15,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"; // Example icons
 import "./CodeBreaker.scss";
 import Button from "../../Components/Button/Button";
-import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
+import Reward from "../../Components/Reward/Reward";
 
 const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   const [hiddenCode, setHiddenCode] = useState([]);
@@ -24,8 +23,9 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
   const [message, setMessage] = useState("Take a guess");
   const [isGameOver, setIsGameOver] = useState(false);
   const [isCorrectGuess, setIsCorrectGuess] = useState(false);
-  const navigate = useNavigate();
-  const { moveToNextDay } = useContext(GameDataContext);
+  const [isRewardOpen, setIsRewardOpen] = useState(false);
+  const [isLoss, setIsLoss] = useState(false);
+
 
   const numberToIconMap = {
     1: faAppleAlt,
@@ -87,6 +87,7 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
       );
     } else if (attempts + 1 === chances) {
       setIsGameOver(true);
+      setIsLoss(true);
       setMessage(
         <span>
           Game over! The correct order was:{" "}
@@ -102,9 +103,8 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
     }
   };
 
-  const navigateToHome = () => {
-    moveToNextDay();
-    navigate("/expeditionhome");
+  const getRewards = () => {
+    setIsRewardOpen(true);
   };
 
   return (
@@ -140,10 +140,16 @@ const CodeBreaker = ({ codeLength = 8, chances = 4 }) => {
             ))}
           </div>
 
-          {isGameOver && (
-            <Button text="Go to Expedition Home" onClick={navigateToHome} />
-          )}
+          {isGameOver && <Button text={isLoss ? "Continue" : "Get Rewards"} onClick={getRewards} />}
         </div>
+        <Reward
+          modalOpen={isRewardOpen}
+          setModalOpen={setIsRewardOpen}
+          presetReward={null}
+          items={1}
+          type={["coins", "dust", "talisman"]}
+          isLoss={isLoss}
+        />
       </div>
     </DndProvider>
   );

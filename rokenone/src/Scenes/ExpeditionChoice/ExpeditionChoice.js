@@ -110,6 +110,7 @@ const ExpeditionChoice = () => {
         name: "Boss Battle",
         type: "battle",
         enemies: [bossData.name], // Put the boss in the enemies array
+        isBoss: true,
       };
       days.push([bossBattleDay]); // Add the boss battle as the last day, wrapped in an array
     }

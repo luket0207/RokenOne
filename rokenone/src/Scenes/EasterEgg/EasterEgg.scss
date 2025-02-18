@@ -1,0 +1,9 @@
+@import "../../Assets/Scss/import.scss";
+
+.easter-egg {
+  @include sceneContainer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

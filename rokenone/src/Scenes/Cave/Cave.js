@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Button from "../../Components/Button/Button";
 import "./Cave.scss";
-import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
+import Reward from "../../Components/Reward/Reward";
 
 const Cave = () => {
   const [playerPosition, setPlayerPosition] = useState(0); // Player's current position in the cave
@@ -10,9 +9,8 @@ const Cave = () => {
   const [gameOver, setGameOver] = useState(false); // Flag to indicate if the game is over
   const [result, setResult] = useState(""); // Result message
   const variableProximity = 2; // Variable proximity for winning
-  const { moveToNextDay } = useContext(GameDataContext);
-
-  const navigate = useNavigate();
+  const [isRewardOpen, setIsRewardOpen] = useState(false);
+  const [isLoss, setIsLoss] = useState(false); // Track if the player lost
 
   // Initialize bearPosition randomly between 6 and 16 when component mounts
   useEffect(() => {
@@ -29,6 +27,7 @@ const Cave = () => {
       if (newPosition >= bearPosition) {
         setResult("You were chased out by a bear!");
         setGameOver(true);
+        setIsLoss(true); // Player lost the game
       }
 
       return newPosition;
@@ -41,14 +40,13 @@ const Cave = () => {
       setResult("You found loot!");
     } else {
       setResult("You went home empty-handed.");
+      setIsLoss(true); // Player lost the game if they went home empty-handed
     }
     setGameOver(true);
   };
 
-  // Navigate back to home
-  const goBackHome = () => {
-    moveToNextDay();
-    navigate("/expeditionhome");
+  const getRewards = () => {
+    setIsRewardOpen(true);
   };
 
   return (
@@ -69,9 +67,18 @@ const Cave = () => {
       {gameOver && (
         <>
           <h2>{result}</h2>
-          <Button text="Return Home" onClick={goBackHome} />
+          <Button text={isLoss ? "Continue" : "Get Rewards"} onClick={getRewards} />
         </>
       )}
+
+      <Reward
+        modalOpen={isRewardOpen}
+        setModalOpen={setIsRewardOpen}
+        presetReward={null}
+        items={1}
+        type={["coins", "dust", "talisman"]}
+        isLoss={isLoss}
+      />
     </div>
   );
 };

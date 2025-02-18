@@ -5,10 +5,9 @@ import Team from "./Components/Team/Team"; // Import Team component
 import Enemy from "./Components/Enemy/Enemy"; // Import Enemy component
 import "./Battle.scss";
 import Button from "../../Components/Button/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import ChargeBar from "./Components/ChargeBar/ChargeBar";
 import ManaIcon from "../../Components/ManaIcon/ManaIcon";
+import Reward from "../../Components/Reward/Reward";
 import {
   triggerWeapon,
   playerTeamWithWeapons,
@@ -43,6 +42,8 @@ const Battle = () => {
   const [intervalTime, setIntervalTime] = useState(1000);
   const [paused, setPaused] = useState(false);
   const [difficulty, setDifficulty] = useState(state?.difficulty || 0);
+  const [isBoss, setIsBoss] = useState(state?.isBoss || false);
+  const [isRewardOpen, setIsRewardOpen] = useState(false);
   const availableMana = [
     "black",
     "grey",
@@ -208,14 +209,13 @@ const Battle = () => {
       }))
     );
     clearInterval(intervalRef.current);
-    moveToNextDay();
-    navigate("/expeditionhome");
+    setIsRewardOpen(true);
   };
 
   //Return the player to home because they fainted and clear the expedition
   const handleFainted = () => {
     resetExpedition();
-    navigate("/home");
+    navigate("/home"); // TODO game over
   };
 
   const handleStartBattle = () => {
@@ -1339,6 +1339,7 @@ const Battle = () => {
           <div className="turn-info">
             <p>Turn: {turn}</p>
             <p>Difficulty: {difficulty}</p>
+            <p>Is Boss: {isBoss ? "True" : "False"}</p>
             <div>
               <button onClick={handlePause}>
                 {paused ? "Resume" : "Pause"}
@@ -1380,6 +1381,15 @@ const Battle = () => {
       />
 
       <ChargeBar charge={teamCharge} isPlayerTeam={true} />
+
+      <Reward 
+                modalOpen={isRewardOpen} 
+                setModalOpen={setIsRewardOpen}
+                presetReward={null} 
+                isBattle={true}
+                items={2} 
+                type={['coins', 'dust', 'token']} 
+            />
     </div>
   );
 };

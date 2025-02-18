@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Loot.scss";
 import Button from "../../Components/Button/Button";
-import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
 import talismans from "../../Data/Talismans/Talismans.json";
+import Reward from "../../Components/Reward/Reward";
 
 // Define the rarity weights here so you can adjust them for balancing.
 // The weight determines how common (higher weight) or rare (lower weight) a rarity is.
@@ -16,8 +15,7 @@ const TALISMAN_RARITY_WEIGHTS = [
 ];
 
 const Loot = () => {
-  const navigate = useNavigate();
-  const { moveToNextDay } = useContext(GameDataContext);
+  const [isRewardOpen, setIsRewardOpen] = useState(false);
 
   // "phase" will control what the loot items display:
   // "preview" (show details), "mixed" (apply class and hide details),
@@ -25,6 +23,7 @@ const Loot = () => {
   const [phase, setPhase] = useState("preview");
   const [loot, setLoot] = useState([]);
   const [selectedLoot, setSelectedLoot] = useState(null);
+  const [amountOrId, setAmountOrId] = useState(null);
 
   useEffect(() => {
     generateLoot();
@@ -40,7 +39,10 @@ const Loot = () => {
           const shuffledLoot = [...prevLoot];
           for (let i = shuffledLoot.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [shuffledLoot[i], shuffledLoot[j]] = [shuffledLoot[j], shuffledLoot[i]];
+            [shuffledLoot[i], shuffledLoot[j]] = [
+              shuffledLoot[j],
+              shuffledLoot[i],
+            ];
           }
           return shuffledLoot;
         });
@@ -54,8 +56,7 @@ const Loot = () => {
   }, []);
 
   const handleContinue = () => {
-    moveToNextDay();
-    navigate("/expeditionhome");
+    setIsRewardOpen(true);
   };
 
   const generateLoot = () => {
@@ -74,7 +75,10 @@ const Loot = () => {
         value: min + idx,
         weight: max - idx, // higher weight for lower values
       }));
-    const totalWeight = weightedValues.reduce((sum, item) => sum + item.weight, 0);
+    const totalWeight = weightedValues.reduce(
+      (sum, item) => sum + item.weight,
+      0
+    );
     const randomNum = Math.random() * totalWeight;
     let currentWeight = 0;
 
@@ -91,7 +95,10 @@ const Loot = () => {
     const rarityOptions = TALISMAN_RARITY_WEIGHTS.filter(
       (option) => option.rarity >= minRarity && option.rarity <= maxRarity
     );
-    const totalWeight = rarityOptions.reduce((sum, option) => sum + option.weight, 0);
+    const totalWeight = rarityOptions.reduce(
+      (sum, option) => sum + option.weight,
+      0
+    );
     const randomNum = Math.random() * totalWeight;
     let currentWeight = 0;
     let chosenRarity = rarityOptions[0].rarity; // default to first option
@@ -118,13 +125,10 @@ const Loot = () => {
     // Only allow selection in the "choose" phase.
     if (phase !== "choose") return;
     const chosenLoot = loot[index];
+    const amountOrId = chosenLoot.id ?? chosenLoot.amount; // Set amountOrId based on availability
+    setAmountOrId(amountOrId);
     setSelectedLoot(chosenLoot);
-    setPhase("result");
-    console.log("Player selected loot: ", chosenLoot);
-  };
-
-  const handleHome = () => {
-    navigate("/home");
+    setIsRewardOpen(true);
   };
 
   return (
@@ -143,14 +147,15 @@ const Loot = () => {
               </>
             )}
             <Button text={"Continue"} onClick={handleContinue} />
-            <Button text={"Home"} onClick={handleHome} type="secondary" />
           </div>
         ) : (
           <div className="loot-items">
             {loot.map((item, index) => (
               <div
                 key={index}
-                className={`loot-item ${phase === "mixed" ? "mixed" : ""} ${phase === "choose" ? "choose" : ""}`}
+                className={`loot-item ${phase === "mixed" ? "mixed" : ""} ${
+                  phase === "choose" ? "choose" : ""
+                }`}
                 onClick={() => handleLootSelection(index)}
               >
                 {phase === "preview" ? (
@@ -158,7 +163,9 @@ const Loot = () => {
                   item.type === "coins" ? (
                     <p>{item.amount} Coins</p>
                   ) : (
-                    <p>Talisman: {item.name} {item.rarity}</p>
+                    <p>
+                      Talisman: {item.name} {item.rarity}
+                    </p>
                   )
                 ) : (
                   // In mixed and choose phases, hide the details.
@@ -169,6 +176,16 @@ const Loot = () => {
           </div>
         )}
       </div>
+      {selectedLoot && (
+        <Reward
+          modalOpen={isRewardOpen}
+          setModalOpen={setIsRewardOpen}
+          presetReward={[
+            [selectedLoot.type, amountOrId]
+          ]}  
+            
+        />
+      )}
     </div>
   );
 };

@@ -36,12 +36,8 @@ const Home = () => {
     navigate("/help");
   };
 
-  const addCoins = () => {
-    addCurrency("coins", 10);
-  };
-
-  const handleReward = () => {
-    setIsRewardOpen(true);
+  const goTest = () => {
+    navigate("/steppingstones")
   };
 
   return (
@@ -51,16 +47,7 @@ const Home = () => {
       <Button text={"OpenPack"} onClick={navigateToOpenPack} />
       <Button text={"Edit Team"} onClick={navigateToEditTeam} />
       <Button text={"Help"} onClick={navigateToHelp} />
-      <Button text={"Add 10 Coins"} onClick={addCoins} type="secondary" />
-      <Button text={"Reward"} onClick={handleReward} type="secondary" />
-
-      <Reward 
-                modalOpen={isRewardOpen} 
-                setModalOpen={setIsRewardOpen}
-                presetReward={null} 
-                items={2} 
-                type={['token', 'talisman']} 
-            />
+      <Button text={"Test"} onClick={goTest} type="secondary" />
     </div>
   );
 };

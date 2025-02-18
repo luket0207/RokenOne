@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button/Button";
 import "./SteppingStones.scss";
-import { GameDataContext } from "../../Data/GameDataContext/GameDataContext";
+import Reward from "../../Components/Reward/Reward";
 
 const SteppingStones = () => {
+  const [isRewardOpen, setIsRewardOpen] = useState(false);
   const initialStones = 4; // Each row starts with 4 stones
-  
+
   // Define the number of safe stones per row
   const safeStonesPerRow = [3, 2, 2, 1];
-  
+
   const totalRows = safeStonesPerRow.length;
 
   // Component state
@@ -21,10 +21,7 @@ const SteppingStones = () => {
   const [animating, setAnimating] = useState(false); // New state for animation
   const [clickedStoneIndex, setClickedStoneIndex] = useState(null); // Track clicked stone index
   const [stoneStatus, setStoneStatus] = useState(""); // Track if stone is "safe" or "sank"
-
-  const { moveToNextDay } = useContext(GameDataContext);
-  const navigate = useNavigate();
-
+  const [isLoss, setIsLoss] = useState(false);
   const getSafeStoneCount = (row) => safeStonesPerRow[row];
 
   // When the current row or number of stones changes, choose random safe stones.
@@ -39,7 +36,10 @@ const SteppingStones = () => {
         }
       }
       setSafeStones(safe);
-      console.log(`Row ${currentRow + 1} - Safe stones are:`, safe.map(stone => `Stone ${stone + 1}`).join(", "));
+      console.log(
+        `Row ${currentRow + 1} - Safe stones are:`,
+        safe.map((stone) => `Stone ${stone + 1}`).join(", ")
+      );
     }
   }, [currentRow, numStones, gameOver]);
 
@@ -65,6 +65,7 @@ const SteppingStones = () => {
         }
       } else {
         setResult("The stone sank under you. You lose!");
+        setIsLoss(true);
         setGameOver(true);
       }
 
@@ -74,13 +75,13 @@ const SteppingStones = () => {
     }, 2000);
   };
 
-  const goBackHome = () => {
-    moveToNextDay();
-    navigate("/expeditionhome");
+  const getRewards = () => {
+    setIsRewardOpen(true);
   };
 
   return (
     <div className="stepping-stones">
+      
       <h1>Stepping Stones</h1>
 
       {!gameOver && (
@@ -104,10 +105,11 @@ const SteppingStones = () => {
                     : ""
                 }`}
               >
-                <h4>{`Stone ${index + 1}`}</h4>
+
               </div>
             ))}
           </div>
+          <div className="river" ></div>
         </>
       )}
 
@@ -116,9 +118,18 @@ const SteppingStones = () => {
           <h2 className={result.includes("win") ? "result-win" : "result-lose"}>
             {result}
           </h2>
-          <Button text="Return Home" onClick={goBackHome} />
+          <Button text={isLoss ? "Continue" : "Get Rewards"} onClick={getRewards} />
         </>
       )}
+      
+      <Reward
+          modalOpen={isRewardOpen}
+          setModalOpen={setIsRewardOpen}
+          presetReward={null}
+          items={1}
+          type={["coins", "dust", "talisman"]}
+          isLoss={isLoss}
+        />
     </div>
   );
 };
