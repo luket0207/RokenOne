@@ -47,7 +47,7 @@ const Home = () => {
       <Button text={"OpenPack"} onClick={navigateToOpenPack} />
       <Button text={"Edit Team"} onClick={navigateToEditTeam} />
       <Button text={"Help"} onClick={navigateToHelp} />
-      <Button text={"Test"} onClick={goTest} type="secondary" />
+      {/* <Button text={"Test"} onClick={goTest} type="secondary" /> */}
     </div>
   );
 };
