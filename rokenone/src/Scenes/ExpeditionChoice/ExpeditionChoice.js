@@ -7,9 +7,9 @@ import bossesData from "../../Data/Characters/Bosses.json";
 import { GameDataContext } from "../../Data/GameDataContext/GameDataContext"; // Import context
 import "./ExpeditionChoice.scss";
 
-const ExpeditionChoice = () => {
+const ExpeditionChoice = ({navigateToExpedition}) => {
   const [generatedExpedition, setGeneratedExpedition] = useState(null);
-  const { setExpeditionData, playerTeam, setPlayerTeam } =
+  const { expeditionData, setExpeditionData, playerTeam, setPlayerTeam } =
     useContext(GameDataContext); // Get context function
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -305,18 +305,31 @@ const ExpeditionChoice = () => {
 
   return (
     <div className="expedition-choice">
-      <Button
-        text={"Generate All Easy Expedition"}
-        onClick={() => generateExpedition("A1")}
-      />
-      <Button
-        text={"Generate Samurai Easy Expedition"}
-        onClick={() => generateExpedition("S1")}
-      />
-      <Button
-        text={"Generate Samurai Medium Expedition"}
-        onClick={() => generateExpedition("S2")}
-      />
+      <h4>Expedition</h4>
+      {expeditionData[0].expedition === null ? (
+        <div className="expedition-choice-buttons">
+          <Button
+            text={"Generate All Easy Expedition"}
+            onClick={() => generateExpedition("A1")}
+            type="secondary"
+          />
+          <Button
+            text={"Generate Samurai Easy Expedition"}
+            onClick={() => generateExpedition("S1")}
+            type="secondary"
+          />
+          <Button
+            text={"Generate Samurai Medium Expedition"}
+            onClick={() => generateExpedition("S2")}
+            type="secondary"
+          />
+        </div>
+      ) : (
+        <Button
+            text={"Return To Current Expedition"}
+            onClick={() => navigateToExpedition()}
+          />
+      )}
     </div>
   );
 };

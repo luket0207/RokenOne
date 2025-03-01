@@ -4,6 +4,7 @@ import { GameDataContext } from "../../Data/GameDataContext/GameDataContext"; //
 import "./Home.scss";
 import Button from "../../Components/Button/Button";
 import Reward from "../../Components/Reward/Reward";
+import ExpeditionChoice from "../ExpeditionChoice/ExpeditionChoice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -37,16 +38,26 @@ const Home = () => {
   };
 
   const goTest = () => {
-    navigate("/steppingstones")
+    navigate("/steppingstones");
   };
 
   return (
     <div className="home">
-      <Button text={"Card Bank"} onClick={navigateToCardBank} />
-      <Button text={"Expeditions"} onClick={navigateToExpedition} />
-      <Button text={"OpenPack"} onClick={navigateToOpenPack} />
-      <Button text={"Edit Team"} onClick={navigateToEditTeam} />
-      <Button text={"Help"} onClick={navigateToHelp} />
+      <ExpeditionChoice navigateToExpedition={navigateToExpedition} />
+      <div className="home-buttons">
+        <Button text={"Card Bank"} onClick={navigateToCardBank} />
+        <Button text={"OpenPack"} onClick={navigateToOpenPack} />
+        <Button
+          text={"Edit Team"}
+          onClick={navigateToEditTeam}
+          disabled={expeditionData[0].expedition !== null}
+        />
+      </div>
+
+      <Button
+        text={"How to Play (It's only short, promise)"}
+        onClick={navigateToHelp}
+      />
       {/* <Button text={"Test"} onClick={goTest} type="secondary" /> */}
     </div>
   );

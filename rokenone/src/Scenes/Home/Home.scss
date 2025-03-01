@@ -7,4 +7,12 @@
   justify-items: center;
   align-items: center;
   @include homeBackground;
+
+  &-buttons {
+    display: flex;
+
+    .btn {
+      margin: 0 20px;
+    }
+  }
 }

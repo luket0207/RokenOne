@@ -14,19 +14,74 @@ const Enemy = ({
   setWeaponEnemy,
   weaponAnimation,
 }) => {
-  // State to track which enemy is being dragged over
   const [draggedOverIndex, setDraggedOverIndex] = useState(null);
+
+  // Store previous health and defense values
+  const [previousStats, setPreviousStats] = useState(
+    enemies.map((enemy) => ({
+      id: enemy.id,
+      health: enemy.health || 0,
+      defence: enemy.currentDefence || 0,
+      change: null, // Stores changes for display
+    }))
+  );
+
+  useEffect(() => {
+    const updatedStats = enemies.map((enemy, index) => {
+      const prev = previousStats[index] || {};
+      const changes = [];
+
+      // Detect health changes
+      if (enemy.health !== prev.health) {
+        const diff = enemy.health - prev.health;
+        changes.push({
+          type: "health",
+          amount: Math.abs(diff),
+          color: diff > 0 ? "green" : "red", // Green for heal, red for damage
+        });
+      }
+
+      // Detect defense changes
+      if (enemy.currentDefence !== prev.defence) {
+        const diff = enemy.currentDefence - prev.defence;
+        changes.push({
+          type: "defence",
+          amount: Math.abs(diff),
+          color: diff > 0 ? "blue" : "black", // Blue for gain, black for loss
+        });
+      }
+
+      return {
+        id: enemy.id,
+        health: enemy.health || 0,
+        defence: enemy.currentDefence || 0,
+        change: changes.length > 0 ? changes : null,
+      };
+    });
+
+    setPreviousStats(updatedStats);
+
+    // Clear messages after 2 seconds
+    const timer = setTimeout(() => {
+      setPreviousStats((prev) =>
+        prev.map((stat) => ({ ...stat, change: null }))
+      );
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [enemies, turn]);
 
   const setTarget = (opponentIndex, health) => {
     if (health !== 0) {
-      setOpponentTarget(opponentIndex === opponentTarget ? null : opponentIndex);
+      setOpponentTarget(
+        opponentIndex === opponentTarget ? null : opponentIndex
+      );
     }
   };
 
   return (
     <div className="enemy-container">
       {enemies.map((enemy, index) => {
-        // Format the enemy object to pass it to CharacterCard
         const formattedEnemy = {
           ...enemy,
           health: enemy.health || 0,
@@ -36,13 +91,14 @@ const Enemy = ({
           timeline: enemy.timeline || [],
         };
 
-        // Calculate currentActionIndex based on the turn
         const currentActionIndex =
           turn > 0 ? Math.floor((turn - 1) % (enemy.timeline.length || 1)) : -1;
 
+        const enemyStats = previousStats.find((stat) => stat.id === enemy.id);
+
         return (
           <div
-            key={`${index}-${turn}`}  // Use turn as part of the key to trigger re-render on turn change
+            key={`${index}-${turn}`}
             className={`enemy ${index === opponentTarget ? "targeted" : ""} 
               ${index === weaponAnimation ? "weapon-attacked" : ""} 
               ${index === draggedOverIndex ? "dragged-on" : ""} 
@@ -51,29 +107,49 @@ const Enemy = ({
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={(e) => {
               e.preventDefault();
-              // Ensure the dragged item stays "dragged-on" while hovering
               setDraggedOverIndex(index);
             }}
             onDragLeave={(e) => {
-              // Only remove the class if the drag has truly left the element
               if (!e.currentTarget.contains(e.relatedTarget)) {
                 setDraggedOverIndex(null);
               }
             }}
             onDrop={(e) => {
               const characterIndex = e.dataTransfer.getData("characterIndex");
-              // Call the passed in functions to set the weapon attacker and enemy
               setWeaponAttacker(characterIndex);
               setWeaponEnemy(index);
-              setDraggedOverIndex(null); // Clear the drag state when dropped
+              setDraggedOverIndex(null);
             }}
           >
             <div className="enemy-target">
               <FontAwesomeIcon icon={faBullseye} size="2x" />
             </div>
+
             <div className="enemy-image">
               <FontAwesomeIcon icon={faUser} size="4x" />
             </div>
+
+            {/* Display stat changes */}
+            {enemyStats?.change && enemyStats.change.length > 0 && (
+              <div className="change-display">
+                {enemyStats.change
+                  .filter(
+                    (change) => !isNaN(change.amount) && change.amount > 0
+                  ) // Ensure valid numbers
+                  .map((change, i) => (
+                    <div key={i} className={`change-text ${change.color}`}>
+                      {change.type === "health"
+                        ? change.color === "red"
+                          ? `-${change.amount} HP`
+                          : `+${change.amount} HP`
+                        : change.color === "black"
+                        ? `-${change.amount} DEF`
+                        : `+${change.amount} DEF`}
+                    </div>
+                  ))}
+              </div>
+            )}
+
             {/* Use CharacterCard component */}
             <CharacterCard
               teammate={formattedEnemy}

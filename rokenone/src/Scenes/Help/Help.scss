@@ -3,22 +3,27 @@
 .help {
     @include sceneContainer;
     display: grid;
-    justify-content: center;
-    justify-items: center;
     align-items: center;
     @include homeBackground;
+
+    &:before {
+        opacity: .1;
+    }
+
+    h1 {
+        text-align: center;
+    }
 
     h3 {
         margin-top: 40px;
     }
 
     p, ul {
-        max-width: 800px;
         width: 100%;
     }
 
     .btn {
-        margin-top: 40px;
+        margin: 40px auto 0;
     }
 
     .sample {

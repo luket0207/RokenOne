@@ -104,7 +104,7 @@ const Edit = () => {
   const handleUpgrade = (action) => {
     const cardBankAction = cardBank.find((c) => c.id === action.id);
 
-    if (!cardBankAction || cardBankAction.quantity < action.level + 1) {
+    if (!cardBankAction || cardBankAction.quantity < action.level + 2) {
       alert("Not enough cards in the cardBank to upgrade!");
       return;
     }
@@ -488,10 +488,12 @@ const Edit = () => {
         actionPool: updatedActionPool,
       };
 
-      const updatedPlayerData = {
-        ...playerData,
-        cardBank: updatedCardBank,
-      };
+      const updatedPlayerData = [
+        {
+          ...playerData[0], 
+          cardBank: updatedCardBank, 
+        },
+      ];
 
       // Update the state with the modified character and updated cardBank
       setPlayerTeam((prevTeam) => {
@@ -575,10 +577,12 @@ const Edit = () => {
     };
 
     // Update player data with the reduced cardBank and updated weapon
-    const updatedPlayerData = {
-      ...playerData,
-      cardBank: updatedCardBank,
-    };
+    const updatedPlayerData = [
+      {
+        ...playerData[0], 
+        cardBank: updatedCardBank, 
+      },
+    ];
 
     // Set the updated player data and character
     setPlayerTeam((prevTeam) =>

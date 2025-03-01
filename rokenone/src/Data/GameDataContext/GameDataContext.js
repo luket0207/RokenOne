@@ -30,6 +30,7 @@ export const GameDataProvider = ({ children }) => {
       maxTeammates: 2,
       cardBank: [],
       autoWeaponStatus: "off",
+      speed: 1,
       coins: 100,
       dustRoken: 0,
       dustSamurai: 0,

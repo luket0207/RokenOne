@@ -39,7 +39,9 @@ const Battle = () => {
   const [mana, setMana] = useState(null);
   const [opponentTarget, setOpponentTarget] = useState(null);
   const intervalRef = useRef(null); // Use ref for interval
-  const [intervalTime, setIntervalTime] = useState(1000);
+  const [intervalTime, setIntervalTime] = useState(
+    playerData[0].speed === 2 ? 500 : playerData[0].speed === 1 ? 1000 : 2000
+  );
   const [paused, setPaused] = useState(false);
   const [difficulty, setDifficulty] = useState(state?.difficulty || 0);
   const [isBoss, setIsBoss] = useState(state?.isBoss || false);
@@ -72,9 +74,20 @@ const Battle = () => {
     return () => clearInterval(intervalRef.current);
   }, [intervalTime, isBattleStarted, battleEnded, paused]); // Add paused to the dependencies
 
-  const handleSlowSpeed = () => setIntervalTime(2000); // 2 seconds interval
-  const handleNormalSpeed = () => setIntervalTime(1000); // 1 second interval
-  const handleFastSpeed = () => setIntervalTime(500); // 0.5 second interval
+  const handleSlowSpeed = () => {
+    setIntervalTime(2000);
+    setPlayerData((prevData) => [{ ...prevData[0], speed: 0 }]);
+  };
+
+  const handleNormalSpeed = () => {
+    setIntervalTime(1000);
+    setPlayerData((prevData) => [{ ...prevData[0], speed: 1 }]);
+  };
+
+  const handleFastSpeed = () => {
+    setIntervalTime(500);
+    setPlayerData((prevData) => [{ ...prevData[0], speed: 2 }]);
+  };
 
   const handlePause = () => {
     setPaused((prevPaused) => !prevPaused); // Toggle paused state
@@ -1382,14 +1395,14 @@ const Battle = () => {
 
       <ChargeBar charge={teamCharge} isPlayerTeam={true} />
 
-      <Reward 
-                modalOpen={isRewardOpen} 
-                setModalOpen={setIsRewardOpen}
-                presetReward={null} 
-                isBattle={true}
-                items={2} 
-                type={['coins', 'dust', 'token']} 
-            />
+      <Reward
+        modalOpen={isRewardOpen}
+        setModalOpen={setIsRewardOpen}
+        presetReward={null}
+        isBattle={true}
+        items={2}
+        type={["coins", "dust", "token"]}
+      />
     </div>
   );
 };

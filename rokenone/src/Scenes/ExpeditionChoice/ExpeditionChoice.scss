@@ -1,10 +1,28 @@
 @import "../../Assets/Scss/import.scss";
 
 .expedition-choice {
-  @include sceneContainer;
-  display: grid;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  @include jungleBackground;
+  @include cardFrame(true);
+  padding: 30px;
+
+  h4 {
+    color: $lightGrey;
+    text-align: center;
+  }
+
+  .btn {
+    p {
+      color: $darkerGrey;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+
+    .btn {
+      max-width: 150px;
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+    }
+  }
 }

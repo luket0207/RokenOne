@@ -10,6 +10,30 @@
   border-radius: 10px;
 }
 
+.change-display {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.change-text {
+  animation: fadeOut 1s ease-out;
+}
+
+.change-text.red { color: red; }
+.change-text.green { color: green; }
+.change-text.black { color: black; }
+.change-text.blue { color: blue; }
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
 .char-one {
   grid-column: 3;
 }
